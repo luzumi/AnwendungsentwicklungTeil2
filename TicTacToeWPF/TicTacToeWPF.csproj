@@ -1,0 +1,25 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <OutputType>WinExe</OutputType>
+    <TargetFramework>net5.0-windows</TargetFramework>
+    <UseWPF>true</UseWPF>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <None Remove="tie.gif" />
+    <None Remove="win.gif" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\AnwendungsentwicklungTeil1\Kontrollstrukturen\TicTacToe\TicTacToe.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Resource Include="tie.gif" />
+    <Resource Include="win.gif">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Resource>
+  </ItemGroup>
+
+</Project>

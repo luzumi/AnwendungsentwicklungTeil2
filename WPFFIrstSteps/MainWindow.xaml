@@ -8,11 +8,11 @@
         mc:Ignorable="d"
         Title="Einstellungen" Height="450" Width="800" Background="Black" Foreground="White">
      
-
+    <!-- Einstellungen für das Gesamte Fenster -->
     <Window.Resources>
         <sys:Double x:Key ="{x:Static SystemParameters.VerticalScrollBarWidthKey}">1</sys:Double>
         <Style TargetType ="Button">
-               <Setter Property="Background" Value ="White"/>
+               <Setter Property="Background" Value ="Black"/>
         </Style>
     </Window.Resources>
 
@@ -115,14 +115,15 @@
                         HorizontalContentAlignment="Left"
                         Background="Black"
                         Foreground="White"
-                        BorderBrush="Black" Click="btnSoundClick" />
+                        BorderBrush="Black" 
+                        Click="btnSoundClick" />
                 
-                <Button x:Name="Benachrichtigung"
-                        Content="Benachrichtigung und Aktionen"
+                <Button x:Name="Images"
+                        Content="Images"
                         Grid.Row="4"
                         HorizontalAlignment="Left"
                         VerticalAlignment="Center"
-                        Click="button_Click"
+                        Click="btnImages_Click"
                         Width="200"
                         Margin="2"
                         Padding="3,5"

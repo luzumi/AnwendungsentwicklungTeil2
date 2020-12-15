@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -12,38 +13,26 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using TicTacToe;
 
-namespace WPFFirstSteps
+namespace TicTacToeWPF
 {
     /// <summary>
     /// Interaction logic for MainWindow.xaml
     /// </summary>
     public partial class MainWindow : Window
     {
-
         public MainWindow()
         {
             InitializeComponent();
+            StartLogo.Text =
+                File.ReadAllText(
+                    @"E:\VisualStudio-workspace\AnwendungsentwicklungTeil1\Kontrollstrukturen\TicTacToe\Logo.txt");
         }
 
-        private void button_Click(object sender, RoutedEventArgs e)
+        private void ButtonBase_OnClick(object pSender, RoutedEventArgs pE)
         {
-
-        }
-        
-        private void btnAnzeigeClick(object sender, RoutedEventArgs e)
-        {
-            frameContent.Navigate(new PageAnzeige());
-        }
-
-        private void btnSoundClick(object pSender, RoutedEventArgs pE)
-        {
-            frameContent.Navigate(new PageSound());
-        }
-
-        private void btnImages_Click(object pSender, RoutedEventArgs pE)
-        {
-            throw new NotImplementedException();
+            FrameContent.Navigate(new PageGame());
         }
     }
 }

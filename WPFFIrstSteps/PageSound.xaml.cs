@@ -24,5 +24,16 @@ namespace WPFFirstSteps
         {
             InitializeComponent();
         }
+
+        private void Button_IsMouseDirectlyOverChanged(object pSender, DependencyPropertyChangedEventArgs pE)
+        {
+            btnGeräteeigenschaften.Foreground = IsMouseCaptured ? Brushes.Gray : Brushes.DarkGoldenrod;
+            btnGeräteeigenschaften.Background = Brushes.Black;
+        }
+
+        private void ChangeVolumeLabelIsMouseButtonUp(object sender, MouseButtonEventArgs e)
+        {
+            lblVolume.Content = volume.Ticks;
+        }
     }
 }

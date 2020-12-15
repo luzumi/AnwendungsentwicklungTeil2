@@ -10,11 +10,13 @@
       Background="Black"
       Title="Anzeige">
     <Page.Resources>
-        <system:Double x:Key ="{x:Static SystemParameters.VerticalScrollBarWidthKey}">1</system:Double>
+        <system:Double x:Key ="{x:Static SystemParameters.VerticalScrollBarWidthKey}">2</system:Double>
         <Style TargetType ="Button">
             <Setter Property="Background" Value ="White"/>
         </Style>
     </Page.Resources>
+
+
 
     <ScrollViewer
         VerticalScrollBarVisibility="Auto"
@@ -220,7 +222,7 @@
             <CheckBox x:Name="CheckBoxNachtmodus"  
                       Grid.Row="12"
                       Grid.Column="0"
-                      Background="Black"
+                      Background="DarkGray"
                       Foreground="White"
                       Width="20"
                       Height="20"

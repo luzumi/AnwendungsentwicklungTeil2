@@ -1,0 +1,145 @@
+﻿<Page x:Class="TicTacToeWPF.PageGame"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+      xmlns:local="clr-namespace:TicTacToeWPF"
+      mc:Ignorable="d"
+      d:DesignHeight="318" d:DesignWidth="300"
+      Title="PageGame">
+
+    <Page.Resources>
+        <Style TargetType="Button">
+            <Setter Property="HorizontalContentAlignment" Value="Center" />
+            <Setter Property="Padding" Value="3,3" />
+            <Setter Property="Background" Value="Wheat" />
+            <Setter Property="Height" Value="100" />
+            <Setter Property="Width" Value="100" />
+            <Setter Property="BorderThickness" Value="2" />
+        </Style>
+    </Page.Resources>
+
+
+    <Grid Width="300"
+            Height="300">
+
+        <Grid>
+
+
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition />
+                <ColumnDefinition />
+                <ColumnDefinition />
+            </Grid.ColumnDefinitions>
+
+            <Grid.RowDefinitions>
+                <RowDefinition />
+                <RowDefinition />
+                <RowDefinition />
+            </Grid.RowDefinitions>
+
+
+            <Button x:Name="bt00"
+                    Click="Bt_OnClick"
+                    Grid.Row="0"
+                    Grid.Column="0"
+                    Height="100"
+                    FontSize="80"
+                    HorizontalContentAlignment="Center"
+                    HorizontalAlignment="Center"
+                    VerticalAlignment="Center" />
+
+            <Button x:Name="bt10"
+                    Click="Bt_OnClick"
+                    Grid.Row="1"
+                    Grid.Column="0"
+                    Height="100"
+                    FontSize="80"
+                    HorizontalContentAlignment="Center"
+                    HorizontalAlignment="Center"
+                    VerticalAlignment="Center" />
+
+            <Button x:Name="bt20"
+                    Click="Bt_OnClick"
+                    Grid.Row="2"
+                    Grid.Column="0"
+                    Height="100"
+                    FontSize="80"
+                    HorizontalContentAlignment="Center"
+                    HorizontalAlignment="Center" />
+
+            <Button x:Name="bt01"
+                    Click="Bt_OnClick"
+                    Grid.Row="0"
+                    Grid.Column="1"
+                    Height="100"
+                    FontSize="80"
+                    HorizontalContentAlignment="Center"
+                    HorizontalAlignment="Center" />
+
+            <Button x:Name="bt11"
+                    Click="Bt_OnClick"
+                    Grid.Row="1"
+                    Grid.Column="1"
+                    Height="100"
+                    FontSize="80"
+                    HorizontalContentAlignment="Center"
+                    HorizontalAlignment="Center" />
+
+            <Button x:Name="bt21"
+                    Click="Bt_OnClick"
+                    Grid.Row="2"
+                    Grid.Column="1"
+                    Height="100"
+                    FontSize="80"
+                    HorizontalContentAlignment="Center"
+                    HorizontalAlignment="Center" />
+
+            <Button x:Name="bt02"
+                    Click="Bt_OnClick"
+                    Grid.Row="0"
+                    Grid.Column="2"
+                    Height="100"
+                    FontSize="80"
+                    HorizontalContentAlignment="Center"
+                    HorizontalAlignment="Center" />
+
+            <Button x:Name="bt12"
+                    Click="Bt_OnClick"
+                    Grid.Row="1"
+                    Grid.Column="2"
+                    Height="100"
+                    FontSize="80"
+                    HorizontalContentAlignment="Center"
+                    HorizontalAlignment="Center" />
+
+            <Button x:Name="bt22"
+                    Click="Bt_OnClick"
+                    Grid.Row="2"
+                    Grid.Column="2"
+                    Height="100"
+                    FontSize="80"
+                    HorizontalContentAlignment="Center"
+                    HorizontalAlignment="Center" />
+
+        </Grid>
+
+        <Image x:Name ="imageWin"
+               Width="300"
+               Height="300"
+               Opacity="0.5" 
+               Source="/win.gif"
+               Visibility="Hidden">
+        </Image>
+
+        <Image x:Name ="imageTie"
+               Width="300"
+               Height="300"
+               Opacity="0.5" 
+               Source="/tie.gif"
+               Visibility="Hidden">
+        </Image>
+
+    </Grid>
+
+</Page>
