@@ -12,7 +12,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\AnwendungsentwicklungTeil1\Kontrollstrukturen\TicTacToe\TicTacToe.csproj" />
+    <ProjectReference Include="..\TicTacToe\TicTacToe.csproj" />
   </ItemGroup>
 
   <ItemGroup>

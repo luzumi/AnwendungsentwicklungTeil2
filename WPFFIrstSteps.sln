@@ -7,7 +7,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WPFFirstSteps", "WPFFIrstSt
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TicTacToeWPF", "TicTacToeWPF\TicTacToeWPF.csproj", "{C4D46B7F-7B35-4548-9322-8455D1362D2B}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TicTacToe", "..\AnwendungsentwicklungTeil1\Kontrollstrukturen\TicTacToe\TicTacToe.csproj", "{E8A4BFE3-77FC-488C-8BDE-0457E15080F6}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TicTacToe", "TicTacToe\TicTacToe.csproj", "{07CAAD9A-090E-4FA2-85D5-CBB3AA39BFBC}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -23,10 +23,10 @@ Global
 		{C4D46B7F-7B35-4548-9322-8455D1362D2B}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{C4D46B7F-7B35-4548-9322-8455D1362D2B}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{C4D46B7F-7B35-4548-9322-8455D1362D2B}.Release|Any CPU.Build.0 = Release|Any CPU
-		{E8A4BFE3-77FC-488C-8BDE-0457E15080F6}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{E8A4BFE3-77FC-488C-8BDE-0457E15080F6}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{E8A4BFE3-77FC-488C-8BDE-0457E15080F6}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{E8A4BFE3-77FC-488C-8BDE-0457E15080F6}.Release|Any CPU.Build.0 = Release|Any CPU
+		{07CAAD9A-090E-4FA2-85D5-CBB3AA39BFBC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{07CAAD9A-090E-4FA2-85D5-CBB3AA39BFBC}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{07CAAD9A-090E-4FA2-85D5-CBB3AA39BFBC}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{07CAAD9A-090E-4FA2-85D5-CBB3AA39BFBC}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
