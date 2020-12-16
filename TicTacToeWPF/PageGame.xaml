@@ -5,7 +5,7 @@
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
       xmlns:local="clr-namespace:TicTacToeWPF"
       mc:Ignorable="d"
-      d:DesignHeight="318" d:DesignWidth="300"
+      d:DesignHeight="487" d:DesignWidth="450"
       Title="PageGame">
 
     <Page.Resources>
@@ -13,15 +13,16 @@
             <Setter Property="HorizontalContentAlignment" Value="Center" />
             <Setter Property="Padding" Value="3,3" />
             <Setter Property="Background" Value="Wheat" />
-            <Setter Property="Height" Value="100" />
-            <Setter Property="Width" Value="100" />
+            <Setter Property="Height" Value="150" />
+            <Setter Property="Width" Value="150" />
+            <Setter Property="FontSize" Value="100" />
             <Setter Property="BorderThickness" Value="2" />
         </Style>
     </Page.Resources>
 
 
-    <Grid Width="300"
-            Height="300">
+    <Grid Width="450"
+            Height="450">
 
         <Grid>
 
@@ -43,100 +44,136 @@
                     Click="Bt_OnClick"
                     Grid.Row="0"
                     Grid.Column="0"
-                    Height="100"
-                    FontSize="80"
                     HorizontalContentAlignment="Center"
                     HorizontalAlignment="Center"
-                    VerticalAlignment="Center" />
+                    VerticalAlignment="Center" >
+                <Image Width="150"
+                       Height="150"
+                       Source="./Pictures/brushed metal background 0603.jpg"
+                       Opacity="0.4">
+                </Image>
+            </Button>
 
             <Button x:Name="bt10"
                     Click="Bt_OnClick"
                     Grid.Row="1"
                     Grid.Column="0"
-                    Height="100"
-                    FontSize="80"
                     HorizontalContentAlignment="Center"
                     HorizontalAlignment="Center"
-                    VerticalAlignment="Center" />
+                    VerticalAlignment="Center" >
+                <Image Width="150"
+                               Height="150"
+                               Source="./Pictures/brushed metal background 0603.jpg"
+                               Opacity="0.4">
+                </Image>
+            </Button>
 
             <Button x:Name="bt20"
                     Click="Bt_OnClick"
                     Grid.Row="2"
                     Grid.Column="0"
-                    Height="100"
-                    FontSize="80"
                     HorizontalContentAlignment="Center"
-                    HorizontalAlignment="Center" />
+                    HorizontalAlignment="Center" >
+                <Image Width="150"
+                       Height="150"
+                       Source="./Pictures/brushed metal background 0603.jpg"
+                       Opacity="0.4">
+                </Image>
+            </Button>
 
             <Button x:Name="bt01"
                     Click="Bt_OnClick"
                     Grid.Row="0"
                     Grid.Column="1"
-                    Height="100"
-                    FontSize="80"
                     HorizontalContentAlignment="Center"
-                    HorizontalAlignment="Center" />
+                    HorizontalAlignment="Center" >
+                <Image Width="150"
+                       Height="150"
+                       Source="./Pictures/brushed metal background 0603.jpg"
+                       Opacity="0.4">
+                </Image>
+            </Button>
 
             <Button x:Name="bt11"
                     Click="Bt_OnClick"
                     Grid.Row="1"
                     Grid.Column="1"
-                    Height="100"
-                    FontSize="80"
                     HorizontalContentAlignment="Center"
-                    HorizontalAlignment="Center" />
+                    HorizontalAlignment="Center" >
+                <Image Width="150"
+                       Height="150"
+                       Source="./Pictures/brushed metal background 0603.jpg"
+                       Opacity="0.4">
+                </Image>
+            </Button>
 
             <Button x:Name="bt21"
                     Click="Bt_OnClick"
                     Grid.Row="2"
                     Grid.Column="1"
-                    Height="100"
-                    FontSize="80"
                     HorizontalContentAlignment="Center"
-                    HorizontalAlignment="Center" />
+                    HorizontalAlignment="Center" >
+                <Image Width="150"
+                       Height="150"
+                       Source="./Pictures/brushed metal background 0603.jpg"
+                       Opacity="0.4">
+                </Image>
+            </Button>
 
             <Button x:Name="bt02"
                     Click="Bt_OnClick"
                     Grid.Row="0"
                     Grid.Column="2"
-                    Height="100"
-                    FontSize="80"
                     HorizontalContentAlignment="Center"
-                    HorizontalAlignment="Center" />
+                    HorizontalAlignment="Center" >
+                <Image Width="150"
+                       Height="150"
+                       Source="./Pictures/brushed metal background 0603.jpg"
+                       Opacity="0.4">
+                </Image>
+            </Button>
 
             <Button x:Name="bt12"
                     Click="Bt_OnClick"
                     Grid.Row="1"
                     Grid.Column="2"
-                    Height="100"
-                    FontSize="80"
                     HorizontalContentAlignment="Center"
-                    HorizontalAlignment="Center" />
+                    HorizontalAlignment="Center" >
+                <Image Width="150"
+                       Height="150"
+                       Source="./Pictures/brushed metal background 0603.jpg"
+                       Opacity="0.4">
+                </Image>
+            </Button>
 
             <Button x:Name="bt22"
                     Click="Bt_OnClick"
                     Grid.Row="2"
                     Grid.Column="2"
-                    Height="100"
-                    FontSize="80"
                     HorizontalContentAlignment="Center"
-                    HorizontalAlignment="Center" />
+                    HorizontalAlignment="Center" >
+                <Image Width="150"
+                       Height="150"
+                       Source="./Pictures/brushed metal background 0603.jpg"
+                       Opacity="0.4">
+                </Image>
+            </Button>
 
         </Grid>
 
         <Image x:Name ="imageWin"
-               Width="300"
-               Height="300"
-               Opacity="0.5" 
-               Source="/win.gif"
+               Width="450"
+               Height="450"
+               Opacity="0.7" 
+               Source="Pictures/win.gif"
                Visibility="Hidden">
         </Image>
 
         <Image x:Name ="imageTie"
-               Width="300"
-               Height="300"
-               Opacity="0.5" 
-               Source="/tie.gif"
+               Width="450"
+               Height="450"
+               Opacity="0.9" 
+               Source="/Pictures/tie.gif"
                Visibility="Hidden">
         </Image>
 

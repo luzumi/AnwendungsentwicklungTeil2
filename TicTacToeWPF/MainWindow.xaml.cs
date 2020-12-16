@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Media;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
@@ -25,9 +26,14 @@ namespace TicTacToeWPF
         public MainWindow()
         {
             InitializeComponent();
-            StartLogo.Text =
-                File.ReadAllText(
-                    @"E:\VisualStudio-workspace\AnwendungsentwicklungTeil1\Kontrollstrukturen\TicTacToe\Logo.txt");
+            StartLogo.Text = File.ReadAllText(
+                    path: @"E:\VisualStudio-workspace\AnwendungsentwicklungTeil1\Kontrollstrukturen\TicTacToe\Logo.txt");
+
+            using (var soundPlayer = new SoundPlayer(@".\Sounds\Generdyn-INSTLoops-03.wav"))
+            {
+                soundPlayer.PlayLooping();
+            }
+
         }
 
         private void ButtonBase_OnClick(object pSender, RoutedEventArgs pE)

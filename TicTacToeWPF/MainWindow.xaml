@@ -5,20 +5,40 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:TicTacToeWPF"
         mc:Ignorable="d"
-        Title="TicTacToe" Height="316" Width="300">
+        Title="TicTacToe" Height="490" Width="450"
+        Background="DarkGoldenrod">
 
-    <Grid>
+
+    <Grid Background="Black">
         
-        <Button Click="ButtonBase_OnClick">
-            
+        <Button Click="ButtonBase_OnClick"
+                Background="DarkGoldenrod"
+                Foreground="DarkBlue"
+                >
+            <Button.Style>
+                <Style TargetType="Button">
+                    <Style.Triggers>
+                        <Trigger Property="IsMouseOver" Value="True">
+                            <Setter Property="Background" Value="DarkGoldenrod" />
+                        </Trigger>
+                    </Style.Triggers>
+                </Style>
+            </Button.Style>
+
             <TextBox x:Name="StartLogo"
                      IsReadOnly="True"
-            >
+                     FontFamily="Consolas"
+                     Background="DarkGoldenrod"
+                     Foreground="DarkBlue"
+                     BorderThickness="0">
             </TextBox>
+
         </Button>
         
         <Frame x:Name="FrameContent"  
                NavigationUIVisibility="Hidden">
         </Frame>
+
     </Grid>
+
 </Window>
