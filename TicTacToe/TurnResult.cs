@@ -1,6 +1,4 @@
-﻿
-
-namespace TicTacToe
+﻿namespace TicTacToe
 {
     public enum TurnResult
     {

@@ -1,18 +1,18 @@
 ﻿using System;
 
-
 namespace TicTacToe
 {
     public class Timer
     {
-        DateTime lastUpdate;
-        uint framesSinceLastUpdate;
+        private uint framesSinceLastUpdate;
+        private DateTime lastUpdate;
 
         public Timer()
         {
             lastUpdate = DateTime.Now;
             framesSinceLastUpdate = 0;
         }
+
         public void FpsChecker()
         {
             framesSinceLastUpdate++;
@@ -20,7 +20,7 @@ namespace TicTacToe
             {
                 Console.ForegroundColor = ConsoleColor.DarkGray;
                 Console.SetCursorPosition(Console.BufferWidth - 15, 0);
-                Console.Write(@"{0,8} fps", framesSinceLastUpdate/5);
+                Console.Write(@"{0,8} fps", framesSinceLastUpdate / 5);
                 framesSinceLastUpdate = 0;
                 lastUpdate = DateTime.Now;
                 Console.ResetColor();

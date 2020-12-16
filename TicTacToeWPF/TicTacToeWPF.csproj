@@ -7,6 +7,7 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <None Remove="Pictures\brushed metal background 0603.jpg" />
     <None Remove="tie.gif" />
     <None Remove="win.gif" />
   </ItemGroup>
@@ -16,18 +17,20 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Resource Include="Pictures\brushed metal background 0603.jpg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Resource>
     <Resource Include="Pictures\tie.gif">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Resource>
     <Resource Include="Pictures\win.gif">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Resource>
+    <Resource Include="tie.gif" />
+    <Resource Include="win.gif" />
   </ItemGroup>
 
   <ItemGroup>
-    <None Update="Pictures\brushed metal background 0603.jpg">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
     <None Update="Sounds\Clippity-Clop_Looping.wav">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>

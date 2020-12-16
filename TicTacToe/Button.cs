@@ -1,15 +1,14 @@
-﻿
-namespace TicTacToe
+﻿namespace TicTacToe
 {
     public class Button
     {
-        private Point Position { get; }
-
         public FieldState FieldState;
 
-        public Button( Point position )
+        public Button(Point position)
         {
-            this.Position = position;
+            Position = position;
         }
+
+        private Point Position { get; }
     }
 }

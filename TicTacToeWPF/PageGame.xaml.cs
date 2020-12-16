@@ -1,18 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Media;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Media;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
 using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
 using TicTacToe;
 using Button = System.Windows.Controls.Button;
 using Point = TicTacToe.Point;
@@ -20,27 +9,27 @@ using Point = TicTacToe.Point;
 namespace TicTacToeWPF
 {
     /// <summary>
-    /// Interaktionslogik für PageGame.xaml
+    ///     Interaktionslogik für PageGame.xaml
     /// </summary>
-    public partial class PageGame : Page
+    public partial class PageGame
     {
-        private Spielfeld game;
-        private SoundPlayer validSoundX;
-        private SoundPlayer validSoundO;
-        private SoundPlayer invalidSound;
-        private SoundPlayer winSound;
-        private SoundPlayer tieSound;
+        private Spielfeld _game;
+        private readonly SoundPlayer _invalidSound;
+        private readonly SoundPlayer _tieSound;
+        private readonly SoundPlayer _validSoundO;
+        private readonly SoundPlayer _validSoundX;
+        private readonly SoundPlayer _winSound;
 
         public PageGame()
         {
             InitializeComponent();
-            game = new Spielfeld();
+            _game = new Spielfeld();
             //Sounds from https://soundimage.org/
-            validSoundX =  new SoundPlayer(@"Sounds\custom_20.wav");
-            validSoundO =  new SoundPlayer(@"Sounds\custom_21.wav");
-            invalidSound = new SoundPlayer(@"Sounds\light-switch-pull-chain-daniel_simon.wav");
-            tieSound =     new SoundPlayer(@"Sounds\LOOP24_172BPM.wav");
-            winSound =     new SoundPlayer(@"Sounds\LOOP15_140BPM.wav");
+            _validSoundX = new SoundPlayer(@"Sounds\custom_20.wav");
+            _validSoundO = new SoundPlayer(@"Sounds\custom_21.wav");
+            _invalidSound = new SoundPlayer(@"Sounds\light-switch-pull-chain-daniel_simon.wav");
+            _tieSound = new SoundPlayer(@"Sounds\LOOP24_172BPM.wav");
+            _winSound = new SoundPlayer(@"Sounds\LOOP15_140BPM.wav");
         }
 
 
@@ -48,81 +37,86 @@ namespace TicTacToeWPF
         {
             Point coordinates;
 
-            coordinates = (pSender as Button).Name switch
+            coordinates = ((Button) pSender).Name switch
             {
-                "bt00" => new Point(0, 0),
-                "bt01" => new Point(0, 1),
-                "bt02" => new Point(0, 2),
-                "bt10" => new Point(1, 0),
-                "bt11" => new Point(1, 1),
-                "bt12" => new Point(1, 2),
-                "bt20" => new Point(2, 0),
-                "bt21" => new Point(2, 1),
-                "bt22" => new Point(2, 2)
+                "Bt00" => new Point(0, 0),
+                "Bt01" => new Point(0, 1),
+                "Bt02" => new Point(0, 2),
+                "Bt10" => new Point(1, 0),
+                "Bt11" => new Point(1, 1),
+                "Bt12" => new Point(1, 2),
+                "Bt20" => new Point(2, 0),
+                "Bt21" => new Point(2, 1),
+                _ => new Point(2, 2)
             };
 
-            TurnResult tr = game.Turn(coordinates);
+            var tr = _game.Turn(coordinates);
 
             switch (tr)
             {
                 case TurnResult.Tie:
-                    game.Board[coordinates.X, coordinates.Y] =
-                        !game.GetPlayerID() ? FieldState.X : FieldState.O;
+                    _game.Board[coordinates.X, coordinates.Y] =
+                        !_game.GetPlayerID() ? FieldState.X : FieldState.O;
                     break;
 
                 case TurnResult.Win:
-                    game.Board[coordinates.X, coordinates.Y] =
-                        !game.GetPlayerID() ? FieldState.X : FieldState.O;
+                    _game.Board[coordinates.X, coordinates.Y] =
+                        !_game.GetPlayerID() ? FieldState.X : FieldState.O;
                     break;
 
                 case TurnResult.Valid:
-                    game.Board[coordinates.X, coordinates.Y] =
-                        game.GetPlayerID() ? FieldState.X : FieldState.O;
+                    _game.Board[coordinates.X, coordinates.Y] =
+                        _game.GetPlayerID() ? FieldState.X : FieldState.O;
                     break;
 
                 case TurnResult.Invalid:
-                    invalidSound.Play();
+                    _invalidSound.Play();
                     return;
             }
 
-            (pSender as Button).Content =
-                game.Board[coordinates.X, coordinates.Y] == FieldState.X ? "X" : "O";
+            (((pSender as Button).Content as Grid).Children[1] as Label).Content =
+                _game.Board[coordinates.X, coordinates.Y] == FieldState.X ? "X" : "O";
 
-            (pSender as Button).Foreground = (pSender as Button).Content == "X" ? Brushes.Red : Brushes.Green;
+            (((pSender as Button).Content as Grid).Children[1] as Label).Foreground =
+                (((pSender as Button).Content as Grid).Children[1] as Label).Content.ToString() == "X"
+                    ? Brushes.Red
+                    : Brushes.Green;
 
-            if (game.GetPlayerID()) { validSoundX.Play(); }
-            else { validSoundO.Play(); }
+            if (_game.GetPlayerID())
+                _validSoundX.Play();
+            else
+                _validSoundO.Play();
 
             switch (tr)
             {
                 case TurnResult.Tie:
-                    imageBtTie.Visibility = Visibility.Visible;
-                    imageTie.Visibility = Visibility.Visible;
-                    tieSound.Play();
+                    ImageBtTie.Visibility = Visibility.Visible;
+                    ImageTie.Visibility = Visibility.Visible;
+                    _tieSound.Play();
                     break;
 
                 case TurnResult.Win:
-                    imageBtWin.Visibility = Visibility.Visible;
-                    imageWin.Visibility = Visibility.Visible;
-                    winSound.Play();
+                    ImageBtWin.Visibility = Visibility.Visible;
+                    ImageWin.Visibility = Visibility.Visible;
+                    _winSound.Play();
                     break;
             }
         }
 
         private void Reset_onClick(object pSender, RoutedEventArgs pE)
         {
-            game = new Spielfeld();
-            imageBtWin.Visibility = Visibility.Hidden;
-            imageBtTie.Visibility = Visibility.Hidden;
-            bt00.Content = "";
-            bt01.Content = "";
-            bt02.Content = "";
-            bt10.Content = "";
-            bt11.Content = "";
-            bt12.Content = "";
-            bt20.Content = "";
-            bt21.Content = "";
-            bt22.Content = "";
+            _game = new Spielfeld();
+            ImageBtWin.Visibility = Visibility.Hidden;
+            ImageBtTie.Visibility = Visibility.Hidden;
+            ((Bt00.Content as Grid).Children[1] as Label).Content = "";
+            ((Bt01.Content as Grid).Children[1] as Label).Content = "";
+            ((Bt02.Content as Grid).Children[1] as Label).Content = "";
+            ((Bt10.Content as Grid).Children[1] as Label).Content = "";
+            ((Bt11.Content as Grid).Children[1] as Label).Content = "";
+            ((Bt12.Content as Grid).Children[1] as Label).Content = "";
+            ((Bt20.Content as Grid).Children[1] as Label).Content = "";
+            ((Bt21.Content as Grid).Children[1] as Label).Content = "";
+            ((Bt22.Content as Grid).Children[1] as Label).Content = "";
         }
     }
 }

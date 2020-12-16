@@ -1,36 +1,36 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.IO;
-using System.Linq;
-using System.Runtime.InteropServices.ComTypes;
 using System.Text;
-using System.Threading.Tasks;
-using Microsoft.VisualBasic;
 
 namespace TicTacToe
 {
-    class TextBox
+    internal class TextBox
     {
-        private StringBuilder content;
-        private readonly Point position;
+        private static readonly int horizonzal = 18;
+        private static readonly int vertikal = 19;
+        private static int offset;
         private readonly ConsoleColor color;
-        private static int horizonzal = 18;
-        private static int vertikal = 19;
-        private static int offset = 0;
+        private readonly Point position;
+        private readonly StringBuilder content;
 
-        public string Content
+        public TextBox(Point Position, ConsoleColor TextColor)
         {
-            get { return content.ToString(); }
+            position = Position;
+            color = TextColor;
+            content = new StringBuilder();
         }
+
+        public string Content => content.ToString();
 
         public void Draw()
         {
             Console.SetCursorPosition(position.X, position.Y);
             Console.ForegroundColor = color;
 
-            string[] zeilen = content.ToString().Split('\n');
+            var zeilen = content.ToString().Split('\n');
 
-            for (int i = 0; i < zeilen.Length; i++)
+            for (var i = 0; i < zeilen.Length; i++)
             {
                 Console.Write(zeilen[i]);
                 Console.SetCursorPosition(position.X, position.Y + i);
@@ -42,13 +42,13 @@ namespace TicTacToe
 
         public void DrawRahmen()
         {
-            for (int row = 0; row < 30; row = Program.rand.Next(0, 45))
+            for (var row = 0; row < 30; row = Program.rand.Next(0, 45))
             {
                 ZeichenSetzen(row, 0, "Zeichen.txt");
                 ZeichenSetzen(row, 50, "Zeichen.txt");
             }
 
-            for (int row = 0; row < 10; row = Program.rand.Next(0, 15))
+            for (var row = 0; row < 10; row = Program.rand.Next(0, 15))
             {
                 ZeichenSetzen(row, 10, "Zeichen.txt");
                 ZeichenSetzen(row, 20, "Zeichen.txt");
@@ -56,7 +56,7 @@ namespace TicTacToe
                 ZeichenSetzen(row, 40, "Zeichen.txt");
             }
 
-            for (int row = 0; row < 2; row = Program.rand.Next(0, 3))
+            for (var row = 0; row < 2; row = Program.rand.Next(0, 3))
             {
                 ZeichenSetzen(row + 28, 10, "Zeichen.txt");
                 ZeichenSetzen(row + 28, 20, "Zeichen.txt");
@@ -69,54 +69,41 @@ namespace TicTacToe
 
         public void DrawLogo()
         {
-            List<string> logoLines = new List<string>();
+            var logoLines = new List<string>();
             string line;
 
             using (var reader = new StreamReader("Logo.txt"))
             {
-                while ((line = reader.ReadLine()) is not null)
-                {
-                    logoLines.Add(line);
-                }
+                while ((line = reader.ReadLine()) is not null) logoLines.Add(line);
             }
 
-            string[] ausgabe = new string[logoLines.Count];
+            var ausgabe = new string[logoLines.Count];
 
-
-            for (int zeileInLogo = 0; zeileInLogo < logoLines.Count; zeileInLogo++)
+            for (var zeileInLogo = 0; zeileInLogo < logoLines.Count; zeileInLogo++)
             {
                 string neueAusgabe;
 
                 ausgabe[zeileInLogo] =
                     logoLines[zeileInLogo].Substring(offset, logoLines[zeileInLogo].Length - 1 - offset);
 
-                if (ausgabe[zeileInLogo].Length == 0)
-                {
-                    ausgabe[zeileInLogo] = logoLines[zeileInLogo];
-                }
+                if (ausgabe[zeileInLogo].Length == 0) ausgabe[zeileInLogo] = logoLines[zeileInLogo];
 
-                neueAusgabe = logoLines[zeileInLogo].Substring(0, (offset));
+                neueAusgabe = logoLines[zeileInLogo].Substring(0, offset);
 
-                if (neueAusgabe.Length > 7 && neueAusgabe.Length < logoLines[zeileInLogo].Length-7)
-                {
-                    ausgabe[zeileInLogo] += "      " + neueAusgabe.Substring(0,neueAusgabe.Length-6);
-                }
+                if (neueAusgabe.Length > 7 && neueAusgabe.Length < logoLines[zeileInLogo].Length - 7)
+                    ausgabe[zeileInLogo] += "      " + neueAusgabe.Substring(0, neueAusgabe.Length - 6);
             }
 
-            for (int zeile = 0; zeile < logoLines.Count; zeile++)
+            for (var zeile = 0; zeile < logoLines.Count; zeile++)
             {
                 Console.SetCursorPosition(0, zeile + 1);
                 Console.Write(ausgabe[zeile]);
             }
 
-            if (offset < logoLines[0].Length-1)
-            {
+            if (offset < logoLines[0].Length - 1)
                 offset++;
-            }
             else
-            {
                 offset = 0;
-            }
         }
 
         private static void ZeichenSetzen(int row, int count, string path)
@@ -145,45 +132,33 @@ namespace TicTacToe
         {
             Console.ForegroundColor = ConsoleColor.Cyan;
             Console.CursorVisible = false;
-            for (int j = 0; j < 3; j++)
+            for (var j = 0; j < 3; j++)
+            for (var i = 0; i < 4; i++)
             {
-                for (int i = 0; i < 4; i++)
-                {
-                    Console.SetCursorPosition(horizonzal + 3 + i * 4, vertikal + 2 + j * 2);
-                    Console.Write("|");
-                }
+                Console.SetCursorPosition(horizonzal + 3 + i * 4, vertikal + 2 + j * 2);
+                Console.Write("|");
             }
 
-            for (int i = 0; i < 4; i++)
+            for (var i = 0; i < 4; i++)
             {
-                Console.SetCursorPosition(horizonzal + 3, (vertikal + 1 + i * 2));
+                Console.SetCursorPosition(horizonzal + 3, vertikal + 1 + i * 2);
 
                 Console.Write("+---+---+---+");
             }
 
-            for (int i = 0; i < 7; i++)
+            for (var i = 0; i < 7; i++)
             {
                 Console.SetCursorPosition(horizonzal + 31, vertikal + 1 + i);
                 Console.ForegroundColor = ConsoleColor.DarkRed;
                 Console.Write("*");
             }
 
-            if (Program.programmZustand == 3)
-            {
-                Program.OutputTie();
-            }
-        }
-
-        public TextBox(Point Position, ConsoleColor TextColor)
-        {
-            position = Position;
-            color = TextColor;
-            content = new StringBuilder();
+            if (Program.programmZustand == 3) Program.OutputTie();
         }
 
 
         /// <summary>
-        /// eingegebene Taste wird behandelt
+        ///     eingegebene Taste wird behandelt
         /// </summary>
         /// <param name="KeyInformation"></param>
         /// <param name="s"></param>
@@ -196,14 +171,13 @@ namespace TicTacToe
                 Console.Write("                                ");
             }
 
-            if ((int)KeyInformation > 63 && (int)KeyInformation < 91 || (int)KeyInformation == 13)
-            {
+            if ((int) KeyInformation > 63 && (int) KeyInformation < 91 || (int) KeyInformation == 13)
                 switch (Program.programmZustand)
                 {
                     case 0:
                         if (KeyInformation != ConsoleKey.Enter)
                         {
-                            Spielfeld.PlayerNames[0] += (char)KeyInformation;
+                            Spielfeld.PlayerNames[0] += (char) KeyInformation;
                             content.Clear();
                             Spieler1Abfragen();
                         }
@@ -218,7 +192,7 @@ namespace TicTacToe
                     case 1:
                         if (KeyInformation != ConsoleKey.Enter)
                         {
-                            Spielfeld.PlayerNames[1] += (char)KeyInformation;
+                            Spielfeld.PlayerNames[1] += (char) KeyInformation;
                             content.Clear();
                             Spieler2Abfragen();
                         }
@@ -244,25 +218,24 @@ namespace TicTacToe
                         content.Append(KeyInformation);
                         break;
                 }
-            }
         }
 
         public void Spiel()
         {
-            string spieler1 = String.Format("*   Spieler 1: {0,-18}  ", Spielfeld.PlayerNames[0].ToString());
-            string spieler2 = String.Format("*   Spieler 1: {0,-18}  ", Spielfeld.PlayerNames[0].ToString());
-            string star = "*";
+            var spieler1 = string.Format("*   Spieler 1: {0,-18}  ", Spielfeld.PlayerNames[0]);
+            var spieler2 = string.Format("*   Spieler 1: {0,-18}  ", Spielfeld.PlayerNames[0]);
+            var star = "*";
 
             content.AppendLine("");
             content.AppendLine("****************************************");
             content.AppendLine("* TTT I  CC  TTT  A    CC  TTT OO  EEE *");
             content.AppendLine("*  T  I C     T  A A  C     T O  O EE  *");
             content.AppendLine("*  T  I  CC   T A   A  CC   T  OO  EEE *");
-            content.AppendLine(String.Format("*{0,39}", star));
-            content.AppendLine(String.Format("*{0,39}", star));
-            content.AppendLine(String.Format("*{0,39}", star));
-            content.AppendLine(String.Format("*   Spieler 1: {0,-18}  ", Spielfeld.PlayerNames[0].ToString()));
-            content.AppendLine(String.Format("*   Spieler 1: {0,-18}  ", Spielfeld.PlayerNames[1].ToString()));
+            content.AppendLine(string.Format("*{0,39}", star));
+            content.AppendLine(string.Format("*{0,39}", star));
+            content.AppendLine(string.Format("*{0,39}", star));
+            content.AppendLine(string.Format("*   Spieler 1: {0,-18}  ", Spielfeld.PlayerNames[0]));
+            content.AppendLine(string.Format("*   Spieler 1: {0,-18}  ", Spielfeld.PlayerNames[1]));
             content.AppendLine("*");
             content.AppendLine("*");
             content.AppendLine("*");
@@ -277,16 +250,12 @@ namespace TicTacToe
 
         public void Spieler1Abfragen()
         {
-            string zeile = "*";
+            var zeile = "*";
             if (Spielfeld.PlayerNames[0] != null)
-            {
-                zeile += String.Format("   Spieler 1: {0,-18}  ",
-                    Spielfeld.PlayerNames[0].ToString());
-            }
+                zeile += string.Format("   Spieler 1: {0,-18}  ",
+                    Spielfeld.PlayerNames[0]);
             else
-            {
                 zeile += "   Spieler 1:                         *";
-            }
 
             content.AppendLine("");
             content.AppendLine("****************************************");
@@ -311,20 +280,16 @@ namespace TicTacToe
 
         public void Spieler2Abfragen()
         {
-            string spieler1 = String.Format("*   Spieler 1: {0,-18}  ",
-                Spielfeld.PlayerNames[0].ToString());
+            var spieler1 = string.Format("*   Spieler 1: {0,-18}  ",
+                Spielfeld.PlayerNames[0]);
 
-            string zeile = "*";
+            var zeile = "*";
 
             if (Spielfeld.PlayerNames[1] != null)
-            {
-                zeile += String.Format("   Spieler 2: {0,-18}  ",
-                    Spielfeld.PlayerNames[1].ToString());
-            }
+                zeile += string.Format("   Spieler 2: {0,-18}  ",
+                    Spielfeld.PlayerNames[1]);
             else
-            {
                 zeile += "   Spieler 2:                         *";
-            }
 
             content.AppendLine("");
             content.AppendLine("****************************************");

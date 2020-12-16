@@ -4,15 +4,13 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:sys="clr-namespace:System;assembly=mscorlib"
-        xmlns:local="clr-namespace:WPFFirstSteps"
         mc:Ignorable="d"
         Title="Einstellungen" Height="450" Width="800" Background="Black" Foreground="White">
-     
+
     <!-- Einstellungen für das Gesamte Fenster -->
     <Window.Resources>
-        <sys:Double x:Key ="{x:Static SystemParameters.VerticalScrollBarWidthKey}">1</sys:Double>
-        <Style TargetType ="Button">
-               <Setter Property="Background" Value ="Black"/>
+        <Style TargetType="Button">
+            <Setter Property="Background" Value="Black" />
         </Style>
     </Window.Resources>
 
@@ -23,7 +21,7 @@
             <ColumnDefinition Width="Auto" />
             <ColumnDefinition Width="*" />
         </Grid.ColumnDefinitions>
-        
+
         <Grid.RowDefinitions>
             <RowDefinition Height="30" />
             <RowDefinition Height="30" />
@@ -56,7 +54,7 @@
                 Background="Black"
                 Foreground="White"
                 BorderBrush="Black" />
-        
+
         <TextBox
             x:Name="txtBoxSuchen"
             Text="Einstellung suchen"
@@ -66,7 +64,7 @@
             Margin="5,0"
             Background="Black"
             Foreground="#FF5B5959" />
-        
+
         <Label x:Name="lblSystem"
                Content="System"
                HorizontalAlignment="Left"
@@ -92,7 +90,6 @@
 
                 <Button x:Name="btAnzeige"
                         Content="Anzeige"
-                        Grid.Row="2"
                         HorizontalAlignment="Left"
                         VerticalAlignment="Center"
                         Click="btnAnzeigeClick"
@@ -103,10 +100,9 @@
                         Background="Black"
                         Foreground="White"
                         BorderBrush="Black" />
-                
+
                 <Button x:Name="Sound"
                         Content="Sound"
-                        Grid.Row="3"
                         HorizontalAlignment="Left"
                         VerticalAlignment="Center"
                         Width="200"
@@ -115,12 +111,11 @@
                         HorizontalContentAlignment="Left"
                         Background="Black"
                         Foreground="White"
-                        BorderBrush="Black" 
+                        BorderBrush="Black"
                         Click="btnSoundClick" />
-                
+
                 <Button x:Name="Images"
                         Content="Images"
-                        Grid.Row="4"
                         HorizontalAlignment="Left"
                         VerticalAlignment="Center"
                         Click="btnImages_Click"
@@ -131,10 +126,9 @@
                         Background="Black"
                         Foreground="White"
                         BorderBrush="Black" />
-                
+
                 <Button x:Name="Benachrichtigungsassistent"
                         Content="Benachrichtigungsassistent"
-                        Grid.Row="5"
                         HorizontalAlignment="Left"
                         VerticalAlignment="Center"
                         Click="button_Click"
@@ -145,10 +139,9 @@
                         Background="Black"
                         Foreground="White"
                         BorderBrush="Black" />
-                
+
                 <Button x:Name="Netzbetrieb"
                         Content="Netzbetrieb und Energiesparen"
-                        Grid.Row="6"
                         HorizontalAlignment="Left"
                         VerticalAlignment="Center"
                         Click="button_Click"
@@ -159,10 +152,9 @@
                         Background="Black"
                         Foreground="White"
                         BorderBrush="Black" />
-                
+
                 <Button x:Name="Akku"
                         Content="Akku"
-                        Grid.Row="7"
                         HorizontalAlignment="Left"
                         VerticalAlignment="Center"
                         Click="button_Click"
@@ -173,10 +165,9 @@
                         Background="Black"
                         Foreground="White"
                         BorderBrush="Black" />
-                
+
                 <Button x:Name="Speicher"
                         Content="Speicher"
-                        Grid.Row="8"
                         HorizontalAlignment="Left"
                         VerticalAlignment="Center"
                         Click="button_Click"
@@ -187,10 +178,9 @@
                         Background="Black"
                         Foreground="White"
                         BorderBrush="Black" />
-                
+
                 <Button x:Name="Tabletmodus"
                         Content="Tabletmodus"
-                        Grid.Row="9"
                         HorizontalAlignment="Left"
                         VerticalAlignment="Center"
                         Click="button_Click"
@@ -201,10 +191,9 @@
                         Background="Black"
                         Foreground="White"
                         BorderBrush="Black" />
-                
+
                 <Button x:Name="Multitasking"
                         Content="Multitasking"
-                        Grid.Row="10"
                         HorizontalAlignment="Left"
                         VerticalAlignment="Center"
                         Click="button_Click"
@@ -215,10 +204,9 @@
                         Background="Black"
                         Foreground="White"
                         BorderBrush="Black" />
-                
+
                 <Button x:Name="Projezieren"
                         Content="Projezieren auf diesen PC"
-                        Grid.Row="11"
                         HorizontalAlignment="Left"
                         VerticalAlignment="Center"
                         Click="button_Click"
@@ -229,10 +217,9 @@
                         Background="Black"
                         Foreground="White"
                         BorderBrush="Black" />
-                
+
                 <Button x:Name="gemeinsam"
                         Content="Gemeinsame Nutzung"
-                        Grid.Row="12"
                         HorizontalAlignment="Left"
                         VerticalAlignment="Center"
                         Click="button_Click"
@@ -243,10 +230,9 @@
                         Background="Black"
                         Foreground="White"
                         BorderBrush="Black" />
-                
+
                 <Button x:Name="Zwischenablage"
                         Content="Zwischenablage"
-                        Grid.Row="13"
                         HorizontalAlignment="Left"
                         VerticalAlignment="Center"
                         Click="button_Click"
@@ -257,10 +243,9 @@
                         Background="Black"
                         Foreground="White"
                         BorderBrush="Black" />
-                
+
                 <Button x:Name="Remotedesktop"
                         Content="Remotedesktop"
-                        Grid.Row="14"
                         HorizontalAlignment="Left"
                         VerticalAlignment="Center"
                         Click="button_Click"
@@ -271,10 +256,9 @@
                         Background="Black"
                         Foreground="White"
                         BorderBrush="Black" />
-                
+
                 <Button x:Name="Info"
                         Content="Info"
-                        Grid.Row="15"
                         HorizontalAlignment="Left"
                         VerticalAlignment="Center"
                         Click="button_Click"
@@ -286,15 +270,14 @@
                         Foreground="White" BorderBrush="Black" />
             </StackPanel>
         </ScrollViewer>
-    
+
 
         <!-- Column 2 -->
-        
-        <Frame x:Name="frameContent"  
-            Grid.Row =" 0"
+
+        <Frame x:Name="frameContent"
+               Grid.Row=" 0"
                Grid.RowSpan="4"
                Grid.Column="1"
-               NavigationUIVisibility="Hidden">
-        </Frame>
+               NavigationUIVisibility="Hidden" />
     </Grid>
 </Window>
