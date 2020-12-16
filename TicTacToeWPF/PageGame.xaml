@@ -22,7 +22,7 @@
 
 
     <Grid Width="450"
-            Height="450">
+          Height="450">
 
         <Grid>
 
@@ -46,12 +46,11 @@
                     Grid.Column="0"
                     HorizontalContentAlignment="Center"
                     HorizontalAlignment="Center"
-                    VerticalAlignment="Center" >
+                    VerticalAlignment="Center">
                 <Image Width="150"
                        Height="150"
-                       Source="./Pictures/brushed metal background 0603.jpg"
-                       Opacity="0.4">
-                </Image>
+                       Source="/Pictures/brushed metal background 0603.jpg"
+                       Opacity="0.4" />
             </Button>
 
             <Button x:Name="bt10"
@@ -60,12 +59,11 @@
                     Grid.Column="0"
                     HorizontalContentAlignment="Center"
                     HorizontalAlignment="Center"
-                    VerticalAlignment="Center" >
+                    VerticalAlignment="Center">
                 <Image Width="150"
-                               Height="150"
-                               Source="./Pictures/brushed metal background 0603.jpg"
-                               Opacity="0.4">
-                </Image>
+                       Height="150"
+                       Source="/Pictures/brushed metal background 0603.jpg"
+                       Opacity="0.4" />
             </Button>
 
             <Button x:Name="bt20"
@@ -73,12 +71,11 @@
                     Grid.Row="2"
                     Grid.Column="0"
                     HorizontalContentAlignment="Center"
-                    HorizontalAlignment="Center" >
+                    HorizontalAlignment="Center">
                 <Image Width="150"
                        Height="150"
-                       Source="./Pictures/brushed metal background 0603.jpg"
-                       Opacity="0.4">
-                </Image>
+                       Source="/Pictures/brushed metal background 0603.jpg"
+                       Opacity="0.4" />
             </Button>
 
             <Button x:Name="bt01"
@@ -86,12 +83,11 @@
                     Grid.Row="0"
                     Grid.Column="1"
                     HorizontalContentAlignment="Center"
-                    HorizontalAlignment="Center" >
+                    HorizontalAlignment="Center">
                 <Image Width="150"
                        Height="150"
-                       Source="./Pictures/brushed metal background 0603.jpg"
-                       Opacity="0.4">
-                </Image>
+                       Source="/Pictures/brushed metal background 0603.jpg"
+                       Opacity="0.4" />
             </Button>
 
             <Button x:Name="bt11"
@@ -99,12 +95,11 @@
                     Grid.Row="1"
                     Grid.Column="1"
                     HorizontalContentAlignment="Center"
-                    HorizontalAlignment="Center" >
+                    HorizontalAlignment="Center">
                 <Image Width="150"
                        Height="150"
-                       Source="./Pictures/brushed metal background 0603.jpg"
-                       Opacity="0.4">
-                </Image>
+                       Source="/Pictures/brushed metal background 0603.jpg"
+                       Opacity="0.4" />
             </Button>
 
             <Button x:Name="bt21"
@@ -112,12 +107,11 @@
                     Grid.Row="2"
                     Grid.Column="1"
                     HorizontalContentAlignment="Center"
-                    HorizontalAlignment="Center" >
+                    HorizontalAlignment="Center">
                 <Image Width="150"
                        Height="150"
-                       Source="./Pictures/brushed metal background 0603.jpg"
-                       Opacity="0.4">
-                </Image>
+                       Source="/Pictures/brushed metal background 0603.jpg"
+                       Opacity="0.4" />
             </Button>
 
             <Button x:Name="bt02"
@@ -125,12 +119,11 @@
                     Grid.Row="0"
                     Grid.Column="2"
                     HorizontalContentAlignment="Center"
-                    HorizontalAlignment="Center" >
+                    HorizontalAlignment="Center">
                 <Image Width="150"
                        Height="150"
-                       Source="./Pictures/brushed metal background 0603.jpg"
-                       Opacity="0.4">
-                </Image>
+                       Source="/Pictures/brushed metal background 0603.jpg"
+                       Opacity="0.4" />
             </Button>
 
             <Button x:Name="bt12"
@@ -138,12 +131,11 @@
                     Grid.Row="1"
                     Grid.Column="2"
                     HorizontalContentAlignment="Center"
-                    HorizontalAlignment="Center" >
+                    HorizontalAlignment="Center">
                 <Image Width="150"
                        Height="150"
-                       Source="./Pictures/brushed metal background 0603.jpg"
-                       Opacity="0.4">
-                </Image>
+                       Source="/Pictures/brushed metal background 0603.jpg"
+                       Opacity="0.4" />
             </Button>
 
             <Button x:Name="bt22"
@@ -151,32 +143,66 @@
                     Grid.Row="2"
                     Grid.Column="2"
                     HorizontalContentAlignment="Center"
-                    HorizontalAlignment="Center" >
+                    HorizontalAlignment="Center">
                 <Image Width="150"
                        Height="150"
-                       Source="./Pictures/brushed metal background 0603.jpg"
-                       Opacity="0.4">
-                </Image>
+                       Source="/Pictures/brushed metal background 0603.jpg"
+                       Opacity="0.4" />
             </Button>
 
         </Grid>
 
-        <Image x:Name ="imageWin"
-               Width="450"
-               Height="450"
-               Opacity="0.7" 
-               Source="Pictures/win.gif"
-               Visibility="Hidden">
-        </Image>
+        <Button x:Name="imageBtWin"
+                Visibility="Hidden"
+                Opacity="0"
+                Height="450"
+                Width="450"
+                Click="Reset_onClick">
 
-        <Image x:Name ="imageTie"
-               Width="450"
-               Height="450"
-               Opacity="0.9" 
-               Source="/Pictures/tie.gif"
-               Visibility="Hidden">
-        </Image>
+            <Button.Resources>
+                <Style TargetType="Button">
+                    
+                    <Style.Triggers>
+                        <Trigger Property="IsMouseOver" Value="False">
+                            <Setter Property="Background" Value="DarkGoldenrod" />
+                        </Trigger>
+                    </Style.Triggers>
+                </Style>
+            </Button.Resources>
 
+            <Image x:Name="imageWin"
+                   Width="450"
+                   Height="450"
+                   Opacity="0.7"
+                   Source="/Pictures/win.gif"
+                   Visibility="Hidden" />
+        </Button>
+
+        <Button x:Name="imageBtTie"
+                Visibility="Hidden"
+                Opacity="0"
+                Height="450"
+                Width="450"
+                Click="Reset_onClick">
+
+            <Button.Resources>
+                <Style TargetType="Button">
+                    
+                    <Style.Triggers>
+                        <Trigger Property="IsMouseOver" Value="False">
+                            <Setter Property="Background" Value="DarkGoldenrod" />
+                        </Trigger>
+                    </Style.Triggers>
+                </Style>
+            </Button.Resources>
+
+            <Image x:Name="imageTie"
+                   Width="450"
+                   Height="450"
+                   Opacity="0.9"
+                   Source="/Pictures/tie.gif"
+                   Visibility="Hidden" />
+        </Button>
     </Grid>
 
 </Page>

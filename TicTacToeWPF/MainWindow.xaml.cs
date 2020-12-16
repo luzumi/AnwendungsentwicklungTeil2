@@ -4,6 +4,7 @@ using System.IO;
 using System.Linq;
 using System.Media;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
@@ -23,18 +24,21 @@ namespace TicTacToeWPF
     /// </summary>
     public partial class MainWindow : Window
     {
+        Task loop;
+        private MediaPlayer loopSound;
         public MainWindow()
         {
             InitializeComponent();
+
             StartLogo.Text = File.ReadAllText(
                     path: @"E:\VisualStudio-workspace\AnwendungsentwicklungTeil1\Kontrollstrukturen\TicTacToe\Logo.txt");
 
-            using (var soundPlayer = new SoundPlayer(@".\Sounds\Generdyn-INSTLoops-03.wav"))
-            {
-                soundPlayer.PlayLooping();
-            }
-
+            //Sound from https://soundimage.org/
+            loopSound = new MediaPlayer();
+            loopSound.Open(new Uri(@".\Sounds\Clippity-Clop_Looping.wav", UriKind.Relative));
+            loopSound.Play();
         }
+
 
         private void ButtonBase_OnClick(object pSender, RoutedEventArgs pE)
         {

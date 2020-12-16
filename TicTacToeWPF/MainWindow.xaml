@@ -8,36 +8,45 @@
         Title="TicTacToe" Height="490" Width="450"
         Background="DarkGoldenrod">
 
+    <Window.Resources>
+        <Style TargetType="{x:Type Button}">
+            <Setter Property="Background" Value="Green" />
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="{x:Type Button}">
+                        <Border Background="{TemplateBinding Background}">
+                            <ContentPresenter HorizontalAlignment="Center" 
+                                              VerticalAlignment="Center" />
+                        </Border>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+            <Style.Triggers>
+                <Trigger Property="IsMouseOver" Value="True">
+                    <Setter Property="Background" Value="DarkGoldenrod" />
+                </Trigger>
+            </Style.Triggers>
+        </Style>
+    </Window.Resources>
 
     <Grid Background="Black">
-        
+
         <Button Click="ButtonBase_OnClick"
                 Background="DarkGoldenrod"
-                Foreground="DarkBlue"
-                >
-            <Button.Style>
-                <Style TargetType="Button">
-                    <Style.Triggers>
-                        <Trigger Property="IsMouseOver" Value="True">
-                            <Setter Property="Background" Value="DarkGoldenrod" />
-                        </Trigger>
-                    </Style.Triggers>
-                </Style>
-            </Button.Style>
+                Foreground="DarkBlue">
+
 
             <TextBox x:Name="StartLogo"
                      IsReadOnly="True"
                      FontFamily="Consolas"
                      Background="DarkGoldenrod"
                      Foreground="DarkBlue"
-                     BorderThickness="0">
-            </TextBox>
+                     BorderThickness="0" />
 
         </Button>
-        
-        <Frame x:Name="FrameContent"  
-               NavigationUIVisibility="Hidden">
-        </Frame>
+
+        <Frame x:Name="FrameContent"
+               NavigationUIVisibility="Hidden" />
 
     </Grid>
 

@@ -35,12 +35,12 @@ namespace TicTacToeWPF
         {
             InitializeComponent();
             game = new Spielfeld();
-
-            using (validSoundX = new SoundPlayer(@".\Sounds\custom_20.wav"))  ; //*validSound.LoadAsync();*/
-            using (validSoundO = new SoundPlayer(@".\Sounds\custom_21.wav"))  ; //*validSound.LoadAsync();*/
-            using (invalidSound = new SoundPlayer(@".\Sounds\light-switch-pull-chain-daniel_simon.wav")); //*invalidSound.LoadAsync();*/
-            using (tieSound = new SoundPlayer(@".\Sounds\LOOP24_172BPM.wav")); //*tieSound.LoadAsync();*/
-            using (winSound = new SoundPlayer(@".\Sounds\LOOP15_140BPM.wav")); //*winSound.LoadAsync();*/
+            //Sounds from https://soundimage.org/
+            validSoundX =  new SoundPlayer(@"Sounds\custom_20.wav");
+            validSoundO =  new SoundPlayer(@"Sounds\custom_21.wav");
+            invalidSound = new SoundPlayer(@"Sounds\light-switch-pull-chain-daniel_simon.wav");
+            tieSound =     new SoundPlayer(@"Sounds\LOOP24_172BPM.wav");
+            winSound =     new SoundPlayer(@"Sounds\LOOP15_140BPM.wav");
         }
 
 
@@ -90,27 +90,39 @@ namespace TicTacToeWPF
 
             (pSender as Button).Foreground = (pSender as Button).Content == "X" ? Brushes.Red : Brushes.Green;
 
-            if (game.GetPlayerID())
-            {
-                validSoundX.Play();
-            }
-            else
-            {
-                validSoundO.Play();
-            }
+            if (game.GetPlayerID()) { validSoundX.Play(); }
+            else { validSoundO.Play(); }
 
             switch (tr)
             {
                 case TurnResult.Tie:
+                    imageBtTie.Visibility = Visibility.Visible;
                     imageTie.Visibility = Visibility.Visible;
                     tieSound.Play();
                     break;
 
                 case TurnResult.Win:
+                    imageBtWin.Visibility = Visibility.Visible;
                     imageWin.Visibility = Visibility.Visible;
                     winSound.Play();
                     break;
             }
+        }
+
+        private void Reset_onClick(object pSender, RoutedEventArgs pE)
+        {
+            game = new Spielfeld();
+            imageBtWin.Visibility = Visibility.Hidden;
+            imageBtTie.Visibility = Visibility.Hidden;
+            bt00.Content = "";
+            bt01.Content = "";
+            bt02.Content = "";
+            bt10.Content = "";
+            bt11.Content = "";
+            bt12.Content = "";
+            bt20.Content = "";
+            bt21.Content = "";
+            bt22.Content = "";
         }
     }
 }

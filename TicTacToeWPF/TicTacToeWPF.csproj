@@ -16,7 +16,9 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Resource Include="Pictures\tie.gif" />
+    <Resource Include="Pictures\tie.gif">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Resource>
     <Resource Include="Pictures\win.gif">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Resource>
@@ -24,6 +26,9 @@
 
   <ItemGroup>
     <None Update="Pictures\brushed metal background 0603.jpg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="Sounds\Clippity-Clop_Looping.wav">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
     <None Update="Sounds\custom_20.wav">
