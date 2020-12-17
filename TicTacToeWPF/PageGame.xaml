@@ -25,7 +25,6 @@
 
         <Grid>
 
-
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="150" />
                 <ColumnDefinition Width="150" />
@@ -52,7 +51,6 @@
                            VerticalAlignment="Center" />
                 </Grid>
             </Button>
-
 
             <Button x:Name="Bt01"
                     Click="Bt_OnClick"
@@ -167,10 +165,37 @@
             </Button>
         </Grid>
 
+        <StackPanel
+                    Orientation="Horizontal"
+                    Width="150"
+                    Height="30" 
+                    Margin="370,410,-70,10">
+            <CheckBox x:Name="cboxSound"
+                      Height="20"
+                      HorizontalAlignment="Center"
+                      VerticalAlignment="Bottom"
+                      IsChecked="True" 
+                      Checked="SoundOnOff_isCHecked" Unchecked="SoundOnOff_isUnCHecked"
+            >
+
+            </CheckBox>
+            <Label Content ="Music"
+                   Height="30"
+                   HorizontalAlignment="Right"
+                   VerticalAlignment="Top"
+                   VerticalContentAlignment="Top"
+                   FontSize="15"
+                   Foreground="Black">
+
+            </Label>
+        </StackPanel>
+
+        <!-- Win/Tie Screen -->
         <Button x:Name="ImageBtWin"
                 Visibility="Hidden"
                 Height="450"
                 Width="450"
+                Opacity="0.58"
                 Click="Reset_onClick">
 
             <Button.Resources>
@@ -187,13 +212,13 @@
             <Image x:Name="ImageWin"
                    Width="450"
                    Height="450"
-                   Opacity="0.7"
                    Source="/win.gif"
                    Visibility="Visible" />
         </Button>
 
         <Button x:Name="ImageBtTie"
                 Visibility="Hidden"
+                Opacity="0.9"
                 Height="450"
                 Width="450"
                 Click="Reset_onClick">
@@ -212,7 +237,6 @@
             <Image x:Name="ImageTie"
                    Width="450"
                    Height="450"
-                   Opacity="0.9"
                    Source="/tie.gif"
                    Visibility="Collapsed" />
         </Button>

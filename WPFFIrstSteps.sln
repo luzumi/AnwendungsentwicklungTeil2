@@ -9,6 +9,13 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TicTacToeWPF", "TicTacToeWP
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TicTacToe", "TicTacToe\TicTacToe.csproj", "{07CAAD9A-090E-4FA2-85D5-CBB3AA39BFBC}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DrumPad", "DrumPad\DrumPad.csproj", "{5B75D583-EEE2-47A4-9BFA-EC0C1D409E56}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "SolutionItems", "SolutionItems", "{44686D74-14AA-4AED-B804-8F8227A732C0}"
+	ProjectSection(SolutionItems) = preProject
+		ReadMe.md = ReadMe.md
+	EndProjectSection
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -27,6 +34,10 @@ Global
 		{07CAAD9A-090E-4FA2-85D5-CBB3AA39BFBC}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{07CAAD9A-090E-4FA2-85D5-CBB3AA39BFBC}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{07CAAD9A-090E-4FA2-85D5-CBB3AA39BFBC}.Release|Any CPU.Build.0 = Release|Any CPU
+		{5B75D583-EEE2-47A4-9BFA-EC0C1D409E56}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5B75D583-EEE2-47A4-9BFA-EC0C1D409E56}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{5B75D583-EEE2-47A4-9BFA-EC0C1D409E56}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{5B75D583-EEE2-47A4-9BFA-EC0C1D409E56}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

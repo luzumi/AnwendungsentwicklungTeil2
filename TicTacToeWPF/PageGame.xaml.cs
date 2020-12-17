@@ -19,6 +19,8 @@ namespace TicTacToeWPF
         private readonly SoundPlayer _validSoundO;
         private readonly SoundPlayer _validSoundX;
         private readonly SoundPlayer _winSound;
+        public static MediaPlayer loopSound;
+
 
         public PageGame()
         {
@@ -117,6 +119,16 @@ namespace TicTacToeWPF
             ((Bt20.Content as Grid).Children[1] as Label).Content = "";
             ((Bt21.Content as Grid).Children[1] as Label).Content = "";
             ((Bt22.Content as Grid).Children[1] as Label).Content = "";
+        }
+
+        private void SoundOnOff_isCHecked(object sender, RoutedEventArgs e)
+        {
+            loopSound.Play();
+        }
+
+        private void SoundOnOff_isUnCHecked(object sender, RoutedEventArgs e)
+        {
+            loopSound.Pause();
         }
     }
 }

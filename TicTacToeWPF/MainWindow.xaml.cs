@@ -18,11 +18,15 @@ namespace TicTacToeWPF
                 @"E:\VisualStudio-workspace\AnwendungsentwicklungTeil1\Kontrollstrukturen\TicTacToe\Logo.txt");
 
             //Sound from https://soundimage.org/
-            var loopSound = new MediaPlayer();
-            loopSound.Open(new Uri(@".\Sounds\Clippity-Clop_Looping.wav", UriKind.Relative));
-            loopSound.Play();
+            PageGame.loopSound = new MediaPlayer();
+            PageGame.loopSound.Open(new Uri(@".\Sounds\Clippity-Clop_Looping.wav", UriKind.Relative));
+            PageGame.loopSound.Play();
+            PageGame.loopSound.MediaEnded += (o, e) =>
+            {
+                PageGame.loopSound.Position = TimeSpan.Zero;
+                PageGame.loopSound.Play();
+            };
         }
-
 
         private void ButtonBase_OnClick(object pSender, RoutedEventArgs pE)
         {
