@@ -5,7 +5,8 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:DrumPad"
         mc:Ignorable="d"
-        Title="MainWindow" Height="480" Width="450">
+        Title="MainWindow" Height="480" Width="450"
+        ResizeMode="NoResize">
 
 
     <Canvas Width="450"
@@ -14,222 +15,240 @@
 
         <Image Source="Pictures/xdrum-dd-530.jpg"
                Height="450"
-               Width="450"/>
+               Width="450" />
 
 
+        <Ellipse x:Name="E0" Width="102"
+                 Height="52"
+                 Fill="DarkGoldenrod"
+                 Opacity="0.2" Canvas.Left="76" Canvas.Top="6" />
+        <Label Content="0" Canvas.Left="139" Canvas.Top="20"
+               Foreground="Aqua" />
         <Button
             x:Name="bt_0"
             Content="_0"
             Opacity="0"
             BorderThickness="0"
-            Click="PlaySound" 
+            Click="PlaySound"
             Canvas.Left="75" Height="54" Canvas.Top="6" Width="104" />
-        <Ellipse x:Name="E0" Width="102"
-                 Height="52"
-                 Fill="Green"
-                 Opacity="0.2" Canvas.Left="76" Canvas.Top="6" />
-        <Label Content="0" Canvas.Left="139" Canvas.Top="20"
-               Foreground="Aqua"></Label>
 
-        <Button Opacity="0"
-                x:Name="bt_1"
-                Click="PlaySound"
-                Content="_1" Canvas.Left="301" Canvas.Top="45" />
+
         <Ellipse x:Name="E1"
                  Width="98"
                  Height="66"
-                 Fill="Green"
-                 Opacity="0.2" Canvas.Left="258" Canvas.Top="26" RenderTransformOrigin="0.5,0.5" >
+                 Fill="DarkGoldenrod"
+                 Opacity="0.2" Canvas.Left="258" Canvas.Top="26" RenderTransformOrigin="0.5,0.5">
             <Ellipse.RenderTransform>
                 <TransformGroup>
-                    <ScaleTransform/>
-                    <SkewTransform AngleY="-7.667"/>
-                    <RotateTransform/>
-                    <TranslateTransform Y="2.102"/>
+                    <ScaleTransform />
+                    <SkewTransform AngleY="-7.667" />
+                    <RotateTransform />
+                    <TranslateTransform Y="2.102" />
                 </TransformGroup>
             </Ellipse.RenderTransform>
         </Ellipse>
         <Label Content="1" Canvas.Left="323" Canvas.Top="47"
-               Foreground="Aqua"></Label>
-
-
+               Foreground="Aqua" />
         <Button Opacity="0"
-                Background="Green"
-                x:Name="bt_2"
+                x:Name="bt_1"
                 Click="PlaySound"
-                Content="_2" Canvas.Left="55" Canvas.Top="95" Width="84" Height="26" />
+                Content="_1" Canvas.Left="258" Canvas.Top="27" Width="98" Height="68" />
+
+
         <Ellipse x:Name="E2" Width="89"
                  Height="26"
-                 Fill="Green"
-                 Opacity="0.2" Canvas.Left="54" Canvas.Top="86" RenderTransformOrigin="0.5,0.5" >
+                 Fill="DarkGoldenrod"
+                 Opacity="0.2" Canvas.Left="54" Canvas.Top="86" RenderTransformOrigin="0.5,0.5">
             <Ellipse.RenderTransform>
                 <TransformGroup>
-                    <ScaleTransform/>
-                    <SkewTransform AngleY="4.756"/>
-                    <RotateTransform/>
-                    <TranslateTransform Y="7.842"/>
+                    <ScaleTransform />
+                    <SkewTransform AngleY="4.756" />
+                    <RotateTransform />
+                    <TranslateTransform Y="7.842" />
                 </TransformGroup>
             </Ellipse.RenderTransform>
         </Ellipse>
         <Label Content="2" Canvas.Left="111" Canvas.Top="95"
-               Foreground="Aqua"></Label>
-
-
+               Foreground="Aqua" />
         <Button Opacity="0"
-                Background="Green"
-                x:Name="bt_3"
+                Background="DarkGoldenrod"
+                x:Name="bt_2"
                 Click="PlaySound"
-                Content="_3" Canvas.Left="139" Canvas.Top="108" Width="74" Height="39" />
+                Content="_2" Canvas.Left="55" Canvas.Top="95" Width="84" Height="26" />
+
+
         <Ellipse x:Name="E3" Width="68"
                  Height="36"
-                 Fill="Green"
-                 Opacity="0.2" Canvas.Left="144" Canvas.Top="110" RenderTransformOrigin="0.5,0.5" >
+                 Fill="DarkGoldenrod"
+                 Opacity="0.2" Canvas.Left="144" Canvas.Top="110" RenderTransformOrigin="0.5,0.5">
             <Ellipse.RenderTransform>
                 <TransformGroup>
-                    <ScaleTransform/>
-                    <SkewTransform AngleY="-2.304"/>
-                    <RotateTransform/>
-                    <TranslateTransform Y="1.388"/>
+                    <ScaleTransform />
+                    <SkewTransform AngleY="-2.304" />
+                    <RotateTransform />
+                    <TranslateTransform Y="1.388" />
                 </TransformGroup>
             </Ellipse.RenderTransform>
         </Ellipse>
         <Label Content="3" Canvas.Left="184" Canvas.Top="115"
-               Foreground="CornflowerBlue"></Label>
-
-
+               Foreground="CornflowerBlue" />
         <Button Opacity="0"
-                Background="Green"
-                x:Name="bt_4"
+                Background="DarkGoldenrod"
+                x:Name="bt_3"
                 Click="PlaySound"
-                Content="_4" Canvas.Left="231" Canvas.Top="108" Width="68" Height="39" />
+                Content="_3" Canvas.Left="139" Canvas.Top="108" Width="74" Height="39" />
+
+
         <Ellipse x:Name="E4" Width="68"
                  Height="36"
-                 Fill="Green"
-                 Opacity="0.2" Canvas.Left="232" Canvas.Top="111" RenderTransformOrigin="0.5,0.5" >
+                 Fill="DarkGoldenrod"
+                 Opacity="0.2" Canvas.Left="232" Canvas.Top="111" RenderTransformOrigin="0.5,0.5">
             <Ellipse.RenderTransform>
                 <TransformGroup>
-                    <ScaleTransform/>
-                    <SkewTransform AngleY="-1.052"/>
-                    <RotateTransform/>
-                    <TranslateTransform Y="-0.624"/>
+                    <ScaleTransform />
+                    <SkewTransform AngleY="-1.052" />
+                    <RotateTransform />
+                    <TranslateTransform Y="-0.624" />
                 </TransformGroup>
             </Ellipse.RenderTransform>
         </Ellipse>
         <Label Content="4" Canvas.Left="265" Canvas.Top="115"
-               Foreground="CornflowerBlue"></Label>
-
-
+               Foreground="CornflowerBlue" />
         <Button Opacity="0"
-                Background="Green"
-                x:Name="bt_5"
+                Background="DarkGoldenrod"
+                x:Name="bt_4"
                 Click="PlaySound"
-                Content="_5" Canvas.Left="122" Canvas.Top="195" Width="91" RenderTransformOrigin="0.5,0.5" >
-            <Button.RenderTransform>
-                <TransformGroup>
-                    <ScaleTransform/>
-                    <SkewTransform AngleY="7.948"/>
-                    <RotateTransform/>
-                    <TranslateTransform Y="0.698"/>
-                </TransformGroup>
-            </Button.RenderTransform>
-        </Button>
+                Content="_4" Canvas.Left="231" Canvas.Top="108" Width="68" Height="39" />
+
+
         <Ellipse x:Name="E5" Width="89"
                  Height="27"
-                 Fill="Green"
-                 Opacity="0.2" Canvas.Left="124" Canvas.Top="191" RenderTransformOrigin="0.5,0.5" >
+                 Fill="DarkGoldenrod"
+                 Opacity="0.2" Canvas.Left="124" Canvas.Top="191" RenderTransformOrigin="0.5,0.5">
             <Ellipse.RenderTransform>
                 <TransformGroup>
-                    <ScaleTransform/>
-                    <SkewTransform AngleY="6.048"/>
-                    <RotateTransform/>
-                    <TranslateTransform Y="0.843"/>
+                    <ScaleTransform />
+                    <SkewTransform AngleY="6.048" />
+                    <RotateTransform />
+                    <TranslateTransform Y="0.843" />
                 </TransformGroup>
             </Ellipse.RenderTransform>
         </Ellipse>
         <Label Content="5" Canvas.Left="176" Canvas.Top="191"
-               Foreground="CornflowerBlue"></Label>
-
+               Foreground="CornflowerBlue" />
         <Button Opacity="0"
-                Background="Green"
-                x:Name="bt_6"
+                Background="DarkGoldenrod"
+                x:Name="bt_5"
                 Click="PlaySound"
-                Content="_6" Canvas.Left="288" Canvas.Top="164" Width="89" RenderTransformOrigin="0.5,0.5" >
+                Content="_5" Canvas.Left="122" Canvas.Top="195" Width="91" RenderTransformOrigin="0.5,0.5">
             <Button.RenderTransform>
                 <TransformGroup>
-                    <ScaleTransform/>
-                    <SkewTransform AngleY="-5.738"/>
-                    <RotateTransform/>
-                    <TranslateTransform Y="0.978"/>
+                    <ScaleTransform />
+                    <SkewTransform AngleY="7.948" />
+                    <RotateTransform />
+                    <TranslateTransform Y="0.698" />
                 </TransformGroup>
             </Button.RenderTransform>
         </Button>
+
         <Ellipse x:Name="E6" Width="89"
                  Height="25"
-                 Fill="Green"
-                 Opacity="0.2" 
+                 Fill="DarkGoldenrod"
+                 Opacity="0.2"
                  Canvas.Left="288"
                  Canvas.Top="164"
-                 RenderTransformOrigin="0.5,0.5" >
+                 RenderTransformOrigin="0.5,0.5">
             <Ellipse.RenderTransform>
                 <TransformGroup>
-                    <ScaleTransform/>
-                    <SkewTransform AngleY="-5.737"/>
-                    <RotateTransform/>
-                    <TranslateTransform Y="-0.839"/>
+                    <ScaleTransform />
+                    <SkewTransform AngleY="-5.737" />
+                    <RotateTransform />
+                    <TranslateTransform Y="-0.839" />
                 </TransformGroup>
             </Ellipse.RenderTransform>
         </Ellipse>
         <Label Content="6" Canvas.Left="340" Canvas.Top="161"
-               Foreground="CornflowerBlue  "></Label>
-
-
-        <Button x:Name="bt_7"
-                Opacity="0"
-                Background="Green"
-                Click="PlaySound"
-                Content="_7" 
-                Canvas.Left="190" 
-                Canvas.Top="240" 
-                Width="63" 
-                Height="59" />
-        <Ellipse x:Name="E7" Width="65"
-                 Height="62"
-                 Fill="Green"
-                 Opacity="0.2" Canvas.Left="190" Canvas.Top="240" />
-        <Label Content="7" Canvas.Left="225" Canvas.Top="258"
-               Foreground="CornflowerBlue         "></Label>
-
-
+               Foreground="CornflowerBlue  " />
         <Button Opacity="0"
-                Background="Green"
-                x:Name="bt_8"
+                Background="DarkGoldenrod"
+                x:Name="bt_6"
                 Click="PlaySound"
-                Content="_8" Canvas.Left="41" Canvas.Top="142" RenderTransformOrigin="0.5,0.5" Height="64" Width="30" >
+                Content="_6" Canvas.Left="288" Canvas.Top="164" Width="89" RenderTransformOrigin="0.5,0.5">
             <Button.RenderTransform>
                 <TransformGroup>
-                    <ScaleTransform/>
-                    <SkewTransform AngleY="20.356"/>
-                    <RotateTransform Angle="-48.901"/>
-                    <TranslateTransform X="6.291" Y="5.488"/>
+                    <ScaleTransform />
+                    <SkewTransform AngleY="-5.738" />
+                    <RotateTransform />
+                    <TranslateTransform Y="0.978" />
                 </TransformGroup>
             </Button.RenderTransform>
         </Button>
+
+
+        <Ellipse x:Name="E7" Width="65"
+                 Height="62"
+                 Fill="DarkGoldenrod"
+                 Opacity="0.2" Canvas.Left="190" Canvas.Top="240" />
+        <Label Content="7" Canvas.Left="225" Canvas.Top="258"
+               Foreground="CornflowerBlue         " />
+        <Button x:Name="bt_7"
+                Opacity="0"
+                Background="DarkGoldenrod"
+                Click="PlaySound"
+                Content="_7"
+                Canvas.Left="190"
+                Canvas.Top="240"
+                Width="63"
+                Height="59" />
+
+
         <Ellipse x:Name="E8" Width="39"
                  Height="33"
-                 Fill="Green"
-                 Opacity="0.2" Canvas.Left="51" Canvas.Top="166" RenderTransformOrigin="0.5,0.5" >
+                 Fill="DarkGoldenrod"
+                 Opacity="0.2" Canvas.Left="51" Canvas.Top="166" RenderTransformOrigin="0.5,0.5">
             <Ellipse.RenderTransform>
                 <TransformGroup>
-                    <ScaleTransform/>
-                    <SkewTransform AngleY="17.913"/>
-                    <RotateTransform/>
-                    <TranslateTransform Y="3.545"/>
+                    <ScaleTransform />
+                    <SkewTransform AngleY="17.913" />
+                    <RotateTransform />
+                    <TranslateTransform Y="3.545" />
                 </TransformGroup>
             </Ellipse.RenderTransform>
         </Ellipse>
         <Label Content="8" Canvas.Left="73" Canvas.Top="176"
-               Foreground="Aqua"></Label>
+               Foreground="Aqua" />
+        <Button Opacity="0"
+                Background="DarkGoldenrod"
+                x:Name="bt_8"
+                Click="PlaySound"
+                Content="_8" Canvas.Left="41" Canvas.Top="142" RenderTransformOrigin="0.5,0.5" Height="64" Width="30">
+            <Button.RenderTransform>
+                <TransformGroup>
+                    <ScaleTransform />
+                    <SkewTransform AngleY="20.356" />
+                    <RotateTransform Angle="-48.901" />
+                    <TranslateTransform X="6.291" Y="5.488" />
+                </TransformGroup>
+            </Button.RenderTransform>
+        </Button>
 
-
+        <StackPanel x:Name="panel" Canvas.Left="288" Canvas.Top="395" >
+            <RadioButton Foreground="CornflowerBlue"
+                         Background="Wheat"
+                         IsChecked="True"
+                         Checked="ToggleButton_OnChecked"
+                         Content="Soundpool 1" 
+                         FontFamily="Cambria"/>
+            <RadioButton Foreground="CornflowerBlue"
+                         Background="Wheat"
+                         FontFamily="Cambria"
+                         Checked="ToggleButton_OnChecked" 
+                         Content="Soundpool 2" />
+            <RadioButton Foreground="CornflowerBlue"
+                         Background="Wheat"
+                         FontFamily="Cambria"
+                         Checked="ToggleButton_OnChecked" 
+                         Content="Soundpool 3" />
+        </StackPanel>
     </Canvas>
 </Window>

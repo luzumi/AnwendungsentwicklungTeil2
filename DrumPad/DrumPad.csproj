@@ -651,6 +651,12 @@
     <None Update="808Samples\kick.WAV">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
+    <None Update="808Samples\PesosDrumless.mp3">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="808Samples\Prison_SongDrumless.mp3">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
     <None Update="808Samples\snare (1).WAV">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
