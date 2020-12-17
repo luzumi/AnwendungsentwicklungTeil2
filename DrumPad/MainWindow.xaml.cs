@@ -21,29 +21,29 @@ namespace DrumPad
     /// </summary>
     public partial class MainWindow : Window
     {
-        private MediaPlayer[] soundPlayers = new MediaPlayer[9];
+        private MediaPlayer[] mediaPlayers = new MediaPlayer[9];
         List<string[]> soundSets;
 
         public MainWindow()
         {
             InitializeComponent();
-            for (int i = 0; i < soundPlayers.Length; i++)
+            for (int i = 0; i < mediaPlayers.Length; i++)
             {
-                soundPlayers[i] = new MediaPlayer();
+                mediaPlayers[i] = new MediaPlayer();
             }
 
             soundSets = new List<string[]>();
             string[] firstSet = new string[9];
 
             //Drumsamples from https://hiphopmakers.com/free-808-drum-kit-227-samples
-            firstSet[0] = @"808Samples/bass(1).wav";
-            firstSet[1] = @"808Samples/clap.wav";
-            firstSet[2] = @"808Samples/cymbal.wav";
-            firstSet[3] = @"808Samples/hihat(2).wav";
-            firstSet[4] = @"808Samples/kick.wav";
+            firstSet[0] = @"808Samples/cymbal.wav";
+            firstSet[1] = @"808Samples/cymbal(1).wav";
+            firstSet[2] = @"808Samples/hihat(5).wav";
+            firstSet[3] = @"808Samples/tom(5).wav";
+            firstSet[4] = @"808Samples/snare(5).wav";
             firstSet[5] = @"808Samples/snare.wav";
-            firstSet[6] = @"808Samples/snare(1).wav";
-            firstSet[7] = @"808Samples/kick(2).wav";
+            firstSet[6] = @"808Samples/snare(7).wav";
+            firstSet[7] = @"808Samples/bass(2).wav";
             firstSet[8] = @"808Samples/tom(4).wav";
 
             soundSets.Add(firstSet);
@@ -99,41 +99,48 @@ namespace DrumPad
             switch (count)
             {
                 case 0:
-                    bt_0.Background = Brushes.Red;
-                    soundPlayers[count].MediaEnded += (o, e) => bt_0.Background = Brushes.Green;
+                    E0.Fill = Brushes.Red;
+                    mediaPlayers[count].MediaEnded += (o, e) => E0.Fill = Brushes.Green;
                     break;
-                case 1:
-                    bt_1.Background = Brushes.Red;
-                    soundPlayers[count].MediaEnded += (o, e) => bt_1.Background = Brushes.Green;
-                    break;
-                case 2:
-                    bt_2.Background = Brushes.Red;
-                    soundPlayers[count].MediaEnded += (o, e) => bt_2.Background = Brushes.Green;
-                    break;
-                case 3:
-                    bt_3.Background = Brushes.Red;
-                    soundPlayers[count].MediaEnded += (o, e) => bt_3.Background = Brushes.Green;
-                    break;
-                case 4:
-                    bt_4.Background = Brushes.Red;
-                    soundPlayers[count].MediaEnded += (o, e) => bt_4.Background = Brushes.Green;
-                    break;
-                case 5:
-                    bt_5.Background = Brushes.Red;
-                    soundPlayers[count].MediaEnded += (o, e) => bt_5.Background = Brushes.Green;
-                    break;
-                case 6:
-                    bt_6.Background = Brushes.Red;
-                    soundPlayers[count].MediaEnded += (o, e) => bt_6.Background = Brushes.Green;
-                    break;
-                case 7:
-                    bt_7.Background = Brushes.Red;
-                    soundPlayers[count].MediaEnded += (o, e) => bt_7.Background = Brushes.Green;
-                    break;
-                case 8:
-                    bt_8.Background = Brushes.Red;
-                    soundPlayers[count].MediaEnded += (o, e) => bt_8.Background = Brushes.Green;
 
+                case 1:
+                    E1.Fill = Brushes.Red;
+                    mediaPlayers[count].MediaEnded += (o, e) => E1.Fill = Brushes.Green;
+                    break;
+
+                case 2:
+                    E2.Fill = Brushes.Red;
+                    mediaPlayers[count].MediaEnded += (o, e) => E2.Fill = Brushes.Green;
+                    break;
+
+                case 3:
+                    E3.Fill = Brushes.Red;
+                    mediaPlayers[count].MediaEnded += (o, e) => E3.Fill = Brushes.Green;
+                    break;
+
+                case 4:
+                    E4.Fill = Brushes.Red;
+                    mediaPlayers[count].MediaEnded += (o, e) => E4.Fill = Brushes.Green;
+                    break;
+
+                case 5:
+                    E5.Fill = Brushes.Red;
+                    mediaPlayers[count].MediaEnded += (o, e) => E5.Fill = Brushes.Green;
+                    break;
+
+                case 6:
+                    E6.Fill = Brushes.Red;
+                    mediaPlayers[count].MediaEnded += (o, e) => E6.Fill = Brushes.Green;
+                    break;
+
+                case 7:
+                    E7.Fill = Brushes.Red;
+                    mediaPlayers[count].MediaEnded += (o, e) => E7.Fill = Brushes.Green;
+                    break;
+
+                case 8:
+                    E8.Fill = Brushes.Red;
+                    mediaPlayers[count].MediaEnded += (o, e) => E8.Fill = Brushes.Green;
                     break;
             }
         }
@@ -141,15 +148,15 @@ namespace DrumPad
 
         private void playSound(int count)
         {
-            soundPlayers[count].Position = TimeSpan.Zero;
-            soundPlayers[count].Play();
+            mediaPlayers[count].Position = TimeSpan.Zero;
+            mediaPlayers[count].Play();
         }
 
         void loadSoundSet(int pSoundSet)
         {
-            for (int i = 0; i < soundPlayers.Length; i++)
+            for (int i = 0; i < mediaPlayers.Length; i++)
             {
-                soundPlayers[i].Open(new Uri(soundSets[pSoundSet][i], UriKind.Relative));
+                mediaPlayers[i].Open(new Uri(soundSets[pSoundSet][i], UriKind.Relative));
             }
         }
     }
