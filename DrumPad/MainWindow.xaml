@@ -12,11 +12,12 @@
     <Canvas Width="450"
             Height="450">
 
-
         <Image Source="Pictures/xdrum-dd-530.jpg"
                Height="450"
                Width="450" />
 
+        <Button x:Name="btNewSamples"
+                Click="BtNewSamples_OnClick" Height="46" Width="42"></Button>
 
         <Ellipse x:Name="E0" Width="102"
                  Height="52"

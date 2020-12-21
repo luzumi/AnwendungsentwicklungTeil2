@@ -1,18 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Media;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
 using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
+using System.Data.SQLite;
+using System.Diagnostics;
+using System.IO;
+using System.Net;
+using System.Text.RegularExpressions;
 
 namespace DrumPad
 {
@@ -28,9 +23,6 @@ namespace DrumPad
 
         public MainWindow()
         {
-
-
-
             for (int i = 0; i < mediaPlayers.Length; i++)
             {
                 mediaPlayers[i] = new MediaPlayer();
@@ -79,31 +71,30 @@ namespace DrumPad
             soundSets.Add(thirdSet);
 
             InitializeComponent();
-            
 
-            drumlessTrack = new MediaPlayer();
-            drumlessTrack.Open(new Uri(@"808Samples/Prison_SongDrumless.mp3", UriKind.Relative));
-            drumlessTrack.Play();
-
+            //drumlessTrack = new MediaPlayer();
+            //drumlessTrack.Open(new Uri(@"808Samples/Prison_SongDrumless.mp3", UriKind.Relative));
+            //drumlessTrack.Play();
         }
+
 
         void PlaySound(object sender, EventArgs e)
         {
+            //aus dem buttonName wird die letzte Zahl extrahiert und als zähler verwendet
             Int32.TryParse((sender as Button).Name.Substring(3), out int number);
 
-            if(number == 8) loadSoundSet(setSetter);
+            if (number == 8) loadSoundSet(setSetter);
 
             mediaPlayers[number].Open(new Uri(soundSets[setSetter][number], UriKind.Relative));
 
             playSound(number);
 
             changeButtonColor(number);
-
         }
+
 
         void changeButtonColor(int count)
         {
-
             switch (count)
             {
                 case 0:
@@ -174,6 +165,170 @@ namespace DrumPad
         private void ToggleButton_OnChecked(object pSender, RoutedEventArgs pE)
         {
             loadSoundSet(setSetter);
+        }
+
+
+        /// <summary>
+        /// Listeeneinträge mit Blankoeinträgen in den Soundsetzt werden erstellt 
+        /// </summary>
+        /// <param name="pSender"></param>
+        /// <param name="pE"></param>
+        private void BtNewSamples_OnClick(object pSender, RoutedEventArgs pE)
+        {
+            var soundSampleStrings = new List<string[]>();
+            string[] input = Directory.GetFiles(@"808Samples");
+
+            int counter = 0;
+            int line = -1;
+            string patter = "";
+            for (int i = 0; i < input.Length; i++)
+            {
+                if (input[i].Contains("mp3"))
+                {
+                    continue;
+                }
+
+                if (counter == soundSampleStrings.Count)
+                {
+                    soundSampleStrings.Add(new[] {" ", " ", " ", " ", " ", " ", " ", " "});
+                }
+
+                if (!patter.Equals(input[i].Substring(11, 3)))
+                {
+                    patter = input[i].Substring(11, 3);
+                    counter = 0;
+                    line++;
+                }
+
+                switch (input[i].Substring(11, 3))
+                {
+                    case "bas":
+                        soundSampleStrings[counter][line] = input[i];
+                        counter++;
+                        break;
+
+                    case "cla":
+                        soundSampleStrings[counter][line] = input[i];
+                        counter++;
+                        break;
+
+                    case "cym":
+                        soundSampleStrings[counter][line] = input[i];
+                        counter++;
+                        break;
+
+                    case "hih":
+                        string pattern = "([0-9]+)";
+                        Match match = Regex.Match(input[i].Substring(5), pattern);
+                        int zahl = Int32.Parse(match.Value);
+
+                        if (zahl % 2 == 0)
+                        {
+                            soundSampleStrings[counter][line] = input[i];
+                        }
+                        else
+                        {
+                            soundSampleStrings[counter][line + 1] = input[i];
+                            counter++;
+                        }
+
+                        break;
+
+                    case "kic":
+                        soundSampleStrings[counter][line + 1] = input[i];
+                        counter++;
+                        break;
+
+                    case "sna":
+                        soundSampleStrings[counter][line + 1] = input[i];
+                        counter++;
+                        break;
+
+                    case "tom":
+                        soundSampleStrings[counter][line + 1] = input[i];
+                        counter++;
+                        break;
+                }
+            }
+
+            DB(soundSampleStrings);
+        }
+
+        private static void DB(List<string[]> soundSampleStrings)
+        {
+            SQLiteCommand command = new SQLiteCommand();
+            SQLiteConnectionStringBuilder builder = new SQLiteConnectionStringBuilder();
+            builder.DataSource = Directory.GetParent(Environment.CommandLine)?.FullName + "samples.db";
+            builder.Version = 3;
+
+            int id = 1;
+            using (SQLiteConnection connection = new SQLiteConnection(builder.ToString()))
+            {
+                connection.Open();
+                //TODO statement setzen
+                if (id == 1)
+                {
+                    connect(soundSampleStrings, connection);
+                    id++;
+                }
+
+                //FillDataBase(soundSampleStrings, connection, command);
+            }
+        }
+
+        private static void FillDataBase(List<string[]> soundSampleStrings, SQLiteConnection connection, SQLiteCommand command)
+        {
+            
+            int id = 1;
+            
+            for (int i = 0; i < soundSampleStrings.Count - 1; i++)
+            {
+                command = connection.CreateCommand();
+                //command.Parameters.Add(new SQLiteParameter("ID",    id));
+                command.CommandText =
+                    "INSERT INTO SoundSamples ('bass', 'clap', 'cymbal', 'hihat', 'hihat2', 'kick', 'snare', 'tom')" +
+                    "Values ('bass' = @bass, 'clap' = @clap, 'cymbal' = @cymbal, 'hihat' = @hihat, 'hihat2' = @hihat2, 'kick' = @kick, 'snare' = @snare, 'tom' = @tom) ";
+                //command.Parameters.Add(new SQLiteParameter("id", id));
+                command.Parameters.Add(new SQLiteParameter("bass", soundSampleStrings[i][0]));
+                command.Parameters.Add(new SQLiteParameter("clap", soundSampleStrings[i][1]));
+                command.Parameters.Add(new SQLiteParameter("cymbal", soundSampleStrings[i][2]));
+                command.Parameters.Add(new SQLiteParameter("hihat", soundSampleStrings[i][3]));
+                command.Parameters.Add(new SQLiteParameter("hihat2", soundSampleStrings[i][4]));
+                command.Parameters.Add(new SQLiteParameter("kick", soundSampleStrings[i][5]));
+                command.Parameters.Add(new SQLiteParameter("snare", soundSampleStrings[i][6]));
+                command.Parameters.Add(new SQLiteParameter("tom", soundSampleStrings[i][7]));
+
+                id++;
+                command.ExecuteReader();
+            }
+        }
+
+
+        public static void connect(List<string[]> soundSampleStrings, SQLiteConnection connection)
+        {
+            SQLiteConnection sqlite_conn = new SQLiteConnection();
+            SQLiteCommand sqlite_cmd = new SQLiteCommand();
+            SQLiteDataReader sqlite_datareader;
+            //string connstr = "Data Source=dbVkcaddin.db;Version=3;New=False;Compress=True;";
+            //sqlite_conn.ConnectionString = connstr;
+            string fullPath = "samples.db";
+            SQLiteConnection conread = new SQLiteConnection();
+            
+            conread.ConnectionString = fullPath;
+            sqlite_conn.ConnectionString = "DataSource =" + fullPath;
+            sqlite_conn.Open();
+            FillDataBase(soundSampleStrings, connection, sqlite_cmd);
+            //sqlite_cmd.CommandText = "SELECT * FROM bass";
+            //sqlite_cmd.Connection = sqlite_conn;
+            //sqlite_datareader = sqlite_cmd.ExecuteReader();
+            //while (sqlite_datareader.Read()) // Read() returns true if there is still a result line to read
+            //{
+            //    string myreader = sqlite_datareader.GetString(0);
+            //    MessageBox.Show(myreader);
+            //}
+
+            // We are ready, now lets cleanup and close our connection:
+            sqlite_conn.Close();
         }
     }
 }

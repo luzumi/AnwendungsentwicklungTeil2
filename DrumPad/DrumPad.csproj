@@ -8,10 +8,16 @@
 
   <ItemGroup>
     <None Remove="Pictures\xdrum-dd-530.jpg" />
+    <None Remove="samples.db" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="System.Data.SQLite.Core" Version="1.0.103" />
   </ItemGroup>
 
   <ItemGroup>
     <Resource Include="Pictures\xdrum-dd-530.jpg" />
+    <Resource Include="samples.db" />
   </ItemGroup>
 
   <ItemGroup>
@@ -513,7 +519,7 @@
     <None Update="808Samples\hihat%289%29.wav">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <None Update="808Samples\hihat.wav">
+    <None Update="808Samples\hihat(0).wav">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
     <None Update="808Samples\kick (1).WAV">
