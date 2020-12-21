@@ -203,6 +203,7 @@ namespace DrumPad
                 string pattern;
                 Match match;
                 int zahl;
+                
                 switch (input[i].Substring(11, 3))
                 {
                     case "bas":
