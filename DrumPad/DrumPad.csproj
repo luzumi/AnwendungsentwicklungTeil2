@@ -951,7 +951,7 @@
     <None Update="808Samples\snare%289%29.wav">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <None Update="808Samples\snare.WAV">
+    <None Update="808Samples\snare(0).WAV">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
     <None Update="808Samples\tom (1).WAV">

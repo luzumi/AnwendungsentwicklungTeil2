@@ -190,7 +190,7 @@ namespace DrumPad
 
                 if (counter == soundSampleStrings.Count)
                 {
-                    soundSampleStrings.Add(new[] {" ", " ", " ", " ", " ", " ", " ", " "});
+                    soundSampleStrings.Add(new[] {" ", " ", " ", " ", " ", " ", " ", " ", " "});
                 }
 
                 if (!patter.Equals(input[i].Substring(11, 3)))
@@ -200,6 +200,9 @@ namespace DrumPad
                     line++;
                 }
 
+                string pattern;
+                Match match;
+                int zahl;
                 switch (input[i].Substring(11, 3))
                 {
                     case "bas":
@@ -218,9 +221,9 @@ namespace DrumPad
                         break;
 
                     case "hih":
-                        string pattern = "([0-9]+)";
-                        Match match = Regex.Match(input[i].Substring(5), pattern);
-                        int zahl = Int32.Parse(match.Value);
+                        pattern = "([0-9]+)";
+                        match = Regex.Match(input[i].Substring(5), pattern);
+                        zahl = Int32.Parse(match.Value);
 
                         if (zahl % 2 == 0)
                         {
@@ -240,8 +243,20 @@ namespace DrumPad
                         break;
 
                     case "sna":
-                        soundSampleStrings[counter][line + 1] = input[i];
-                        counter++;
+                        pattern = "([0-9]+)";
+                        match = Regex.Match(input[i].Substring(5), pattern);
+                        zahl = Int32.Parse(match.Value);
+
+                        if (zahl % 2 == 0)
+                        {
+                            soundSampleStrings[counter][line] = input[i];
+                        }
+                        else
+                        {
+                            soundSampleStrings[counter][line + 1] = input[i];
+                            counter++;
+                        }
+
                         break;
 
                     case "tom":
@@ -258,7 +273,7 @@ namespace DrumPad
         {
             SQLiteCommand command = new SQLiteCommand();
             SQLiteConnectionStringBuilder builder = new SQLiteConnectionStringBuilder();
-            builder.DataSource = Directory.GetParent(Environment.CommandLine)?.FullName + "samples.db";
+            builder.DataSource = Directory.GetParent(Environment.CommandLine)?.FullName + @"\samples.db";
             builder.Version = 3;
 
             int id = 1;
@@ -276,19 +291,20 @@ namespace DrumPad
             }
         }
 
-        private static void FillDataBase(List<string[]> soundSampleStrings, SQLiteConnection connection, SQLiteCommand command)
+        private static void FillDataBase(List<string[]> soundSampleStrings, SQLiteConnection connection,
+            SQLiteCommand command)
         {
-            
             int id = 1;
-            
+
             for (int i = 0; i < soundSampleStrings.Count - 1; i++)
             {
                 command = connection.CreateCommand();
                 //command.Parameters.Add(new SQLiteParameter("ID",    id));
                 command.CommandText =
-                    "INSERT INTO SoundSamples ('bass', 'clap', 'cymbal', 'hihat', 'hihat2', 'kick', 'snare', 'tom')" +
-                    "Values ('bass' = @bass, 'clap' = @clap, 'cymbal' = @cymbal, 'hihat' = @hihat, 'hihat2' = @hihat2, 'kick' = @kick, 'snare' = @snare, 'tom' = @tom) ";
-                //command.Parameters.Add(new SQLiteParameter("id", id));
+                    "INSERT INTO 'SoundSamples' (ID, bass, clap, cymbal, hihat, hihat2, kick, snare, snare2, tom)" +
+                    "Values (@id, @bass, @clap, @cymbal, @hihat, " +
+                    "@hihat2, @kick, @snare, @snare2, @tom); ";
+                command.Parameters.Add(new SQLiteParameter("ID", id));
                 command.Parameters.Add(new SQLiteParameter("bass", soundSampleStrings[i][0]));
                 command.Parameters.Add(new SQLiteParameter("clap", soundSampleStrings[i][1]));
                 command.Parameters.Add(new SQLiteParameter("cymbal", soundSampleStrings[i][2]));
@@ -296,39 +312,34 @@ namespace DrumPad
                 command.Parameters.Add(new SQLiteParameter("hihat2", soundSampleStrings[i][4]));
                 command.Parameters.Add(new SQLiteParameter("kick", soundSampleStrings[i][5]));
                 command.Parameters.Add(new SQLiteParameter("snare", soundSampleStrings[i][6]));
-                command.Parameters.Add(new SQLiteParameter("tom", soundSampleStrings[i][7]));
+                command.Parameters.Add(new SQLiteParameter("snare2", soundSampleStrings[i][7]));
+                command.Parameters.Add(new SQLiteParameter("tom", soundSampleStrings[i][8]));
+
+                command.ExecuteReader();
 
                 id++;
-                command.ExecuteReader();
             }
         }
 
 
         public static void connect(List<string[]> soundSampleStrings, SQLiteConnection connection)
         {
-            SQLiteConnection sqlite_conn = new SQLiteConnection();
             SQLiteCommand sqlite_cmd = new SQLiteCommand();
             SQLiteDataReader sqlite_datareader;
-            //string connstr = "Data Source=dbVkcaddin.db;Version=3;New=False;Compress=True;";
-            //sqlite_conn.ConnectionString = connstr;
-            string fullPath = "samples.db";
-            SQLiteConnection conread = new SQLiteConnection();
             
-            conread.ConnectionString = fullPath;
-            sqlite_conn.ConnectionString = "DataSource =" + fullPath;
-            sqlite_conn.Open();
-            FillDataBase(soundSampleStrings, connection, sqlite_cmd);
-            //sqlite_cmd.CommandText = "SELECT * FROM bass";
-            //sqlite_cmd.Connection = sqlite_conn;
-            //sqlite_datareader = sqlite_cmd.ExecuteReader();
-            //while (sqlite_datareader.Read()) // Read() returns true if there is still a result line to read
-            //{
-            //    string myreader = sqlite_datareader.GetString(0);
-            //    MessageBox.Show(myreader);
-            //}
+            //FillDataBase(soundSampleStrings, connection, sqlite_cmd);
+            
+            sqlite_cmd.CommandText = "SELECT * FROM 'SoundSamples'";
+            sqlite_cmd.Connection = connection;
+            sqlite_datareader = sqlite_cmd.ExecuteReader();
+            
+            while (sqlite_datareader.Read()) // Read() returns true if there is still a result line to read
+            {
+                string myreader = sqlite_datareader.GetString(0);
+                MessageBox.Show(myreader);
+            }
 
-            // We are ready, now lets cleanup and close our connection:
-            sqlite_conn.Close();
+            
         }
     }
 }
