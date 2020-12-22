@@ -24,6 +24,8 @@
         <ScrollViewer Grid.Column="1" VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Auto">
             <Grid x:Name="Spielfeld" Margin="10" />
         </ScrollViewer>
+        <Frame x:Name="FrameContent"
+               NavigationUIVisibility="Hidden" />
         <StackPanel Grid.Column="0">
             <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
                 <Label Content="Breite" />
@@ -36,6 +38,12 @@
             <Button Content="Reset" 
                     Click="btnReset_Click" 
                     Style="{StaticResource ResetButton}"/>
+            <TextBox x:Name="tfName"
+                     Text ="Dein Name"
+                     ></TextBox>
+            <Label x:Name="lblPoints"
+                   Content="turns"></Label>
         </StackPanel>
+        
     </Grid>
 </Window>

@@ -15,7 +15,7 @@ namespace Memory
     /// </summary>
     public partial class MainWindow
     {
-
+        private Pair player;
         List<BitmapImage> bitmaps;
         private bool clickCount;
         private Button firstSelectedButton = new();
@@ -23,6 +23,21 @@ namespace Memory
         (string firstPic, string secondPic) pairTuple = new();
         private int absolutePairs;
         private int rounds = 0;
+        public DateTime startTime;
+
+        public DateTime StartTime
+        {
+            get => startTime;
+            set => startTime = value;
+        }
+
+        public int Rounds
+        {
+            get => rounds;
+            set { rounds = value;
+                lblPoints.Content = "Turns: " + rounds.ToString();
+            }
+        }
 
         public MainWindow()
         {
@@ -46,6 +61,7 @@ namespace Memory
         void CreateGame(int columns, int rows)
         {
             // clear
+            player = new();
 
             Spielfeld.Children.Clear();
             Spielfeld.ColumnDefinitions.Clear();
@@ -63,6 +79,12 @@ namespace Memory
             var rndGen = CreateButtonsRandom(columns, rows, images);
 
             ShuffleButtons(columns, rows, rndGen, availableBitmaps, images);
+
+            player.Name = tfName.Text;
+            player.Points = 0;
+            tfName.SelectAll();
+            
+            StartTime = DateTime.Now;
         }
 
         
@@ -159,35 +181,28 @@ namespace Memory
                 secondSelectedButton = button;
                 pairTuple.secondPic = (button.Content as Image).Source.ToString();
                 (button.Content as Image).Opacity = 1;
-                
-                //TODO: vergleich 
 
                 if (pairTuple.firstPic == pairTuple.secondPic)
                 {
                     firstSelectedButton = null;
                     secondSelectedButton = null;
-                    absolutePairs--;
-                    rounds++;
                     
-                    if (absolutePairs == 0) {} //TODO Resultscreen
+                    absolutePairs--;
+                    Rounds++;
+                    
+                    player.Points = Rounds;
+                    if (absolutePairs == 0) { FrameContent.Navigate(new ResultPage(player)); } //TODO Resultscreen
                 }
                 else
                 {
-                    rounds++;
+                    Rounds++;
+                    player.Points = Rounds;
                 }
                 
                 clickCount = !clickCount;
             }
         }
 
-
-        private async Task delayHideAsync(Button buttonA, Button buttonB)
-        {
-            await Task.Delay(2000);
-            (buttonA.Content as Image).Opacity = 0;
-            (buttonB.Content as Image).Opacity = 0;
-            
-        }
 
         private void ShuffleButtons(int columns, int rows, Random rndGen, List<int> availableBitmaps, List<Image> images)
         {

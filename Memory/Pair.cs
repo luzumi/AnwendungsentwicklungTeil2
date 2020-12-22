@@ -1,6 +1,6 @@
 ﻿namespace Memory
 {
-    internal class Pair
+    public class Pair
     {
         public int Points;
         public string Name;
