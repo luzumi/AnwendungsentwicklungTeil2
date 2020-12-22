@@ -4,7 +4,7 @@ namespace Memory
 {
     public class Pair
     {
-        private int Points;
+        private int points;
         private string name;
         private double solveTime;
         private int tileNumber;
@@ -12,13 +12,13 @@ namespace Memory
         private int rank;
 
         
-        public int Points1
+        public int Points
         {
-            get => Points;
-            set => Points = value;
+            get => points;
+            set => points = value * (MainWindow.coord.widht + MainWindow.coord.height) / 2;
         }
 
-        public string Name1
+        public string Name
         {
             get => name;
             set => name = value;
@@ -47,6 +47,5 @@ namespace Memory
             get => rank;
             set => rank = value;
         }
-
     }
 }

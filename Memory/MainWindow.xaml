@@ -5,15 +5,26 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Memory"
         mc:Ignorable="d"
-        Title="MainWindow" Height="450" Width="800">
-    <Window.Resources >
-        <Style x:Key="FieldButton" TargetType ="Button">
-            <Setter Property="Margin" Value="2"></Setter>
-        </Style> 
-        <Style x:Key="ResetButton" TargetType ="Button">
-            <Setter Property="Margin" Value="2"></Setter>
-            <Setter Property="Background" Value="Bisque"></Setter>
-        </Style> 
+        Background="DarkOliveGreen"
+        Title="W-E-R-D-E-R - memory"
+        Height="450" Width="800">
+    <Window.Resources>
+        <Style x:Key="FieldButton" TargetType="Button">
+            <Setter Property="Margin" Value="2" />
+            <Style.Triggers>
+                <EventTrigger RoutedEvent="PreviewMouseDown">
+                    <SoundPlayerAction Source="applause.wav"></SoundPlayerAction>
+                </EventTrigger>
+            </Style.Triggers>
+        </Style>
+        <Style x:Key="ResetButton" TargetType="Button">
+            <Setter Property="Background" Value="AntiqueWhite" />
+            <Style.Triggers>
+                <EventTrigger RoutedEvent="PreviewMouseDown">
+                    <SoundPlayerAction Source="hack.wav"></SoundPlayerAction>
+                </EventTrigger>
+            </Style.Triggers>
+        </Style>
     </Window.Resources>
 
     <Grid Margin="10">
@@ -29,21 +40,32 @@
         <StackPanel Grid.Column="0">
             <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
                 <Label Content="Breite" />
-                <TextBox x:Name="tbWidth" Text="7" MaxLength="2" Width="40" />
+                <TextBox x:Name="tbWidth" 
+                         Background="ForestGreen" Text="4"
+                         BorderBrush="Lime"
+                         MaxLength="2" Width="40" />
             </StackPanel>
             <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
                 <Label Content="Höhe" />
-                <TextBox x:Name="tbHeight" Text="4" MaxLength="2" Width="40" />
+                <TextBox x:Name="tbHeight" 
+                         Background="ForestGreen" 
+                         BorderBrush="Lime"
+                         Text="4" MaxLength="2" Width="40" />
             </StackPanel>
-            <Button Content="Reset" 
-                    Click="btnReset_Click" 
-                    Style="{StaticResource ResetButton}"/>
             <TextBox x:Name="tfName"
-                     Text ="Dein Name"
-                     ></TextBox>
+                     Background="ForestGreen"
+                     BorderBrush="Lime"
+                     Text="Dein Name"/>
+            <Button Content="Play a Game"
+                    BorderThickness="0"
+                    FontFamily="Berlin Sans FB"
+                    FontWeight="DemiBold"
+                    Foreground="ForestGreen"
+                    Click="btnReset_Click"
+                    Style="{StaticResource ResetButton}" />
             <Label x:Name="lblPoints"
-                   Content="turns"></Label>
+                   Content="turns" />
         </StackPanel>
-        
+
     </Grid>
 </Window>

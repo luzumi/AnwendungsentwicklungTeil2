@@ -25,6 +25,8 @@ namespace Memory
         private int absolutePairs;
         private int rounds = 0;
         public DateTime startTime;
+        public static (int widht, int height) coord = new();
+
 
         public DateTime StartTime
         {
@@ -64,6 +66,7 @@ namespace Memory
         void CreateGame(int columns, int rows)
         {
             // clear
+            coord = (columns, rows);
             player = new();
             Rounds = 0;
             FrameContent.Visibility = Visibility.Collapsed;
@@ -172,6 +175,8 @@ namespace Memory
 
                 (button.Content as Image).Opacity = 1;
 
+                Rounds++;
+                
                 clickCount = !clickCount;
             }
             else
@@ -188,7 +193,6 @@ namespace Memory
                     absolutePairs--;
                     Rounds++;
 
-                    player.Points = Rounds;
                     if (absolutePairs == 0)
                     {
                         TimeSpan timeSpan = DateTime.Now - StartTime;
@@ -196,6 +200,9 @@ namespace Memory
                         FrameContent.Navigate(new ResultPage(player));
                         AddEntryToDatabase(Rounds, player.Name, timeSpan);
                     } //TODO Resultscreen
+                    player.Points = (int)(Rounds * Int32.Parse(tbWidth.Text) * Int32.Parse(tbHeight.Text) /
+                                     player.SolveTime / 100);
+                    lblPoints.Content = player.Points;
                 }
                 else
                 {

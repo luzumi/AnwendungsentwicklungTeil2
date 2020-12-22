@@ -36,9 +36,9 @@ namespace Memory
             ReadDatabase(player, getActualPlayerInfos(player.Name));
             lblRank.Content = "Rank: " + player.Rank;
             lblResultPoints.Content = "Points: " + player.Points;
-            lblSolvedDate.Content = "Gespielt am: \n" + player.solveDate;
+            lblSolvedDate.Content = "Gespielt am: \n" + player.SolveDate;
             lblSolvedTime.Content = "benötigte Zeit: " + Math.Round(player.SolveTime / 1000, 3);
-            lblTileNumbers.Content = "Anzahl Bilder: " + player.tileNumber/2;
+            lblTileNumbers.Content = "Anzahl Bilder: " + player.TileNumber/2;
         }
         
         public void ReadDatabase(Pair actPair, string SqlStatement)
@@ -78,8 +78,8 @@ namespace Memory
                         actPair.Points = reader.GetInt32(2);
                         actPair.Rank = reader.FieldCount;
                         actPair.SolveTime = reader.GetDouble(3);
-                        actPair.tileNumber = reader.GetInt32(4);
-                        actPair.solveDate = reader.GetDateTime(5);
+                        actPair.TileNumber = reader.GetInt32(4);
+                        actPair.SolveDate = reader.GetDateTime(5);
                         
                         highScore.Add(actPair);
                     }
@@ -89,7 +89,7 @@ namespace Memory
 
         string getActualPlayerInfos(string name)
         {
-            return $"Select * from Scores Where Name = '{name}' Order by SolveTime desc";
+            return $"Select * from Scores Where Name = '{name}' Order by Points desc";
         }
 
         

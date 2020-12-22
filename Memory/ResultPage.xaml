@@ -26,11 +26,11 @@
         </Grid.ColumnDefinitions>
         <Label Content="WIN"
                FontSize="33"
-               Foreground="BlueViolet"></Label>
+               Foreground="LimeGreen"></Label>
         
         <Label Grid.Row="2"
                Content ="Sie haben gewonnen!"
-               Foreground="BlueViolet"
+               Foreground="Brown"
                FontWeight="Bold"></Label>
         <Label Grid.Row="3"
                Content ="Ihre Statistiken:"

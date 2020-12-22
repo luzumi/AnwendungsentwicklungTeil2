@@ -7,7 +7,21 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <None Remove="applause.wav" />
+    <None Remove="applause7.wav" />
+    <None Remove="cheer2.wav" />
+    <None Remove="hack.wav" />
+  </ItemGroup>
+
+  <ItemGroup>
     <PackageReference Include="System.Data.SQLite.Core" Version="1.0.113.6" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Resource Include="applause.wav" />
+    <Resource Include="applause7.wav" />
+    <Resource Include="cheer2.wav" />
+    <Resource Include="hack.wav" />
   </ItemGroup>
 
   <ItemGroup>
