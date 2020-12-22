@@ -2,28 +2,27 @@
 using System.Collections.Generic;
 using System.Data.SQLite;
 using System.IO;
-using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
 
 namespace Memory
 {
     /// <summary>
     /// Interaction logic for MainWindow.xaml
     /// </summary>
-    public partial class MainWindow : Window
+    public partial class MainWindow
     {
 
         List<BitmapImage> bitmaps;
+        private bool clickCount;
+        private Button firstSelectedButton = new();
+        private Button secondSelectedButton = new();
+        (string firstPic, string secondPic) pairTuple = new();
+        private int absolutePairs;
+        private int rounds = 0;
 
         public MainWindow()
         {
@@ -44,7 +43,7 @@ namespace Memory
 
         }
 
-        void createGame(int Columns, int Rows)
+        void CreateGame(int columns, int rows)
         {
             // clear
 
@@ -59,25 +58,32 @@ namespace Memory
 
             List<Image> images = new List<Image>();
             // recreate
-            DefineRowCol(Columns, Rows);
+            DefineRowCol(columns, rows);
 
-            var rndGen = CreateButtonsRandom(Columns, Rows, images);
+            var rndGen = CreateButtonsRandom(columns, rows, images);
 
-            shuffleButtons(Columns, Rows, rndGen, availableBitmaps, images);
+            ShuffleButtons(columns, rows, rndGen, availableBitmaps, images);
         }
 
-        private void DefineRowCol(int Columns, int Rows)
+        
+        /// <summary>
+        /// Erstellt variable die Oberfläche des Spielfelds
+        /// </summary>
+        /// <param name="columns"></param>
+        /// <param name="rows"></param>
+        private void DefineRowCol(int columns, int rows)
         {
             var gridElementSize = new GridLength(80);
-
-            for (int counter = 0; counter < Columns; counter++)
+            absolutePairs = columns * rows / 2;
+            
+            for (int counter = 0; counter < columns; counter++)
             {
                 ColumnDefinition colDef = new();
                 colDef.Width = gridElementSize;
                 Spielfeld.ColumnDefinitions.Add(colDef);
             }
 
-            for (int counter = 0; counter < Rows; counter++)
+            for (int counter = 0; counter < rows; counter++)
             {
                 RowDefinition rowDef = new();
                 rowDef.Height = gridElementSize;
@@ -85,12 +91,19 @@ namespace Memory
             }
         }
 
-        private Random CreateButtonsRandom(int Columns, int Rows, List<Image> images)
+        /// <summary>
+        /// weist jedem Button ein Bild und einen zweiten button mit dem gleichen bild zu
+        /// </summary>
+        /// <param name="columns"></param>
+        /// <param name="rows"></param>
+        /// <param name="images"></param>
+        /// <returns></returns>
+        private Random CreateButtonsRandom(int columns, int rows, List<Image> images)
         {
             Random rndGen = new();
-            for (int row = 0; row < Rows; row++)
+            for (int row = 0; row < rows; row++)
             {
-                for (int col = 0; col < Columns; col++)
+                for (int col = 0; col < columns; col++)
                 {
                     // Image tag erstellen
                     Image tempImage = new Image
@@ -100,7 +113,10 @@ namespace Memory
                     images.Add(tempImage);
                     // Button erstellen und füllen
                     Button temp = new();
+                    temp.Click += btn_Click;
+                    temp.Style = FindResource("FieldButton") as Style;
                     temp.Content = tempImage; // button mit Image füllen
+                    
 
                     // Im Grid eintragen
                     Grid.SetColumn(temp, col); // button in spalte positionieren
@@ -112,18 +128,81 @@ namespace Memory
             return rndGen;
         }
 
-        private void shuffleButtons(int Columns, int Rows, Random rndGen, List<int> availableBitmaps, List<Image> images)
+        
+        
+        private void btn_Click(object sender, RoutedEventArgs e)
         {
-            for (int counter = 0; counter < Columns * Rows / 2; counter++)
+            
+            var button = (sender as Button);
+            
+            if (!clickCount)
+            {
+                if (secondSelectedButton != null && firstSelectedButton != null)
+                {
+                    if (firstSelectedButton.Content != null && secondSelectedButton.Content != null)
+                    {
+                        (firstSelectedButton.Content as Image).Opacity = 0;
+                        (secondSelectedButton.Content as Image).Opacity = 0;
+                    }
+                }
+
+                firstSelectedButton = button;
+                
+                pairTuple.firstPic = (firstSelectedButton.Content as Image).Source.ToString() ;
+                
+                (button.Content as Image).Opacity = 1;
+                
+                clickCount = !clickCount;
+            }
+            else
+            {
+                secondSelectedButton = button;
+                pairTuple.secondPic = (button.Content as Image).Source.ToString();
+                (button.Content as Image).Opacity = 1;
+                
+                //TODO: vergleich 
+
+                if (pairTuple.firstPic == pairTuple.secondPic)
+                {
+                    firstSelectedButton = null;
+                    secondSelectedButton = null;
+                    absolutePairs--;
+                    rounds++;
+                    
+                    if (absolutePairs == 0) {} //TODO Resultscreen
+                }
+                else
+                {
+                    rounds++;
+                }
+                
+                clickCount = !clickCount;
+            }
+        }
+
+
+        private async Task delayHideAsync(Button buttonA, Button buttonB)
+        {
+            await Task.Delay(2000);
+            (buttonA.Content as Image).Opacity = 0;
+            (buttonB.Content as Image).Opacity = 0;
+            
+        }
+
+        private void ShuffleButtons(int columns, int rows, Random rndGen, List<int> availableBitmaps, List<Image> images)
+        {
+            for (int counter = 0; counter < columns * rows / 2; counter++)
             {
                 int choosenBitmap = rndGen.Next(availableBitmaps.Count);
                 int chosenImage;
                 chosenImage = rndGen.Next(images.Count);
                 images[chosenImage].Source = bitmaps[availableBitmaps[choosenBitmap]];
+                images[chosenImage].Opacity = 0;
                 images.RemoveAt(chosenImage);
 
                 chosenImage = rndGen.Next(images.Count);
                 images[chosenImage].Source = bitmaps[availableBitmaps[choosenBitmap]];
+                images[chosenImage].Opacity = 0;
                 images.RemoveAt(chosenImage);
 
                 availableBitmaps.RemoveAt(choosenBitmap);
@@ -131,7 +210,7 @@ namespace Memory
         }
 
 
-        void readDatabase()
+        void ReadDatabase()
         {
 
             // entweder builder nutzen oder auf https://www.connectionstrings.com/ nachschauen
@@ -147,7 +226,7 @@ namespace Memory
             connectionStringBuilder.SslMode = MySqlSslMode.None; // None ist ok für testumgebungen, im Internet immer verschlüsseln. Benötigt extra CPU-Leistung
             */
 
-            List<Pair> highscore = new();
+            List<Pair> highScore = new();
 
             using (SQLiteConnection connection = new SQLiteConnection(builder.ToString()))
             {
@@ -168,12 +247,12 @@ namespace Memory
                         temp.Rank = reader.GetInt32(0);
                         temp.Name = reader.GetString(1);
                         temp.Points = reader.GetInt32(2);
-                        highscore.Add(temp);
+                        highScore.Add(temp);
                     }
                 }
             }
 
-            void addEntryToDatabase(int Points, string PlayerName)
+            void AddEntryToDatabase(int points, string playerName)
             {
                 // entweder builder nutzen oder auf https://www.connectionstrings.com/ nachschauen
                 SQLiteConnectionStringBuilder builder = new();
@@ -186,8 +265,8 @@ namespace Memory
 
                     SQLiteCommand command = connection.CreateCommand();
                     command.CommandText = "insert into Scores (Name, Points) values (@name, @points);";
-                    command.Parameters.AddWithValue("name", PlayerName);
-                    command.Parameters.AddWithValue("points", Points);
+                    command.Parameters.AddWithValue("name", playerName);
+                    command.Parameters.AddWithValue("points", points);
 
                     if (command.ExecuteNonQuery() == 0)
                         throw new Exception();
@@ -197,15 +276,26 @@ namespace Memory
 
         private void btnReset_Click(object sender, RoutedEventArgs e)
         {
-            int widht = int.Parse(tbWidth.Text);
-            int height = int.Parse(tbHeight.Text);
-            
-            if (widht * height < 67)
+            if (int.TryParse(tbWidth.Text, out int widht))
             {
-                createGame(int.Parse(tbWidth.Text), int.Parse(tbHeight.Text));
+                var button = (sender as Button);
+                
+                button.Background = Brushes.Red;
+
+            }
+
+            
+            if (int.TryParse(tbHeight.Text, out int height))
+            {
+                var button = (sender as Button);
+                
+                button.Background = Brushes.Red;
+            }
+            
+            if (widht * height < 67 && widht > 0 && height > 0 && (widht * height) % 2 == 0)
+            {
+                CreateGame(widht, height);
             }
         }
-
-        
     }
 }

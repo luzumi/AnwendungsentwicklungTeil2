@@ -6,6 +6,15 @@
         xmlns:local="clr-namespace:Memory"
         mc:Ignorable="d"
         Title="MainWindow" Height="450" Width="800">
+    <Window.Resources >
+        <Style x:Key="FieldButton" TargetType ="Button">
+            <Setter Property="Margin" Value="2"></Setter>
+        </Style> 
+        <Style x:Key="ResetButton" TargetType ="Button">
+            <Setter Property="Margin" Value="2"></Setter>
+            <Setter Property="Background" Value="Bisque"></Setter>
+        </Style> 
+    </Window.Resources>
 
     <Grid Margin="10">
         <Grid.ColumnDefinitions>
@@ -18,13 +27,15 @@
         <StackPanel Grid.Column="0">
             <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
                 <Label Content="Breite" />
-                <TextBox x:Name="tbWidth" Text="10" MaxLength="2" Width="40" />
+                <TextBox x:Name="tbWidth" Text="7" MaxLength="2" Width="40" />
             </StackPanel>
             <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
                 <Label Content="Höhe" />
-                <TextBox x:Name="tbHeight" Text="6" MaxLength="2" Width="40" />
+                <TextBox x:Name="tbHeight" Text="4" MaxLength="2" Width="40" />
             </StackPanel>
-            <Button Content="Reset" Click="btnReset_Click" />
+            <Button Content="Reset" 
+                    Click="btnReset_Click" 
+                    Style="{StaticResource ResetButton}"/>
         </StackPanel>
     </Grid>
 </Window>

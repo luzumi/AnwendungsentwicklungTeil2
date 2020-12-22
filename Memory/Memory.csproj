@@ -7,29 +7,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <None Remove="280.jpg" />
-    <None Remove="318.jpg" />
-    <None Remove="427.jpg" />
-    <None Remove="433.jpg" />
-    <None Remove="635.jpg" />
-    <None Remove="644.jpg" />
-    <None Remove="877.jpg" />
-    <None Remove="880.jpg" />
-  </ItemGroup>
-
-  <ItemGroup>
     <PackageReference Include="System.Data.SQLite.Core" Version="1.0.113.6" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Resource Include="280.jpg" />
-    <Resource Include="318.jpg" />
-    <Resource Include="427.jpg" />
-    <Resource Include="433.jpg" />
-    <Resource Include="635.jpg" />
-    <Resource Include="644.jpg" />
-    <Resource Include="877.jpg" />
-    <Resource Include="880.jpg" />
   </ItemGroup>
 
   <ItemGroup>
@@ -66,6 +44,9 @@
     <None Update="Images\253.jpg">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
+    <None Update="Images\264.jpg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
     <None Update="Images\280.jpg">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
@@ -100,9 +81,6 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
     <None Update="Images\624.jpg">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Update="Images\635.jpg">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
     <None Update="Images\644.jpg">
