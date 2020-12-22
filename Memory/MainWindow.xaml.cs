@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Data.SQLite;
+using System.Globalization;
 using System.IO;
 using System.Threading.Tasks;
 using System.Windows;
@@ -34,7 +35,9 @@ namespace Memory
         public int Rounds
         {
             get => rounds;
-            set { rounds = value;
+            set
+            {
+                rounds = value;
                 lblPoints.Content = "Turns: " + rounds.ToString();
             }
         }
@@ -43,26 +46,27 @@ namespace Memory
         {
             InitializeComponent();
 
-
             bitmaps = new List<BitmapImage>();
 
             // alle bilder laden
             foreach (var fileName in Directory.GetFiles("Images"))
             {
                 BitmapImage tempBitmap = new(); // neues Bild erstellen
-                tempBitmap.BeginInit();// füllen des Bildes starten
-                tempBitmap.UriSource = new Uri( Directory.GetParent(Environment.CommandLine).FullName + @"\" + fileName);// bildinhalt aus datei laden
-                tempBitmap.EndInit();// füllen des Bildes finalisieren
+                tempBitmap.BeginInit(); // füllen des Bildes starten
+                tempBitmap.UriSource =
+                    new Uri(Directory.GetParent(Environment.CommandLine).FullName + @"\" +
+                            fileName); // bildinhalt aus datei laden
+                tempBitmap.EndInit(); // füllen des Bildes finalisieren
                 bitmaps.Add(tempBitmap);
             }
-
         }
 
         void CreateGame(int columns, int rows)
         {
             // clear
             player = new();
-
+            Rounds = 0;
+            FrameContent.Visibility = Visibility.Collapsed;
             Spielfeld.Children.Clear();
             Spielfeld.ColumnDefinitions.Clear();
             Spielfeld.RowDefinitions.Clear();
@@ -83,11 +87,11 @@ namespace Memory
             player.Name = tfName.Text;
             player.Points = 0;
             tfName.SelectAll();
-            
+
             StartTime = DateTime.Now;
         }
 
-        
+
         /// <summary>
         /// Erstellt variable die Oberfläche des Spielfelds
         /// </summary>
@@ -97,7 +101,7 @@ namespace Memory
         {
             var gridElementSize = new GridLength(80);
             absolutePairs = columns * rows / 2;
-            
+
             for (int counter = 0; counter < columns; counter++)
             {
                 ColumnDefinition colDef = new();
@@ -128,17 +132,13 @@ namespace Memory
                 for (int col = 0; col < columns; col++)
                 {
                     // Image tag erstellen
-                    Image tempImage = new Image
-                    {
-                        Stretch = Stretch.UniformToFill
-                    };
+                    Image tempImage = new Image {Stretch = Stretch.UniformToFill};
                     images.Add(tempImage);
                     // Button erstellen und füllen
                     Button temp = new();
                     temp.Click += btn_Click;
                     temp.Style = FindResource("FieldButton") as Style;
                     temp.Content = tempImage; // button mit Image füllen
-                    
 
                     // Im Grid eintragen
                     Grid.SetColumn(temp, col); // button in spalte positionieren
@@ -150,13 +150,11 @@ namespace Memory
             return rndGen;
         }
 
-        
-        
+
         private void btn_Click(object sender, RoutedEventArgs e)
         {
-            
             var button = (sender as Button);
-            
+
             if (!clickCount)
             {
                 if (secondSelectedButton != null && firstSelectedButton != null)
@@ -169,11 +167,11 @@ namespace Memory
                 }
 
                 firstSelectedButton = button;
-                
-                pairTuple.firstPic = (firstSelectedButton.Content as Image).Source.ToString() ;
-                
+
+                pairTuple.firstPic = (firstSelectedButton.Content as Image).Source.ToString();
+
                 (button.Content as Image).Opacity = 1;
-                
+
                 clickCount = !clickCount;
             }
             else
@@ -186,25 +184,32 @@ namespace Memory
                 {
                     firstSelectedButton = null;
                     secondSelectedButton = null;
-                    
+
                     absolutePairs--;
                     Rounds++;
-                    
+
                     player.Points = Rounds;
-                    if (absolutePairs == 0) { FrameContent.Navigate(new ResultPage(player)); } //TODO Resultscreen
+                    if (absolutePairs == 0)
+                    {
+                        TimeSpan timeSpan = DateTime.Now - StartTime;
+                        FrameContent.Visibility = Visibility.Visible;
+                        FrameContent.Navigate(new ResultPage(player));
+                        AddEntryToDatabase(Rounds, player.Name, timeSpan);
+                    } //TODO Resultscreen
                 }
                 else
                 {
                     Rounds++;
                     player.Points = Rounds;
                 }
-                
+
                 clickCount = !clickCount;
             }
         }
 
 
-        private void ShuffleButtons(int columns, int rows, Random rndGen, List<int> availableBitmaps, List<Image> images)
+        private void ShuffleButtons(int columns, int rows, Random rndGen, List<int> availableBitmaps,
+            List<Image> images)
         {
             for (int counter = 0; counter < columns * rows / 2; counter++)
             {
@@ -225,67 +230,28 @@ namespace Memory
         }
 
 
-        void ReadDatabase()
+        void AddEntryToDatabase(int points, string playerName, TimeSpan timeSpan)
         {
-
             // entweder builder nutzen oder auf https://www.connectionstrings.com/ nachschauen
             SQLiteConnectionStringBuilder builder = new();
-            builder.DataSource = "./highscore.db";
+            builder.DataSource = "./memory.db";
             builder.Version = 3;
-            /*
-            MySqlConnectionStringBuilder connectionStringBuilder = new MySqlConnectionStringBuilder(); // Der Builder kann uns den passenden Connectionstring zusammensetzen sodass Syntaxfehler minimiert werden
-            connectionStringBuilder.Server = "192.168.2.2"; // IP Adresse des servers, DNS name, Localhost und . funktioniert auch
-            connectionStringBuilder.UserID = "MusicDBUser"; // Benutzername innerhalb des DBMS, dieser nutzer sollte so wenig rechte wie möglich bekommen
-            connectionStringBuilder.Password = "MusicDBPass"; // Passwort zu dem Benutzernamen
-            connectionStringBuilder.Database = "musicdb"; // Datenbankname mit der sich verbunden werden soll, alle SQL statements sind dann relativ zu dieser Datenbank (siehe USE )
-            connectionStringBuilder.SslMode = MySqlSslMode.None; // None ist ok für testumgebungen, im Internet immer verschlüsseln. Benötigt extra CPU-Leistung
-            */
-
-            List<Pair> highScore = new();
+            builder.FailIfMissing = true;
 
             using (SQLiteConnection connection = new SQLiteConnection(builder.ToString()))
             {
                 connection.Open();
 
                 SQLiteCommand command = connection.CreateCommand();
-                command.CommandText = "select rowid, Name, Points from Scores order by Points desc top 10;";
+                command.CommandText =
+                    "insert into 'Scores' (Name, Points, SolveTime, TileNumber) values (@name, @points, @solveTime, @tileNumber);";
+                command.Parameters.AddWithValue("name", playerName);
+                command.Parameters.AddWithValue("points", points);
+                command.Parameters.AddWithValue("solveTime", timeSpan.TotalMilliseconds);
+                command.Parameters.AddWithValue("tileNumber", Int32.Parse(tbHeight.Text) * Int32.Parse(tbWidth.Text));
 
-                using (var reader = command.ExecuteReader())
-                {
-                    while (reader.Read())
-                    {
-                        // angenommende Tabelle:
-                        // ID, Name, Points
-                        // 1 , Hans, 20
-                        // 2 , Lisa, 18
-                        Pair temp = new();
-                        temp.Rank = reader.GetInt32(0);
-                        temp.Name = reader.GetString(1);
-                        temp.Points = reader.GetInt32(2);
-                        highScore.Add(temp);
-                    }
-                }
-            }
-
-            void AddEntryToDatabase(int points, string playerName)
-            {
-                // entweder builder nutzen oder auf https://www.connectionstrings.com/ nachschauen
-                SQLiteConnectionStringBuilder builder = new();
-                builder.DataSource = "./highscore.db";
-                builder.Version = 3;
-
-                using (SQLiteConnection connection = new SQLiteConnection(builder.ToString()))
-                {
-                    connection.Open();
-
-                    SQLiteCommand command = connection.CreateCommand();
-                    command.CommandText = "insert into Scores (Name, Points) values (@name, @points);";
-                    command.Parameters.AddWithValue("name", playerName);
-                    command.Parameters.AddWithValue("points", points);
-
-                    if (command.ExecuteNonQuery() == 0)
-                        throw new Exception();
-                }
+                if (command.ExecuteNonQuery() == 0)
+                    throw new Exception();
             }
         }
 
@@ -294,19 +260,17 @@ namespace Memory
             if (int.TryParse(tbWidth.Text, out int widht))
             {
                 var button = (sender as Button);
-                
-                button.Background = Brushes.Red;
 
+                button.Background = Brushes.Red;
             }
 
-            
             if (int.TryParse(tbHeight.Text, out int height))
             {
                 var button = (sender as Button);
-                
+
                 button.Background = Brushes.Red;
             }
-            
+
             if (widht * height < 67 && widht > 0 && height > 0 && (widht * height) % 2 == 0)
             {
                 CreateGame(widht, height);

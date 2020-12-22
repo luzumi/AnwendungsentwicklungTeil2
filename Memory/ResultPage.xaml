@@ -15,6 +15,10 @@
             <RowDefinition Height="Auto"></RowDefinition>
             <RowDefinition Height="Auto"></RowDefinition>
             <RowDefinition Height="Auto"></RowDefinition>
+            <RowDefinition Height="Auto"></RowDefinition>
+            <RowDefinition Height="Auto"></RowDefinition>
+            <RowDefinition Height="Auto"></RowDefinition>
+            <RowDefinition Height="Auto"></RowDefinition>
         </Grid.RowDefinitions>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="180"></ColumnDefinition>
@@ -23,6 +27,7 @@
         <Label Content="WIN"
                FontSize="33"
                Foreground="BlueViolet"></Label>
+        
         <Label Grid.Row="2"
                Content ="Sie haben gewonnen!"
                Foreground="BlueViolet"
@@ -33,6 +38,17 @@
                FontWeight="ExtraLight"></Label>
         <Label Grid.Row="4" x:Name="lblResultPoints"
                Content="points"></Label>
+        <Label Grid.Row="5"
+               x:Name="lblRank"></Label>
+        <Label Grid.Row="6"
+               x:Name="lblSolvedTime"></Label>
+        <Label Grid.Row="7"
+               x:Name="lblTileNumbers"></Label>
+        <Label Grid.Row="8"
+               x:Name="lblSolvedDate"></Label>
+        
+        
+        
         <Button Grid.Row="0"
                 Grid.Column="1"
                 Grid.RowSpan="4"></Button>
