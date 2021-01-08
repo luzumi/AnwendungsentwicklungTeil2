@@ -1,12 +1,11 @@
-﻿using Container;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
+﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
+using Container;
 
 namespace ContainerTest
 {
     [TestClass]
     public class StackTests
     {
-
         [TestMethod]
         public void IsEmptyAfterNew()
         {
@@ -14,7 +13,6 @@ namespace ContainerTest
             Assert.IsTrue(testStack.IsEmpty());
         }
 
-        
         [TestMethod]
         public void IsEmptyAfterPushAndPop()
         {
@@ -23,8 +21,6 @@ namespace ContainerTest
             _ = testStack.Pop();
             Assert.IsTrue(testStack.IsEmpty());
         }
-        
-        
         [TestMethod]
         public void IsNotEmptyAfterPush()
         {
@@ -33,7 +29,6 @@ namespace ContainerTest
             Assert.IsFalse(testStack.IsEmpty());
         }
 
-        
         [TestMethod]
         public void IsNotEmptyAfterDoublePushAndPop()
         {
@@ -43,8 +38,6 @@ namespace ContainerTest
             testStack.Pop();
             Assert.IsFalse(testStack.IsEmpty());
         }
-        
-        
         [TestMethod]
         public void IsNotEmptyAfterMultiPushAndPop()
         {
@@ -60,7 +53,6 @@ namespace ContainerTest
             Assert.IsFalse(testStack.IsEmpty());
         }
 
-        
         [TestMethod]
         public void EqualAfterPushAndPop()
         {
@@ -70,8 +62,6 @@ namespace ContainerTest
             int returnValue = testStack.Pop();
             Assert.IsTrue(testValue == returnValue);
         }
-        
-        
         [TestMethod]
         public void EqualAfterMultiPushAndPop()
         {
@@ -89,8 +79,6 @@ namespace ContainerTest
             Assert.IsTrue(testValueB == returnValueB);
             Assert.IsTrue(testValueC == returnValueC);
         }
-        
-        
         [TestMethod]
         public void EqualAfterLoopPushAndPop()
         {
@@ -106,8 +94,6 @@ namespace ContainerTest
                 Assert.IsTrue(testStack.Pop() == i);
             }
         }
-        
-        
         [TestMethod]
         public void EqualAfterLoopPushAndPopWithParameter()
         {
