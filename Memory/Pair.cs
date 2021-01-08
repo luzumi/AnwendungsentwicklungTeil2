@@ -15,7 +15,7 @@ namespace Memory
         public int Points
         {
             get => points;
-            set => points = value * (MainWindow.coord.widht + MainWindow.coord.height) / 2;
+            set => points = value;
         }
 
         public string Name

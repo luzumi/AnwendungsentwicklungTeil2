@@ -1,27 +1,16 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Data.SQLite;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
+using System.Diagnostics;
 
 namespace Memory
 {
     /// <summary>
     /// Interaktionslogik für ResultPage.xaml
     /// </summary>
-    public partial class ResultPage : Page
+    public partial class ResultPage
     {
-        private Pair player;
+        public static readonly List<Pair> highScore = new();
 
         public ResultPage()
         {
@@ -30,7 +19,6 @@ namespace Memory
 
         public ResultPage(Pair player)
         {
-            this.player = player;
             InitializeComponent();
 
             ReadDatabase(player, getActualPlayerInfos(player.Name));
@@ -38,12 +26,11 @@ namespace Memory
             lblResultPoints.Content = "Points: " + player.Points;
             lblSolvedDate.Content = "Gespielt am: \n" + player.SolveDate;
             lblSolvedTime.Content = "benötigte Zeit: " + Math.Round(player.SolveTime / 1000, 3);
-            lblTileNumbers.Content = "Anzahl Bilder: " + player.TileNumber/2;
+            lblTileNumbers.Content = "Anzahl Bilder: " + player.TileNumber;
         }
-        
+
         public void ReadDatabase(Pair actPair, string SqlStatement)
         {
-
             // entweder builder nutzen oder auf https://www.connectionstrings.com/ nachschauen
             SQLiteConnectionStringBuilder builder = new();
             builder.DataSource = "./memory.db";
@@ -57,13 +44,21 @@ namespace Memory
             connectionStringBuilder.SslMode = MySqlSslMode.None; // None ist ok für testumgebungen, im Internet immer verschlüsseln. Benötigt extra CPU-Leistung
             */
 
-            List<Pair> highScore = new();
 
             using (SQLiteConnection connection = new SQLiteConnection(builder.ToString()))
             {
                 connection.Open();
 
                 SQLiteCommand command = connection.CreateCommand();
+                command.Parameters = null;
+                string CommandText = "SELECT count(ID) from Scores";
+                SQLiteCommand countCommand = new SQLiteCommand(CommandText, connection);
+                countCommand.ExecuteScalar();
+                countCommand.CommandText = CommandText;
+                int countRows = Int32.Parse(countCommand.ExecuteScalar().ToString());
+                
+                
+                
                 command.CommandText = SqlStatement;
 
                 using (var reader = command.ExecuteReader())
@@ -74,14 +69,16 @@ namespace Memory
                         // ID, Name, Points, SolveTime, TileNumber, SolveDate
                         // 1 , Hans,    20,     12.09,  12,         21.12.2020
                         // 2 , Lisa,    18,     16.34,  14          22.12.2020
+                        if (reader.GetInt32(0) == countRows)
+                        {
+                            actPair.Points = reader.GetInt32(2);
+                            actPair.Rank = reader.StepCount;
+                            actPair.SolveTime = reader.GetDouble(3);
+                            actPair.TileNumber = reader.GetInt32(4) / 2;
+                            actPair.SolveDate = reader.GetDateTime(5) + TimeSpan.FromHours(1);
 
-                        actPair.Points = reader.GetInt32(2);
-                        actPair.Rank = reader.FieldCount;
-                        actPair.SolveTime = reader.GetDouble(3);
-                        actPair.TileNumber = reader.GetInt32(4);
-                        actPair.SolveDate = reader.GetDateTime(5);
-                        
-                        highScore.Add(actPair);
+                            highScore.Add(actPair);
+                        }
                     }
                 }
             }
@@ -89,9 +86,7 @@ namespace Memory
 
         string getActualPlayerInfos(string name)
         {
-            return $"Select * from Scores Where Name = '{name}' Order by Points desc";
+            return $"Select * from Scores Order by Points desc";
         }
-
-        
     }
 }
