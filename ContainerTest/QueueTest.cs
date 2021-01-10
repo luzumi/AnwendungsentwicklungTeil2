@@ -1,4 +1,5 @@
-﻿using System.Diagnostics;
+﻿using System;
+using System.Diagnostics;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Container;
 
@@ -123,5 +124,54 @@ namespace ContainerTest
                 Assert.IsTrue(testQueue.Pop() == i);
             }
         }
+        
+        
+        [TestMethod]
+        public void MakeBiggerIfAraysizeEnd()
+        {
+            Queue testQueue = new();
+
+            for (int i = 0; i <= 10; i++)
+            {
+                testQueue.Push(i);
+            }
+
+            Console.WriteLine(testQueue.elements.Length);
+            Assert.IsTrue(testQueue.elements.Length == 20);
+        }
+        
+        [TestMethod]
+        public void PopOnEmpty()
+        {
+            Queue testQueue = new();
+
+            int testValue = 20;
+
+            testQueue.Push(testValue);
+            testQueue.Push(testValue);
+            testQueue.Pop();
+            testQueue.Pop();
+
+            Assert.ThrowsException<IndexOutOfRangeException>(() => testQueue.Pop());
+
+        } 
+        
+        
+        [TestMethod]
+        public void ContinuousPushAndPop()
+        {
+            Queue testQueue = new(5);
+            bool testResult = true;
+
+            for (int i = 0; i < 50; i++)
+            {
+                testQueue.Push(i);
+
+                int result = testQueue.Pop();
+
+                if (i != result) testResult = false;
+            }
+            Assert.IsTrue(testResult);
+        } 
     }
 }
