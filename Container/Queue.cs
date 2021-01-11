@@ -5,21 +5,16 @@ namespace Container
     public class Queue
     {
         int elementCount = 0;
-        int[] elements;
         private int minimumSize = 0;
 
-        public int[] Elements
-        {
-            get => elements;
-            set => elements = value;
-        }
+        public int[] Elements { get; set; }
 
         int pushIndex = 0;
         int popIndex = 0;
 
         public int Capacity
         {
-            get => elements.Length;
+            get => Elements.Length;
             set
             {
                 minimumSize = value;
@@ -42,22 +37,22 @@ namespace Container
 
             for (int counter = 0; counter < elementCount; counter++)
             {
-                if (readIndex == elements.Length)
+                if (readIndex == Elements.Length)
                 {
                     readIndex = 0;
                 }
 
-                biggerArray[writeIndex++] = elements[readIndex++];
+                biggerArray[writeIndex++] = Elements[readIndex++];
             }
 
             popIndex = 0;
             pushIndex = elementCount;
-            elements = biggerArray;
+            Elements = biggerArray;
         }
 
         public Queue(int InitialCapacity = 20)
         {
-            elements = new int[InitialCapacity];
+            Elements = new int[InitialCapacity];
             minimumSize = InitialCapacity;
         }
 
@@ -68,11 +63,11 @@ namespace Container
 
         public void Push(int v)
         {
-            if (elements.Length == elementCount)
-                resize(elements.Length * 2);
+            if (Elements.Length == elementCount)
+                resize(Elements.Length * 2);
             elementCount++;
-            if (pushIndex == elements.Length) pushIndex = 0;
-            elements[pushIndex] = v;
+            if (pushIndex == Elements.Length) pushIndex = 0;
+            Elements[pushIndex] = v;
             pushIndex++;
         }
         
@@ -84,9 +79,9 @@ namespace Container
 
             elementCount--;
 
-            if (popIndex == elements.Length) popIndex = 0;
+            if (popIndex == Elements.Length) popIndex = 0;
 
-            return elements[popIndex++];
+            return Elements[popIndex++];
         }
 
         public void ForEach(Action<int> methodAction)
