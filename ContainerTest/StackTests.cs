@@ -68,7 +68,7 @@ namespace ContainerTest
             Stack testStack = new();
             int testValueA = 20;
             int testValueB = 5;
-            int testValueC = 9000;
+            int testValueC = 9_000;
             testStack.Push(testValueA);
             testStack.Push(testValueB);
             testStack.Push(testValueC);
@@ -84,12 +84,12 @@ namespace ContainerTest
         {
             Stack testStack = new();
 
-            for (int i = 10; i <= 90000; i++)
+            for (int i = 10; i <= 90_000; i++)
             {
                 testStack.Push(i);
             }
 
-            for (int i = 90000; i >= 10 ; --i)
+            for (int i = 90_000; i >= 10 ; --i)
             {
                 Assert.IsTrue(testStack.Pop() == i);
             }
@@ -97,14 +97,14 @@ namespace ContainerTest
         [TestMethod]
         public void EqualAfterLoopPushAndPopWithParameter()
         {
-            Stack testStack = new(90000);
+            Stack testStack = new(90_000);
 
-            for (int i = 10; i <= 90000; i++)
+            for (int i = 10; i <= 90_000; i++)
             {
                 testStack.Push(i);
             }
 
-            for (int i = 90000; i >= 10 ; --i)
+            for (int i = 90_000; i >= 10 ; --i)
             {
                 Assert.IsTrue(testStack.Pop() == i);
             }

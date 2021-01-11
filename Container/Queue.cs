@@ -1,55 +1,100 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Diagnostics;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Container
 {
     public class Queue
     {
-        private int elementCounter = 0;
-        private int firstIndex = 0;
-        private int elementsCapacity = 0;
-        public int[] elements;
-        private int[] elementsCopy;
-        private bool freePlace;
+        int elementCount = 0;
+        int[] elements;
+        private int minimumSize = 0;
 
-
-        public Queue(int Capacity = 5)
+        public int[] Elements
         {
-            elements = new int[Capacity];
-            elementsCopy = new int[Capacity];
-            elementsCapacity = Capacity;
+            get => elements;
+            set => elements = value;
+        }
+
+        int pushIndex = 0;
+        int popIndex = 0;
+
+        public int Capacity
+        {
+            get => elements.Length;
+            set
+            {
+                minimumSize = value;
+                resize(value);
+            }
+        }
+
+        private void resize(int value)
+        {
+            if (value < 0) throw new ArgumentOutOfRangeException();
+
+            if (value < elementCount) throw new InsufficientMemoryException();
+
+            if (value < minimumSize) minimumSize = value;
+
+            int[] biggerArray = new int[value];
+
+            int readIndex = popIndex;
+            int writeIndex = 0;
+
+            for (int counter = 0; counter < elementCount; counter++)
+            {
+                if (readIndex == elements.Length)
+                {
+                    readIndex = 0;
+                }
+
+                biggerArray[writeIndex++] = elements[readIndex++];
+            }
+
+            popIndex = 0;
+            pushIndex = elementCount;
+            elements = biggerArray;
+        }
+
+        public Queue(int InitialCapacity = 20)
+        {
+            elements = new int[InitialCapacity];
+            minimumSize = InitialCapacity;
         }
 
         public bool IsEmpty()
         {
-            return elementCounter == 0;
+            return elementCount == 0;
         }
 
-        public void Push(int number)
+        public void Push(int v)
         {
-            if (elementCounter == elements.Length)
-            {
-                elementsCapacity *= 2;
-                Array.Resize(ref elements, elementsCapacity);
-            }
-
-            elements[elementCounter++] = number;
+            if (elements.Length == elementCount)
+                resize(elements.Length * 2);
+            elementCount++;
+            if (pushIndex == elements.Length) pushIndex = 0;
+            elements[pushIndex] = v;
+            pushIndex++;
         }
-
+        
         public int Pop()
         {
-            if (elementCounter == 0)
+            if (IsEmpty()) throw new IndexOutOfRangeException();
+
+            if (elementCount < Capacity / 3 && Capacity > minimumSize) resize(Capacity / 2);
+
+            elementCount--;
+
+            if (popIndex == elements.Length) popIndex = 0;
+
+            return elements[popIndex++];
+        }
+
+        public void ForEach(Action<int> methodAction)
+        {
+            while (elementCount > 0)
             {
-                throw new IndexOutOfRangeException();
+                methodAction(Pop());
             }
-            int result = elements[0];
-            Array.Copy(elements, 1, elements, 0, elements.Length - 1);
-            elementCounter--;
-            return result;
         }
     }
 }
