@@ -30,7 +30,7 @@ namespace Container
 
             if (value < minimumSize) minimumSize = value;
 
-            int[] biggerArray = new int[value];
+            int[] resizedArray = new int[value];
 
             int readIndex = popIndex;
             int writeIndex = 0;
@@ -42,12 +42,12 @@ namespace Container
                     readIndex = 0;
                 }
 
-                biggerArray[writeIndex++] = Elements[readIndex++];
+                resizedArray[writeIndex++] = Elements[readIndex++];
             }
 
             popIndex = 0;
             pushIndex = elementCount;
-            Elements = biggerArray;
+            Elements = resizedArray;
         }
 
         public Queue(int InitialCapacity = 20)
