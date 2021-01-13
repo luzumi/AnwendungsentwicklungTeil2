@@ -1,0 +1,30 @@
+﻿<Page x:Class="Binding.IntroBinding"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+      xmlns:local="clr-namespace:Binding"
+      mc:Ignorable="d" 
+      d:DesignHeight="400" d:DesignWidth="600"
+      Title="IntroBinding">
+
+    <Grid>
+
+        <Grid.RowDefinitions>
+            <RowDefinition Height="40"></RowDefinition>
+            <RowDefinition Height="40"></RowDefinition>
+            <RowDefinition Height="40"></RowDefinition>
+            <RowDefinition Height="40"></RowDefinition>
+            <RowDefinition Height="40"></RowDefinition>
+            <RowDefinition Height="40"></RowDefinition>
+            <RowDefinition Height="*"></RowDefinition>
+        </Grid.RowDefinitions>
+        <TextBox x:Name="tblInput" Grid.Row="0" TextAlignment="Center" Margin="3" ></TextBox>
+        <Label x:Name="lblOutput" Grid.Row="1" Content="{Binding ElementName=tblInput, Path=Text}"></Label>
+        <TextBox IsReadOnly="True" Grid.Row="2" Text="{Binding ElementName=lblOutput, Path=Content}" ></TextBox>
+        <TextBox Grid.Row="3" Text="{Binding ElementName=tblInput, Path=Text, UpdateSourceTrigger=PropertyChanged}" ></TextBox>
+        <TextBox x:Name ="tbText" Grid.Row="4"  ></TextBox>
+        <Button x:Name ="btButton" Grid.Row="5" Content="{Binding ElementName=tbText, Path=Text}"></Button>
+        <TextBox x:Name ="tbWidht" Grid.Row="6"  Width="{Binding ElementName=btButton, Path=Content, UpdateSourceTrigger=PropertyChanged}"></TextBox>
+    </Grid>
+</Page>
