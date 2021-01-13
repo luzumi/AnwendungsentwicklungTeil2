@@ -100,5 +100,24 @@ namespace Container
             secondList.ForEach(resultList.Add);
             return resultList;
         }
+
+        public static List Merge(params List[] pLists)
+        {
+            int size = 0;
+
+            foreach (var list in pLists)
+            {
+                size += list.Count;
+            }
+
+            List result = new List(size);
+
+            foreach (var list in pLists)
+            {
+                list.ForEach(result.Add);
+            }
+
+            return result;
+        }
     }
 }
