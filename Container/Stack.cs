@@ -1,11 +1,4 @@
-﻿using Microsoft.Analytics.Interfaces;
-using Microsoft.Analytics.Interfaces.Streaming;
-using Microsoft.Analytics.Types.Sql;
-using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-using System.Text;
+﻿using System;
 
 namespace Container
 {
@@ -18,13 +11,13 @@ namespace Container
         {
             elements = new int[5];
         }
-        
+
         public Stack(int Capacity)
         {
             elements = new int[Capacity];
-        } 
-        
-        
+        }
+
+
         public bool IsEmpty()
         {
             return elementCounter == 0;
@@ -41,7 +34,7 @@ namespace Container
                 //}
 
                 //elements = newArray;
-                Array.Resize(ref elements, elements.Length*2);
+                Array.Resize(ref elements, elements.Length * 2);
             }
             elements[elementCounter++] = i;
         }

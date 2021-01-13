@@ -1,5 +1,5 @@
-﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
-using Container;
+﻿using Container;
+using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace ContainerTest
 {
@@ -89,7 +89,7 @@ namespace ContainerTest
                 testStack.Push(i);
             }
 
-            for (int i = 90_000; i >= 10 ; --i)
+            for (int i = 90_000; i >= 10; --i)
             {
                 Assert.IsTrue(testStack.Pop() == i);
             }
@@ -104,7 +104,7 @@ namespace ContainerTest
                 testStack.Push(i);
             }
 
-            for (int i = 90_000; i >= 10 ; --i)
+            for (int i = 90_000; i >= 10; --i)
             {
                 Assert.IsTrue(testStack.Pop() == i);
             }

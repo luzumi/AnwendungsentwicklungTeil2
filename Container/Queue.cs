@@ -70,7 +70,7 @@ namespace Container
             Elements[pushIndex] = v;
             pushIndex++;
         }
-        
+
         public int Pop()
         {
             if (IsEmpty()) throw new IndexOutOfRangeException();

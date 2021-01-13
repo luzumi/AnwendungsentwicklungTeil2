@@ -1,6 +1,6 @@
 ﻿using System;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Container;
+using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace ContainerTest
 {
@@ -213,12 +213,16 @@ namespace ContainerTest
         public void ContinuousPushTiming()
         {
             Queue testQueue = new(5);
+            Assert.IsTrue(testQueue.Capacity == 5);
+
             DateTime testStart = DateTime.Now;
+            Assert.IsTrue(testStart.GetType() == typeof(DateTime));
+
             for (int counter = 0; counter < 100_000; counter++)
                 testQueue.Push(counter);
             for (int counter = 0; counter < 100_000; counter++)
                 testQueue.Pop();
-            Assert.IsTrue((DateTime.Now - testStart).TotalMilliseconds < 100);
+            Assert.IsTrue((DateTime.Now - testStart).TotalMilliseconds < 200);
         }
 
         [TestMethod]
@@ -270,7 +274,7 @@ namespace ContainerTest
             Queue testQueue = new(10);
             for (int counter = 0; counter < 8; counter++)
                 testQueue.Push(counter);
-                Assert.ThrowsException<InsufficientMemoryException>(() => testQueue.Capacity = 5);
+            Assert.ThrowsException<InsufficientMemoryException>(() => testQueue.Capacity = 5);
         }
 
         [TestMethod]
@@ -295,14 +299,14 @@ namespace ContainerTest
 
             for (int counter = 0; counter < 30; counter++)
                 testQueue.Push(counter);
-            
+
             for (int counter = 0; counter < 29; counter++)
                 testQueue.Pop();
 
-            
+
             Assert.IsTrue(testQueue.Capacity == 10);
         }
-        
+
         [TestMethod]
         public void ZBonusCapacityMinumumOnUserDefenition()
         {
@@ -310,18 +314,18 @@ namespace ContainerTest
 
             for (int counter = 0; counter < 30; counter++)
                 testQueue.Push(counter);
-            
+
             for (int counter = 0; counter < 29; counter++)
                 testQueue.Pop();
 
             testQueue.Capacity = 5;
-            
+
             for (int counter = 0; counter < 30; counter++)
                 testQueue.Push(counter);
-            
+
             for (int counter = 0; counter < 29; counter++)
                 testQueue.Pop();
-            
+
             Assert.IsTrue(testQueue.Capacity == 10);
         }
 

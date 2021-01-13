@@ -1,6 +1,6 @@
-﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
+﻿using System;
 using Container;
-using System;
+using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace ContainerTest
 {
@@ -10,7 +10,7 @@ namespace ContainerTest
         [TestMethod]
         public void CreateableStandard()
         {
-            // testet ob eine Liste mit standardkonstruktor erstellt werden kann
+            // testet ob eine Liste mit Standardkonstruktor erstellt werden kann
             Assert.IsNotNull(new List());
         }
 
@@ -25,16 +25,17 @@ namespace ContainerTest
         [TestMethod]
         public void IsEmptyAfterAddAndRemove()
         {
-            // testet ob die liste nach einfügen und entfernen von einem wert wieder leer ist
+            // testet ob die Liste nach Einfügen und Entfernen von einem Wert wieder leer ist
             List testList = new();
             testList.Add(1);
             testList.Remove(0);
             Assert.IsTrue(testList.Count == 0);
         }
+
         [TestMethod]
         public void IsNotEmptyAfterAdd()
         {
-            // testet ob die liste nach einem einfügen eine Anzahl von einem element hat
+            // testet ob die Liste nach einem Einfügen eine Anzahl von einem Element hat
             List testList = new();
             testList.Add(1);
             Assert.IsTrue(testList.Count == 1);
@@ -43,7 +44,7 @@ namespace ContainerTest
         [TestMethod]
         public void IsNotEmptyAfterDoubleAddAndRemove()
         {
-            // testet ob nach mehrfachen einfügen und einigen entfernen das der füllstandszähler korrekt arbeitet
+            // testet ob nach mehrfachen Einfügen und Einigen entfernen das der Füllstandszähler korrekt arbeitet
             List testList = new();
             testList.Add(1);
             testList.Add(1);
@@ -52,10 +53,11 @@ namespace ContainerTest
             testList.Remove(0);
             Assert.IsTrue(testList.Count == 1);
         }
+
         [TestMethod]
         public void IsNotEmptyAfterMultiAddAndRemove()
         {
-            // testet count ob es nach mehreren add und remove jederzeit korrekt arbeitet
+            // testet count ob es nach mehreren Add und Remove jederzeit korrekt arbeitet
             List testList = new();
             testList.Add(1);
             testList.Add(1);
@@ -72,17 +74,18 @@ namespace ContainerTest
         [TestMethod]
         public void EqualAfterAddAndRemove()
         {
-            // testet ob das eingefügte element auch wieder ausgelesen werden kann
+            // testet ob das eingefügte Element auch wieder ausgelesen werden kann
             List testList = new();
             int testValue = 20;
             testList.Add(testValue);
             int returnValue = testList.At(0);
             Assert.IsTrue(testValue == returnValue);
         }
+
         [TestMethod]
         public void EqualAfterMultiAddAndRemove()
         {
-            // testet das mehrfache einfügen und auslesen und überprüft die werte
+            // testet das mehrfache Einfügen und Auslesen und überprüft die Werte
             List testList = new();
             int testValueA = 20;
             int testValueB = 5;
@@ -97,10 +100,11 @@ namespace ContainerTest
             Assert.IsTrue(testValueB == returnValueB);
             Assert.IsTrue(testValueC == returnValueC);
         }
+
         [TestMethod]
         public void EqualAfterLoopAddAndRemove()
         {
-            // testet das vergrössern der Liste und das alle elemente auch korrekt gespeichert wurden
+            // testet das vergrössern der Liste und das alle Elemente auch korrekt gespeichert wurden
             List testList = new();
 
             for (int i = 10; i <= 90000; i++)
@@ -115,12 +119,12 @@ namespace ContainerTest
 
             // Pos :  00 01 02 03 04 05 ..
             // Wert:  10 11 12 13 14 15 ..
-
         }
+
         [TestMethod]
         public void EqualAfterLoopAddAndAtWithParameter()
         {
-            // testet ob der überladene construktor funkitoniert
+            // testet ob der überladene construktor funktioniert
             List testList = new(90000);
 
             Assert.IsTrue(testList.Capacity == 90000);
@@ -131,14 +135,14 @@ namespace ContainerTest
 
             for (int i = 10; i <= 90000; i++)
             {
-                Assert.IsTrue(testList.At(i - 10) == i);
+                Assert.IsTrue(testList[i - 10] == i);
             }
         }
 
         [TestMethod]
         public void RemoveOnEmpty()
         {
-            // testet ob das entfernen aus einer bereits leeren liste einen fehler erzeugt
+            // testet ob das Entfernen aus einer bereits leeren Liste einen Fehler erzeugt
             List testList = new();
             int testValue = 20;
             testList.Add(testValue);
@@ -151,7 +155,7 @@ namespace ContainerTest
         [TestMethod]
         public void ContinuousAddRemoveAndAtOnMaxCapacity()
         {
-            // testet ob nach mehrfachen einfügen und löschen das vergrössern gestartet wird und die werte trotzdem
+            // testet ob nach mehrfachen Einfügen und Löschen das vergrössern gestartet wird und die Werte trotzdem
             // korrekt hintereinander stehen
             List testList = new(4);
             testList.Add(1); // 1
@@ -165,7 +169,7 @@ namespace ContainerTest
             testList.Add(5); // 3 4 5
             testList.Add(6); // 3 4 5 6
             Assert.IsTrue(testList.At(3) == 6); // 3 4 5 6
-            testList.Add(7); // 3 4 5 6 7  vergrösserung der Liste
+            testList.Add(7); // 3 4 5 6 7  Vergrösserung der Liste
             testList.Add(8); // 3 4 5 6 7 8
             Assert.IsTrue(testList.At(5) == 8);
         }
@@ -173,7 +177,7 @@ namespace ContainerTest
         [TestMethod]
         public void ContinuousAddAndRemoveTiming()
         {
-            // testet die geschwindigkeit der grössenänderung des array
+            // testet die Geschwindigkeit der Grössenänderung des array
             List testList = new(5);
             DateTime testStart = DateTime.Now;
             for (int counter = 0; counter < 100000; counter++)
@@ -187,7 +191,7 @@ namespace ContainerTest
         [TestMethod]
         public void ResizeAutomated()
         {
-            // testet die automatische verkleinerung der Liste
+            // testet die automatische Verkleinerung der Liste
             List testList = new(5);
             for (int counter = 0; counter < 20; counter++)
                 testList.Add(counter);
@@ -206,7 +210,7 @@ namespace ContainerTest
             List testList = new(10);
             for (int counter = 0; counter < 8; counter++) // 0 1 2 3 4 5 6 7
                 testList.Add(counter);
-            for (int counter = 0; counter < 4; counter++)// 4 5 6 7
+            for (int counter = 0; counter < 4; counter++) // 4 5 6 7
                 testList.Remove(0);
             testList.Capacity = 5;
             for (int counter = 4; counter < 8; counter++)
@@ -218,6 +222,7 @@ namespace ContainerTest
         {
             // testet ob ein zu starkes verkleinern eine fehlermeldung zeigt
             List testList = new(10);
+            Assert.IsTrue(testList.Capacity == 10);
             for (int counter = 0; counter < 8; counter++)
                 testList.Add(counter);
             Assert.ThrowsException<InsufficientMemoryException>(() => testList.Capacity = 5);
@@ -259,8 +264,8 @@ namespace ContainerTest
             for (int counter = 0; counter < 29; counter++)
                 testList.Remove(0);
             Assert.IsTrue(testList.Capacity == 5);
-
         }
+
         [TestMethod]
         public void DirectResize()
         {
@@ -282,6 +287,42 @@ namespace ContainerTest
             int Q = 0;
             testList.ForEach((i) => Q += i);
             Assert.IsTrue(Q == 10);
+        }
+
+        [TestMethod]
+        public void EqualThisAndAtFunction()
+        {
+            List testList = new(10);
+            testList.Add(1);
+            testList.Add(2);
+            testList.Add(3);
+            testList.Add(4);
+
+            Assert.IsTrue(testList.At(0) == testList[0]);
+            Assert.IsTrue(testList.At(1) == testList[1]);
+            Assert.IsTrue(testList.At(2) == testList[2]);
+            Assert.IsTrue(testList.At(3) == testList[3]);
+            Assert.IsFalse(testList.At(1) == testList[3]);
+        }
+
+        [TestMethod]
+        public void AdditionOfLists()
+        {
+            List listA = new();
+            listA.Add(1);
+            listA.Add(2);
+            listA.Add(3);
+            List listB = new();
+            listB.Add(4);
+            listB.Add(5);
+            listB.Add(6);
+
+            List listC = listA + listB;
+
+            for (int counter = 0; counter < listC.Count; counter++)
+            {
+                Assert.IsTrue(listC[counter] == counter + 1);
+            }
         }
     }
 }

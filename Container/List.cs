@@ -33,6 +33,7 @@ namespace Container
         {
             get { return count; }
         }
+
         private int count;
 
         public void Add(int v)
@@ -45,17 +46,18 @@ namespace Container
 
         private void resize(int v)
         {
-            if (v < count) throw new InsufficientMemoryException();
+            if (v <= count || v < 0) throw new InsufficientMemoryException();
             Array.Resize(ref elements, v);
         }
 
         public void Remove(int v)
         {
             if (v >= count) throw new IndexOutOfRangeException();
-            for (int counter = v; counter < count-1; counter++)
+            for (int counter = v; counter < count - 1; counter++)
             {
                 elements[counter] = elements[counter + 1];
             }
+
             if (count * 3 < Capacity && Capacity > minSize) resize(Capacity / 2);
             count--;
         }
@@ -65,12 +67,38 @@ namespace Container
             return elements[v];
         }
 
-        public void ForEach(Action<int> p)
+        public void ForEach(Action<int> pAction)
         {
             for (int i = 0; i < count; i++)
             {
-                p(elements[i]);
+                pAction(elements[i]);
             }
+        }
+
+        /// <summary>
+        /// stellt [] schreibweise zur verfügung
+        /// </summary>
+        /// <param name="index"></param>
+        /// <returns></returns>
+        public int this[int index]
+        {
+            get => elements[index];
+            set => elements[index] = value;
+        }
+
+        /// <summary>
+        /// hängt zwei Listen aneinander
+        /// </summary>
+        /// <param name="listA"></param>
+        /// <param name="listB"></param>
+        /// <returns>hängt Liste2 an Liste1 und gibt diese neue Liste zurück</returns>
+        public static List operator +(List firstList, List secondList)
+        {
+            if (firstList == null || secondList == null) throw new ArgumentNullException();
+            List resultList = new List(firstList.Count + secondList.Count);
+            firstList.ForEach(resultList.Add);
+            secondList.ForEach(resultList.Add);
+            return resultList;
         }
     }
 }
