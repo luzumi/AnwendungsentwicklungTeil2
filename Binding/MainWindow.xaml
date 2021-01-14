@@ -5,18 +5,21 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Binding"
         mc:Ignorable="d"
-        Title="MainWindow" Height="800" Width="600">
-   <Grid>
-       <Grid.ColumnDefinitions>
-           <ColumnDefinition Width="220"></ColumnDefinition>
-           <ColumnDefinition Width="*"></ColumnDefinition>
-       </Grid.ColumnDefinitions>
-       <StackPanel >
-           <Button Content ="Binding" Click="loadBindingIntro" ></Button>
-           <Button Content ="Binding - Intro" Click="loadBindingIntroExcersice"></Button>
-           <Button Content="Binding -Richtung" Click="loadBindingDirection"></Button>
-           <Button Content="Übung ext Daten" Click="loadBindingExternal"></Button>
-       </StackPanel>
-       <Frame Grid.Column="1" x:Name="FrameContent" NavigationUIVisibility="Hidden"></Frame>
-   </Grid>
+        Title="MainWindow"
+        Height="400"
+        Width="600">
+    <Grid Margin="5">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="220" />
+            <ColumnDefinition Width="*" />
+        </Grid.ColumnDefinitions>
+        <StackPanel>
+            <Button Content="Intro" Click="loadBindingIntro" />
+            <Button Content="Intro Übung" Click="loadBindingIntroExcersice" />
+            <Button Content="Bindungsrichtung" Click="loadBindingDirection"/>
+            <Button Content="Übung für Externe Daten" Click="loadBindingExternal"/>
+            <Button Content="Formatieren und Konvertieren" Click="loadBindingFormatAndConvert"/>
+        </StackPanel>
+        <Frame Grid.Column="1" x:Name="frmContent" NavigationUIVisibility="Hidden" />
+    </Grid>
 </Window>

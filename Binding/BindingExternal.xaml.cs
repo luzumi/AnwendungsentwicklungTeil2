@@ -2,12 +2,21 @@
 using System.Windows.Controls;
 
 namespace Binding
+    /// <summary>ng
 {
-    /// <summary>
     /// Interaktionslogik für BindingExternal.xaml
     /// </summary>
     public partial class BindingExternal : Page
     {
+
+
+        public BindingExternal()
+        {
+            InitializeComponent();
+        }
+
+
+
         public BindingExternal(Window bindingTarget = null)
         {
             InitializeComponent();

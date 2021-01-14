@@ -26,9 +26,9 @@
         <TextBox Grid.Row="0" Grid.Column="2" x:Name="tbA"></TextBox>
         <TextBox Grid.Row="1" Grid.Column="0" Text="{Binding ElementName=tbB, Path=Text, Mode=OneWayToSource, UpdateSourceTrigger=PropertyChanged}"></TextBox>
         <TextBox Grid.Row="1" Grid.Column="2" x:Name="tbB"></TextBox>
-        <TextBox Grid.Row="2" Grid.Column="0" Text="{Binding ElementName=tbC, Path=Text, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"></TextBox>
+        <TextBox Grid.Row="2" Grid.Column="0" Text="{Binding ElementName=tbC, Path=Text, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged }" DataContext="{x:Reference Name=thisPage}"></TextBox>
         <TextBox Grid.Row="2" Grid.Column="2" x:Name="tbC"></TextBox>
-        <TextBox Grid.Row="3" Grid.Column="0" Text="{Binding ElementName=tbD, Path=Text, Mode=OneTime, UpdateSourceTrigger=PropertyChanged}"></TextBox>
+        <TextBox Grid.Row="3" Grid.Column="0" Text="{Binding ElementName=tbD, Path=Text, Mode=OneTime, UpdateSourceTrigger=PropertyChanged}" DataContext="{x:Reference Name=thisPage}"></TextBox>
         <TextBox Grid.Row="3" Grid.Column="2" x:Name="tbD"></TextBox>
 
         <Label Content="holen" Grid.Row="0" Grid.Column="1"></Label>

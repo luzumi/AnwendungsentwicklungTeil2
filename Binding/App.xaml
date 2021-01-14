@@ -4,6 +4,8 @@
              xmlns:local="clr-namespace:Binding"
              StartupUri="MainWindow.xaml">
     <Application.Resources>
-         
+        <local:StringToBoolConverter x:Key="StringToBoolConverter"/>
+        <local:doubleToIntConverter x:Key="doubleToIntConverter"/>
+        <local:SizeToLine x:Key="SizeToLine"/>
     </Application.Resources>
 </Application>

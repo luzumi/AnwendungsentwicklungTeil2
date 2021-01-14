@@ -18,10 +18,7 @@
                 <Binding Path="WindowContext.Height" UpdateSourceTrigger="PropertyChanged" />
             </Slider.Value>
         </Slider>
-        <Slider Minimum="300" Maximum="800" TickFrequency="10">
-            <Slider.Value>
-                <Binding Path="WindowContext.Height" UpdateSourceTrigger="PropertyChanged" />
-            </Slider.Value>
-        </Slider>
+        <Slider Minimum="300" Maximum="800" TickFrequency="10" Value ="{Binding Path=WindowContext.Height, UpdateSourceTrigger=PropertyChanged}"></Slider>  
+        
     </StackPanel>
 </Page>

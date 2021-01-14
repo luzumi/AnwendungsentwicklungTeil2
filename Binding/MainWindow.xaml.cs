@@ -15,23 +15,28 @@ namespace Binding
 
         private void loadBindingIntro(object pSender, RoutedEventArgs pE)
         {
-            FrameContent.Navigate(new IntroBinding());
+            frmContent.Navigate(new IntroBinding());
         }
 
         private void loadBindingIntroExcersice(object pSender, RoutedEventArgs pE)
         {
-            FrameContent.Navigate(new BindingIntroExercise());
+            frmContent.Navigate(new BindingIntroExercise());
         }
 
         private void loadBindingDirection(object pSender, RoutedEventArgs pE)
         {
-            FrameContent.Navigate(new BindingDirection());
+            frmContent.Navigate(new BindingDirection());
         }
 
         private void loadBindingExternal(object pSender, RoutedEventArgs pE)
         {
             Page pageToShow = new BindingExternal();
-            FrameContent.Navigate(new BindingExternal(this));
+            frmContent.Navigate(new BindingExternal(this));
+        }
+
+        private void loadBindingFormatAndConvert(object pSender, RoutedEventArgs pE)
+        {
+            frmContent.Navigate(new bindingFormatAndConvert());
         }
     }
 }
