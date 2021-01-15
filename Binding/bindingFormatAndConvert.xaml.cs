@@ -15,11 +15,11 @@ using System.Windows.Shapes;
 namespace Binding
 {
     /// <summary>
-    /// Interaktionslogik für bindingFormatAndConvert.xaml
+    /// Interaktionslogik für BindingFormatAndConvert.xaml
     /// </summary>
-    public partial class bindingFormatAndConvert : Page
+    public partial class BindingFormatAndConvert : Page
     {
-        public bindingFormatAndConvert()
+        public BindingFormatAndConvert()
         {
             InitializeComponent();
             (FindResource("SizeToLine") as SizeToLine).ParentPage = cvsDiagramm;

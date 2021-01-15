@@ -1,0 +1,27 @@
+﻿<Page x:Class="Binding.BindingPropertys"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+      xmlns:local="clr-namespace:Binding"
+      mc:Ignorable="d"
+      d:DesignHeight="250" d:DesignWidth="350"
+      Title="BindingPropertys">
+
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="25" />
+            <RowDefinition Height="25" />
+            <RowDefinition Height="25" />
+            <RowDefinition Height="25" />
+            <RowDefinition Height="25" />
+            <RowDefinition Height="25" />
+        </Grid.RowDefinitions>
+        <Slider Grid.Row="0" Minimum="0" Maximum="100" Value="{Binding Path=SliderValue}" />
+        <Slider Grid.Row="1" Minimum="0" Maximum="100" Value="{Binding Path=SliderValue}" />
+        <Button Grid.Row="2" Height="25" Click="btnReadProp_Click" />
+        <Slider Grid.Row="3" Minimum="0" Maximum="100" Value="{Binding Path=PushBackSlider}" />
+        <Slider Grid.Row="4" Minimum="0" Maximum="100" Value="{Binding Path=PushBackSlider2}" />
+        <Label Grid.Row="5" Content="{Binding Path=PushBackSlider}"></Label>
+    </Grid>
+</Page>

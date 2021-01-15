@@ -36,7 +36,12 @@ namespace Binding
 
         private void loadBindingFormatAndConvert(object pSender, RoutedEventArgs pE)
         {
-            frmContent.Navigate(new bindingFormatAndConvert());
+            frmContent.Navigate(new BindingFormatAndConvert());
+        }
+
+        private void LoadBindingPropertys(object pSender, RoutedEventArgs pE)
+        {
+            frmContent.Navigate(new BindingPropertys());
         }
     }
 }
