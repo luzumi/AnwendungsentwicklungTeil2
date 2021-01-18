@@ -10,6 +10,7 @@
     <Page.Resources>
         <Style TargetType="Button">
             <Setter Property="HorizontalContentAlignment" Value="Center" />
+            <Setter Property="HorizontalAlignment" Value="Center" />
             <Setter Property="Padding" Value="3,3" />
             <Setter Property="FontSize" Value="100" />
             <Setter Property="Background" Value="Wheat" />
@@ -17,6 +18,14 @@
             <Setter Property="Height" Value="150" />
             <Setter Property="BorderThickness" Value="2" />
         </Style>
+        <ControlTemplate x:Key="ButtonTemplate" TargetType="{x:Type Button}">
+            <Grid Background="Wheat" Margin="3">
+                <Image Source="/Pictures/brushed metal background 0603.jpg"
+                       Opacity="0.4" />
+                <Label HorizontalAlignment="Center"
+                       VerticalAlignment="Center" />
+            </Grid>
+        </ControlTemplate>
     </Page.Resources>
 
 
@@ -37,157 +46,97 @@
                 <RowDefinition Height="150" />
             </Grid.RowDefinitions>
 
-
             <Button x:Name="Bt00"
                     Click="Bt_OnClick"
                     Grid.Row="0"
                     Grid.Column="0"
-                    HorizontalContentAlignment="Center"
-                    HorizontalAlignment="Center">
-                <Grid>
-                    <Image Source="/Pictures/brushed metal background 0603.jpg"
-                           Opacity="0.4" />
-                    <Label HorizontalAlignment="Center"
-                           VerticalAlignment="Center" />
-                </Grid>
+                    Template="{StaticResource ButtonTemplate}">
+
             </Button>
 
             <Button x:Name="Bt01"
                     Click="Bt_OnClick"
                     Grid.Row="0"
                     Grid.Column="1"
-                    HorizontalContentAlignment="Center"
-                    HorizontalAlignment="Center">
-                <Grid>
-                    <Image Source="/Pictures/brushed metal background 0603.jpg"
-                           Opacity="0.4" />
-                    <Label HorizontalAlignment="Center"
-                           VerticalAlignment="Center" />
-                </Grid>
+                Template="{StaticResource ButtonTemplate}">
             </Button>
 
             <Button x:Name="Bt02"
                     Click="Bt_OnClick"
                     Grid.Row="0"
                     Grid.Column="2"
-                    HorizontalContentAlignment="Center"
-                    HorizontalAlignment="Center">
-                <Grid>
-                    <Image Source="/Pictures/brushed metal background 0603.jpg"
-                           Opacity="0.4" />
-                    <Label HorizontalAlignment="Center"
-                           VerticalAlignment="Center" />
-                </Grid>
+                    Template="{StaticResource ButtonTemplate}">
             </Button>
 
             <Button x:Name="Bt10"
                     Click="Bt_OnClick"
                     Grid.Row="1"
                     Grid.Column="0"
-                    HorizontalContentAlignment="Center"
-                    HorizontalAlignment="Center">
-                <Grid>
-                    <Image Source="/Pictures/brushed metal background 0603.jpg"
-                           Opacity="0.4" />
-                    <Label HorizontalAlignment="Center"
-                           VerticalAlignment="Center" />
-                </Grid>
+                    Template="{StaticResource ButtonTemplate}">
             </Button>
 
             <Button x:Name="Bt11"
                     Click="Bt_OnClick"
                     Grid.Row="1"
                     Grid.Column="1"
-                    HorizontalContentAlignment="Center"
-                    HorizontalAlignment="Center">
-                <Grid>
-                    <Image Source="/Pictures/brushed metal background 0603.jpg"
-                           Opacity="0.4" />
-                    <Label HorizontalAlignment="Center"
-                           VerticalAlignment="Center" />
-                </Grid>
+                    Template="{StaticResource ButtonTemplate}">
             </Button>
 
             <Button x:Name="Bt12"
                     Click="Bt_OnClick"
                     Grid.Row="1"
                     Grid.Column="2"
-                    HorizontalContentAlignment="Center"
-                    HorizontalAlignment="Center">
-                <Grid>
-                    <Image Source="/Pictures/brushed metal background 0603.jpg"
-                           Opacity="0.4" />
-                    <Label HorizontalAlignment="Center"
-                           VerticalAlignment="Center" />
-                </Grid>
+                    Template="{StaticResource ButtonTemplate}">
             </Button>
 
             <Button x:Name="Bt20"
                     Click="Bt_OnClick"
                     Grid.Row="2"
                     Grid.Column="0"
-                    HorizontalContentAlignment="Center"
-                    HorizontalAlignment="Center">
-                <Grid>
-                    <Image Source="/Pictures/brushed metal background 0603.jpg"
-                           Opacity="0.4" />
-                    <Label HorizontalAlignment="Center"
-                           VerticalAlignment="Center" />
-                </Grid>
+                    Template="{StaticResource ButtonTemplate}">
             </Button>
 
             <Button x:Name="Bt21"
                     Click="Bt_OnClick"
                     Grid.Row="2"
                     Grid.Column="1"
-                    HorizontalContentAlignment="Center"
-                    HorizontalAlignment="Center">
-                <Grid>
-                    <Image Source="/Pictures/brushed metal background 0603.jpg"
-                           Opacity="0.4" />
-                    <Label HorizontalAlignment="Center"
-                           VerticalAlignment="Center" />
-                </Grid>
+                    Template="{StaticResource ButtonTemplate}">
             </Button>
 
             <Button x:Name="Bt22"
                     Click="Bt_OnClick"
                     Grid.Row="2"
                     Grid.Column="2"
-                    HorizontalContentAlignment="Center"
-                    HorizontalAlignment="Center">
+                    Template="{StaticResource ButtonTemplate}">
+                <!--
                 <Grid>
                     <Image Source="/Pictures/brushed metal background 0603.jpg"
                            Opacity="0.4" />
                     <Label HorizontalAlignment="Center"
                            VerticalAlignment="Center" />
                 </Grid>
+                -->
             </Button>
         </Grid>
 
         <StackPanel
-                    Orientation="Horizontal"
-                    Width="150"
-                    Height="30" 
-                    Margin="370,410,-70,10">
+            Orientation="Horizontal"
+            Width="150"
+            Height="30"
+            Margin="370,410,-70,10">
             <CheckBox x:Name="cboxSound"
                       Height="20"
                       HorizontalAlignment="Center"
                       VerticalAlignment="Bottom"
-                      IsChecked="True" 
-                      Checked="SoundOnOff_isCHecked" Unchecked="SoundOnOff_isUnCHecked"
-            >
-
-            </CheckBox>
-            <Label Content ="Music"
+                      IsChecked="True"
+                      Checked="SoundOnOff_isCHecked" Unchecked="SoundOnOff_isUnCHecked" />
+            <Label Content="Music"
                    Height="30"
                    HorizontalAlignment="Right"
                    VerticalAlignment="Top"
                    VerticalContentAlignment="Top"
                    FontSize="15"
-                   Foreground="Black">
-
-            </Label>
+                   Foreground="Black" />
         </StackPanel>
 
         <!-- Win/Tie Screen -->
@@ -241,5 +190,4 @@
                    Visibility="Collapsed" />
         </Button>
     </Grid>
-
 </Page>

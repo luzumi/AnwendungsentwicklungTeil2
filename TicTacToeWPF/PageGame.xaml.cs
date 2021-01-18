@@ -19,7 +19,7 @@ namespace TicTacToeWPF
         private readonly SoundPlayer _validSoundO;
         private readonly SoundPlayer _validSoundX;
         private readonly SoundPlayer _winSound;
-        public static MediaPlayer loopSound;
+        public static MediaPlayer LoopSound { get; set; }
 
 
         public PageGame()
@@ -52,9 +52,9 @@ namespace TicTacToeWPF
                 _ => new Point(2, 2)
             };
 
-            var tr = _game.Turn(coordinates);
+            var turnResult = _game.Turn(coordinates);
 
-            switch (tr)
+            switch (turnResult)
             {
                 case TurnResult.Tie:
                     _game.Board[coordinates.X, coordinates.Y] =
@@ -89,7 +89,7 @@ namespace TicTacToeWPF
             else
                 _validSoundO.Play();
 
-            switch (tr)
+            switch (turnResult)
             {
                 case TurnResult.Tie:
                     ImageBtTie.Visibility = Visibility.Visible;
@@ -123,12 +123,12 @@ namespace TicTacToeWPF
 
         private void SoundOnOff_isCHecked(object sender, RoutedEventArgs e)
         {
-            loopSound.Play();
+            LoopSound.Play();
         }
 
         private void SoundOnOff_isUnCHecked(object sender, RoutedEventArgs e)
         {
-            loopSound.Pause();
+            LoopSound.Pause();
         }
     }
 }
