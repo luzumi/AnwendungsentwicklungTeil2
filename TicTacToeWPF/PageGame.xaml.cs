@@ -76,13 +76,13 @@ namespace TicTacToeWPF
                     return;
             }
 
-            (((pSender as Button).Content as Grid).Children[1] as Label).Content =
-                _game.Board[coordinates.X, coordinates.Y] == FieldState.X ? "X" : "O";
 
-            (((pSender as Button).Content as Grid).Children[1] as Label).Foreground =
-                (((pSender as Button).Content as Grid).Children[1] as Label).Content.ToString() == "X"
-                    ? Brushes.Red
-                    : Brushes.Green;
+            (pSender as Button).Content =
+                (_game.Board[coordinates.X, coordinates.Y] == FieldState.X) ? "X" : "O";
+            
+            (pSender as Button).Foreground = (_game.Board[coordinates.X, coordinates.Y] == FieldState.X) 
+                ? Brushes.Red : Brushes.Green;
+
 
             if (_game.GetPlayerID())
                 _validSoundX.Play();

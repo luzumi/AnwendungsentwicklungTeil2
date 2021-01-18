@@ -8,7 +8,18 @@
       Title="PageGame">
 
     <Page.Resources>
+        <ControlTemplate x:Key="ButtonTemplate" TargetType="{x:Type Button}">
+            <Grid Background="Wheat" Margin="3">
+                <Image Source="/Pictures/brushed metal background 0603.jpg"
+                       Opacity="0.4" />
+                <Label HorizontalAlignment="Center"
+                       VerticalAlignment="Center"
+                       Content="{TemplateBinding Content}"
+                       Foreground="{TemplateBinding Foreground}" />
+            </Grid>
+        </ControlTemplate>
         <Style TargetType="Button">
+            <Setter Property="Template" Value="{StaticResource ButtonTemplate}" />
             <Setter Property="HorizontalContentAlignment" Value="Center" />
             <Setter Property="HorizontalAlignment" Value="Center" />
             <Setter Property="Padding" Value="3,3" />
@@ -18,14 +29,6 @@
             <Setter Property="Height" Value="150" />
             <Setter Property="BorderThickness" Value="2" />
         </Style>
-        <ControlTemplate x:Key="ButtonTemplate" TargetType="{x:Type Button}">
-            <Grid Background="Wheat" Margin="3">
-                <Image Source="/Pictures/brushed metal background 0603.jpg"
-                       Opacity="0.4" />
-                <Label HorizontalAlignment="Center"
-                       VerticalAlignment="Center" />
-            </Grid>
-        </ControlTemplate>
     </Page.Resources>
 
 
@@ -33,7 +36,6 @@
           Height="450">
 
         <Grid>
-
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="150" />
                 <ColumnDefinition Width="150" />
@@ -49,65 +51,47 @@
             <Button x:Name="Bt00"
                     Click="Bt_OnClick"
                     Grid.Row="0"
-                    Grid.Column="0"
-                    Template="{StaticResource ButtonTemplate}">
-
-            </Button>
+                    Grid.Column="0" />
 
             <Button x:Name="Bt01"
                     Click="Bt_OnClick"
                     Grid.Row="0"
-                    Grid.Column="1"
-                Template="{StaticResource ButtonTemplate}">
-            </Button>
+                    Grid.Column="1" />
 
             <Button x:Name="Bt02"
                     Click="Bt_OnClick"
                     Grid.Row="0"
-                    Grid.Column="2"
-                    Template="{StaticResource ButtonTemplate}">
-            </Button>
+                    Grid.Column="2" />
 
             <Button x:Name="Bt10"
                     Click="Bt_OnClick"
                     Grid.Row="1"
-                    Grid.Column="0"
-                    Template="{StaticResource ButtonTemplate}">
-            </Button>
+                    Grid.Column="0" />
 
             <Button x:Name="Bt11"
                     Click="Bt_OnClick"
                     Grid.Row="1"
-                    Grid.Column="1"
-                    Template="{StaticResource ButtonTemplate}">
-            </Button>
+                    Grid.Column="1" />
 
             <Button x:Name="Bt12"
                     Click="Bt_OnClick"
                     Grid.Row="1"
-                    Grid.Column="2"
-                    Template="{StaticResource ButtonTemplate}">
-            </Button>
+                    Grid.Column="2" />
 
             <Button x:Name="Bt20"
                     Click="Bt_OnClick"
                     Grid.Row="2"
-                    Grid.Column="0"
-                    Template="{StaticResource ButtonTemplate}">
-            </Button>
+                    Grid.Column="0" />
 
             <Button x:Name="Bt21"
                     Click="Bt_OnClick"
                     Grid.Row="2"
-                    Grid.Column="1"
-                    Template="{StaticResource ButtonTemplate}">
-            </Button>
+                    Grid.Column="1" />
 
             <Button x:Name="Bt22"
                     Click="Bt_OnClick"
                     Grid.Row="2"
-                    Grid.Column="2"
-                    Template="{StaticResource ButtonTemplate}">
+                    Grid.Column="2" />
                 <!--
                 <Grid>
                     <Image Source="/Pictures/brushed metal background 0603.jpg"
@@ -116,7 +100,7 @@
                            VerticalAlignment="Center" />
                 </Grid>
                 -->
-            </Button>
+            
         </Grid>
 
         <StackPanel
