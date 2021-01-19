@@ -29,7 +29,17 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ContainerTest", "ContainerT
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TicTacToeTest", "TicTacToeTest\TicTacToeTest.csproj", "{967E17DD-F649-4DEB-8ED0-85B19F8D5F1B}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Binding", "Binding\Binding.csproj", "{FBF188A2-CAA3-4A26-8E6C-CB7499B59557}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Binding", "Binding\Binding.csproj", "{FBF188A2-CAA3-4A26-8E6C-CB7499B59557}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MVVM-View", "MVVM-View\MVVM-View.csproj", "{9F459678-A541-4439-962D-1DCC3562EC38}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MVVM-Test", "MVVM-Test\MVVM-Test.csproj", "{B6B5C228-E3E2-4849-882B-7FC0CFBB32B0}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MVVM-ViewModel", "MVVM-ViewModel\MVVM-ViewModel.csproj", "{8442F5E5-618D-4BFC-9C4F-5B6AE4BB2740}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TaschenrechnerLogic", "TaschenrechnerLogic\TaschenrechnerLogic.csproj", "{869751D8-8EA8-401E-A04F-416A60CB75C8}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TaschenrechnerGui", "TaschenrechnerGui\TaschenrechnerGui.csproj", "{6D5DD4A9-3160-4AB5-8463-71A1272C48F4}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -73,6 +83,26 @@ Global
 		{FBF188A2-CAA3-4A26-8E6C-CB7499B59557}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{FBF188A2-CAA3-4A26-8E6C-CB7499B59557}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{FBF188A2-CAA3-4A26-8E6C-CB7499B59557}.Release|Any CPU.Build.0 = Release|Any CPU
+		{9F459678-A541-4439-962D-1DCC3562EC38}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9F459678-A541-4439-962D-1DCC3562EC38}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9F459678-A541-4439-962D-1DCC3562EC38}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9F459678-A541-4439-962D-1DCC3562EC38}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B6B5C228-E3E2-4849-882B-7FC0CFBB32B0}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B6B5C228-E3E2-4849-882B-7FC0CFBB32B0}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B6B5C228-E3E2-4849-882B-7FC0CFBB32B0}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B6B5C228-E3E2-4849-882B-7FC0CFBB32B0}.Release|Any CPU.Build.0 = Release|Any CPU
+		{8442F5E5-618D-4BFC-9C4F-5B6AE4BB2740}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8442F5E5-618D-4BFC-9C4F-5B6AE4BB2740}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8442F5E5-618D-4BFC-9C4F-5B6AE4BB2740}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8442F5E5-618D-4BFC-9C4F-5B6AE4BB2740}.Release|Any CPU.Build.0 = Release|Any CPU
+		{869751D8-8EA8-401E-A04F-416A60CB75C8}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{869751D8-8EA8-401E-A04F-416A60CB75C8}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{869751D8-8EA8-401E-A04F-416A60CB75C8}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{869751D8-8EA8-401E-A04F-416A60CB75C8}.Release|Any CPU.Build.0 = Release|Any CPU
+		{6D5DD4A9-3160-4AB5-8463-71A1272C48F4}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{6D5DD4A9-3160-4AB5-8463-71A1272C48F4}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{6D5DD4A9-3160-4AB5-8463-71A1272C48F4}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{6D5DD4A9-3160-4AB5-8463-71A1272C48F4}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
