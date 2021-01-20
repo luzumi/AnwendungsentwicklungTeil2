@@ -2,13 +2,16 @@
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
+using System.Windows.Input;
 
 namespace MVVM_ViewModel
 {
     public class MainViewModel : INotifyPropertyChanged
     {
-        private string filter;
+        public event PropertyChangedEventHandler PropertyChanged;
+        public ICommand AddUser { get; set; }
 
+        private string filter;
         public string Filter
         {
             get { return filter; }
@@ -22,9 +25,8 @@ namespace MVVM_ViewModel
             }
         }
 
-        public event PropertyChangedEventHandler PropertyChanged;
 
-
+        private ObservableCollection<UserViewModel> entries;
         public ObservableCollection<UserViewModel> EntryList
         {
             get => entries;
@@ -37,10 +39,11 @@ namespace MVVM_ViewModel
                 }
             }
         }
-        private ObservableCollection<UserViewModel> entries;
 
+        
         public MainViewModel()
         {
+            AddUser = new AddUserCommand() {Parent = this};
             EntryList = new ObservableCollection<UserViewModel>();
             EntryList.Add(new UserViewModel { Name = "Hans", Salary = 55000.0 });
             EntryList.Add(new UserViewModel { Name = "Peter", Salary = 58000.0 });
