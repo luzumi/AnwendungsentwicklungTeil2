@@ -7,6 +7,9 @@
         mc:Ignorable="d"
         Title="MainWindow" Height="450" Width="800">
 
+    <Window.DataContext>
+        <local:MainWindow/>
+    </Window.DataContext>
     <Window.Resources>
         <Style x:Key="MyFocusVisual">
             <Setter Property="Control.Template">
@@ -48,7 +51,15 @@
                          Text="enter contact für search"
                          FocusVisualStyle="{DynamicResource MyFocusVisual}" />
             </Grid>
-            <ListView x:Name="lwContactView" Background="Azure" Height="280" />
+            <ListView x:Name="lwContactView" Background="Beige" Height="280" ItemsSource="{Binding ElementName=Contact, Path=Name}">
+                <ListView.ItemTemplate>
+                    <DataTemplate>
+                        <StackPanel Orientation="Horizontal">
+                            <TextBlock Text="{Binding manName}" Width="200"/>
+                        </StackPanel>
+                    </DataTemplate>
+                </ListView.ItemTemplate>
+            </ListView>
 
             <!-- Buttons -->
             <Grid x:Name="grButtonGrid">
@@ -64,7 +75,7 @@
                 <Grid.Resources>
                     <Style x:Key="Buttons" TargetType="Button">
                         <Setter Property="Margin" Value="8" />
-                        <Setter Property="Background" Value="Chocolate" />
+                        <Setter Property="Background" Value="Brown" />
                         <Setter Property="Foreground" Value="AntiqueWhite" />
                         <Setter Property="BorderThickness" Value="0" />
                         <Setter Property="FontFamily" Value="Castellar" />
@@ -91,5 +102,8 @@
                         Style="{StaticResource Buttons}" />
             </Grid>
         </StackPanel>
+        <Frame Grid.Column="1" Background="Brown">
+
+        </Frame>
     </Grid>
 </Window>
