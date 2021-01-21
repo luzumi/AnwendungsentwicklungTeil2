@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 
 namespace AdressbuchLogic
 {
@@ -15,7 +16,31 @@ namespace AdressbuchLogic
         public Adressbook()
         {
             contactList = new List<Contact>();
-            contactList.Add(new Contact("Test"));
+            AddUser("Test0");
+            AddUser("Test1");
+            AddUser("Test2");
+        }
+
+        public void AddUser(string pName)
+        {
+            contactList.Add(new Contact(pName));
+        }
+
+
+        public void EditUser(Contact pContact)
+        {
+
+        }
+
+
+        public void DeleteUser(Contact pContact)
+        {
+
+        }
+
+        public void LoadBrowser(Enum eNetworkTypeEnum)
+        {
+            
         }
     }
 }

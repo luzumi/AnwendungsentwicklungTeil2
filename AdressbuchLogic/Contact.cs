@@ -88,28 +88,5 @@ namespace AdressbuchLogic
         {
             name = pName;
         }
-
-
-        public Contact AddUser(string pName)
-        {
-            return new Contact(pName);
-        }
-
-
-        public void EditUser(Contact pContact)
-        {
-
-        }
-
-
-        public void DeleteUser(Contact pContact)
-        {
-
-        }
-
-        public void LoadBrowser(Enum eNetworkTypeEnum)
-        {
-            
-        }
     }
 }
