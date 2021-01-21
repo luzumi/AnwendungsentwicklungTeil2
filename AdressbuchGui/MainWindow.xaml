@@ -88,7 +88,7 @@
                 <Button Grid.Row="0"
                         Grid.Column="0"
                         Content="Add"
-                        Command="{Binding Command_AddUser, UpdateSourceTrigger=PropertyChanged}"
+                        Command="{Binding Command_AddUser}"
                         Style="{StaticResource Buttons}" />
                 <Button Grid.Row="0"
                         Grid.Column="1"

@@ -1,11 +1,18 @@
 ﻿using System;
 using System.Windows.Input;
 
-namespace AdressbuchLogic.Commands
+namespace AdressbuchLogic
 {
     public class AddUserCommand : ICommand
     {
         #region Implementation of ICommand
+
+        private readonly Adressbook Parent;
+
+        public AddUserCommand(Adressbook pParent)
+        {
+            Parent = pParent;
+        }
 
         public bool CanExecute(object parameter)
         {
@@ -14,16 +21,13 @@ namespace AdressbuchLogic.Commands
 
         public void Execute(object parameter)
         {
-
+            Parent.ContactList.Add(new Contact("testen"));
         }
 
         public event EventHandler CanExecuteChanged;
 
         #endregion
 
-        public AddUserCommand(Adressbook pAdressbook)
-        {
-            pAdressbook.AddUser("createTest");
-        }
+        
     }
 }

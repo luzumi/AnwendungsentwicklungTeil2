@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Windows.Input;
-using AdressbuchLogic.Commands;
 
 namespace AdressbuchLogic
 {
@@ -21,32 +20,33 @@ namespace AdressbuchLogic
         public Adressbook()
         {
             contactList = new ObservableCollection<Contact>();
-            AddUser("Test0");
-            AddUser("Test1");
-            AddUser("Test2");
             Command_AddUser = new AddUserCommand(this);
         }
 
-        public void AddUser(string pName)
+        public ICommand AddUser
         {
-            contactList.Add(new Contact(pName));
+            get;
+            set;
         }
 
 
-        public void EditUser(Contact pContact)
+        public ICommand EditUser
         {
-
+            get;
+            set;
         }
 
 
-        public void DeleteUser(Contact pContact)
+        public ICommand DeleteUser
         {
-
+            get;
+            set;
         }
 
-        public void LoadBrowser(Enum eNetworkTypeEnum)
+        public ICommand LoadBrowser
         {
-            
+            get;
+            set;
         }
     }
 }
