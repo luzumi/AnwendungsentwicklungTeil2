@@ -1,13 +1,18 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
+using System.Windows.Input;
+using AdressbuchLogic.Commands;
 
 namespace AdressbuchLogic
 {
     public class Adressbook
     {
-        private List<Contact> contactList;
+        private ObservableCollection<Contact> contactList;
+        public ICommand Command_AddUser { get; set; }
 
-        public List<Contact> ContactList
+
+        public ObservableCollection<Contact> ContactList
         {
             get => contactList;
             set => contactList = value;
@@ -15,10 +20,11 @@ namespace AdressbuchLogic
 
         public Adressbook()
         {
-            contactList = new List<Contact>();
+            contactList = new ObservableCollection<Contact>();
             AddUser("Test0");
             AddUser("Test1");
             AddUser("Test2");
+            Command_AddUser = new AddUserCommand(this);
         }
 
         public void AddUser(string pName)

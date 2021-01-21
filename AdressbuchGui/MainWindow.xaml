@@ -22,6 +22,7 @@
             </Setter>
         </Style>
     </Window.Resources>
+    
 
     <Grid>
         <Grid.ColumnDefinitions>
@@ -49,14 +50,14 @@
                 <Label HorizontalAlignment="Center" VerticalAlignment="Center" Content=" ֍" />
                 <TextBox Grid.Column="1"
                          Margin="3"
-                         Text="enter contact für search"
+                         Text="enter contact for search"
                          FocusVisualStyle="{DynamicResource MyFocusVisual}" />
             </Grid>
-            <ListView x:Name="lwContactView" Background="Beige" Height="280" ItemsSource="{Binding ElementName=Contact, Path=Name}">
+            <ListView x:Name="lwContactView" Background="Beige" Height="280" ItemsSource="{Binding ContactList}">
                 <ListView.ItemTemplate>
                     <DataTemplate>
                         <StackPanel Orientation="Horizontal">
-                            <TextBlock Text="{Binding ContactList}" Width="200"/>
+                            <TextBlock Text="{Binding Name}" Width="200"/>
                         </StackPanel>
                     </DataTemplate>
                 </ListView.ItemTemplate>
@@ -87,6 +88,7 @@
                 <Button Grid.Row="0"
                         Grid.Column="0"
                         Content="Add"
+                        Command="{Binding Command_AddUser, UpdateSourceTrigger=PropertyChanged}"
                         Style="{StaticResource Buttons}" />
                 <Button Grid.Row="0"
                         Grid.Column="1"
