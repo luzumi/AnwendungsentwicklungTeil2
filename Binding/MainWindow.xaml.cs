@@ -1,4 +1,5 @@
-﻿using System.Windows;
+﻿using System.ComponentModel;
+using System.Windows;
 using System.Windows.Controls;
 
 namespace Binding
@@ -13,10 +14,10 @@ namespace Binding
             InitializeComponent();
         }
 
-        private void loadBindingIntro(object pSender, RoutedEventArgs pE)
-        {
-            frmContent.Navigate(new IntroBinding());
-        }
+        //private void loadBindingIntro(object pSender, RoutedEventArgs pE)
+        //{
+        //    frmContent.Navigate(new IntroBinding());
+        //}
 
         private void loadBindingIntroExcersice(object pSender, RoutedEventArgs pE)
         {

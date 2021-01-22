@@ -7,9 +7,9 @@ namespace AdressbuchLogic
     {
         #region Implementation of ICommand
 
-        private readonly Adressbook Parent;
+        private readonly AdressbookViewModel Parent;
 
-        public AddUserCommand(Adressbook pParent)
+        public AddUserCommand(AdressbookViewModel pParent)
         {
             Parent = pParent;
         }
@@ -21,14 +21,19 @@ namespace AdressbuchLogic
 
         public void Execute(object parameter)
         {
-            Parent.AddView = !Parent.AddView;
-            Parent.ContactList.Add(new Contact("testen"));
+            if (!Parent.ChangeView)
+            {
+                ContactViewModel cm = new ContactViewModel();
+
+                Parent.ContactList.Add(cm);
+                Parent.ThisContact = cm;
+            }
+
+            Parent.ChangeView = !Parent.ChangeView;
         }
 
         public event EventHandler CanExecuteChanged;
 
         #endregion
-
-        
     }
 }

@@ -6,4 +6,14 @@
     <UseWPF>true</UseWPF>
   </PropertyGroup>
 
+  <ItemGroup>
+    <Compile Remove="BindingDirection.xaml.cs" />
+    <Compile Remove="IntroBinding.xaml.cs" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Page Remove="BindingDirection.xaml" />
+    <Page Remove="IntroBinding.xaml" />
+  </ItemGroup>
+
 </Project>

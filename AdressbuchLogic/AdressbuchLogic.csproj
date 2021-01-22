@@ -43,10 +43,10 @@
     <Reference Include="Microsoft.Analytics.Types" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Adressbook.cs" />
+    <Compile Include="AdressbookViewModel.cs" />
     <Compile Include="Commands\AddUserCommand.cs" />
-    <Compile Include="Contact.cs" />
-    <Compile Include="NetworkTypes.cs" />
+    <Compile Include="ContactViewModel.cs" />
+    <Compile Include="Properties\Annotations.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup />
