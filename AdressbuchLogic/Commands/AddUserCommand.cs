@@ -21,7 +21,7 @@ namespace AdressbuchLogic
 
         public void Execute(object parameter)
         {
-            Parent.VisibilityItem = Parent.VisibilityItem;
+            Parent.AddView = !Parent.AddView;
             Parent.ContactList.Add(new Contact("testen"));
         }
 

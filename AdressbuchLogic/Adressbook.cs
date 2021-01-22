@@ -42,6 +42,16 @@ namespace AdressbuchLogic
             }
         }
 
+
+        private bool _AddView;
+
+        public bool AddView
+        {
+            get => _AddView; 
+            set => _AddView = value;
+        }
+
+
         public enum Visibilitys
         {
             Collapsed,
