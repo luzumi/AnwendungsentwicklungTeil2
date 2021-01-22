@@ -6,10 +6,10 @@
         xmlns:local="clr-namespace:AdressbuchGui"
         xmlns:logic="clr-namespace:AdressbuchLogic;assembly=AdressbuchLogic"
         mc:Ignorable="d"
-        Title="MainWindow" Height="450" Width="800">
+        Title="MainWindow" Height="480" Width="800">
 
     <Window.DataContext>
-        <logic:Adressbook/>
+        <logic:Adressbook />
     </Window.DataContext>
     <Window.Resources>
         <Style x:Key="MyFocusVisual">
@@ -22,7 +22,7 @@
             </Setter>
         </Style>
     </Window.Resources>
-    
+
 
     <Grid>
         <Grid.ColumnDefinitions>
@@ -30,7 +30,7 @@
             <ColumnDefinition Width="*" />
         </Grid.ColumnDefinitions>
 
-        <StackPanel Grid.Column="0" Background="BlanchedAlmond">
+        <StackPanel Grid.Column="0" Background="BlanchedAlmond" Margin="10,0,0,10">
             <Label Content="my contacts"
                    HorizontalAlignment="Center"
                    HorizontalContentAlignment="Center"
@@ -46,29 +46,97 @@
                     <ColumnDefinition Width="30" />
                     <ColumnDefinition Width="*" />
                 </Grid.ColumnDefinitions>
+
                 <Button Grid.Column="0" Width="30" Height="30" />
-                <Label HorizontalAlignment="Center" VerticalAlignment="Center" Content=" ֍" />
+
+                <Label Grid.Column="0" 
+                       HorizontalAlignment="Center" 
+                       VerticalAlignment="Center" 
+                       Content=" ֍" />
+
                 <TextBox Grid.Column="1"
                          Margin="3"
                          Text="enter contact for search"
                          FocusVisualStyle="{DynamicResource MyFocusVisual}" />
             </Grid>
-            <ListView x:Name="lwContactView" Background="Beige" Height="280" ItemsSource="{Binding ContactList}">
-                <ListView.ItemTemplate>
-                    <DataTemplate>
-                        <StackPanel Orientation="Horizontal">
-                            <TextBlock Text="{Binding Name}" Width="200"/>
-                        </StackPanel>
-                    </DataTemplate>
-                </ListView.ItemTemplate>
-            </ListView>
+
+            <Grid x:Name="gdListAdd">
+                <ListView x:Name="lwContactView" 
+                          Visibility="{Binding VisibilityItem}" 
+                          Background="Beige" 
+                          Height="280"
+                          ItemsSource="{Binding ContactList}">
+                    <ListView.ItemTemplate>
+                        <DataTemplate>
+                            <StackPanel Orientation="Horizontal">
+                                <TextBlock Text="{Binding Name}"
+                                           Width="200" />
+                            </StackPanel>
+                        </DataTemplate>
+                    </ListView.ItemTemplate>
+                </ListView>
+
+                <Grid x:Name="gdAddName"
+                      Height="280"
+                      Background="LightSalmon"
+                      Visibility="{Binding VisibilityItem}">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="27" />
+                        <RowDefinition Height="27" />
+                        <RowDefinition Height="27" />
+                        <RowDefinition Height="27" />
+                        <RowDefinition Height="27" />
+                        <RowDefinition Height="27" />
+                        <RowDefinition Height="27" />
+                        <RowDefinition Height="27" />
+                        <RowDefinition Height="27" />
+                        <RowDefinition Height="27" />
+                        <RowDefinition Height="27" />
+                    </Grid.RowDefinitions>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="80" />
+                        <ColumnDefinition Width="*" />
+                    </Grid.ColumnDefinitions>
+                    <Grid.Resources>
+                        <Style x:Key="lbl" TargetType="Label">
+                            <Setter Property="Margin" Value="2" />
+                            <Setter Property="Background" Value="Coral" />
+                        </Style>
+                        <Style x:Key="textboxes" TargetType="TextBox">
+                            <Setter Property="Margin" Value="2" />
+                            <Setter Property="Background" Value="Tomato" />
+                        </Style>
+                    </Grid.Resources>
+                    <Label Style="{StaticResource lbl}" Content="Name" Grid.Row="0" Grid.Column="0" />
+                    <Label Style="{StaticResource lbl}" Content="Straße" Grid.Row="1" Grid.Column="0" />
+                    <Label Style="{StaticResource lbl}" Content="Stadt" Grid.Row="2" Grid.Column="0" />
+                    <Label Style="{StaticResource lbl}" Content="eMail" Grid.Row="3" Grid.Column="0" />
+                    <Label Style="{StaticResource lbl}" Content="Twitter" Grid.Row="4" Grid.Column="0" />
+                    <Label Style="{StaticResource lbl}" Content="Facebook" Grid.Row="5" Grid.Column="0" />
+                    <Label Style="{StaticResource lbl}" Content="LinkedIn" Grid.Row="6" Grid.Column="0" />
+                    <Label Style="{StaticResource lbl}" Content="Xing" Grid.Row="7" Grid.Column="0" />
+                    <Label Style="{StaticResource lbl}" Content="Instagram" Grid.Row="8" Grid.Column="0" />
+                    <Label Style="{StaticResource lbl}" Content="reddit" Grid.Row="9" Grid.Column="0" />
+
+                    <TextBox Text="{Binding ThisContact.Name}" x:Name="tbName" Style="{StaticResource textboxes}" Grid.Column="1" Grid.Row="0"></TextBox>
+                    <TextBox Text="{Binding ThisContact.Name}" x:Name="tbStreet" Style="{StaticResource textboxes}" Grid.Column="1" Grid.Row="1"></TextBox>
+                    <TextBox Text="{Binding ThisContact.Street}" x:Name="tbCity" Style="{StaticResource textboxes}" Grid.Column="1" Grid.Row="2"></TextBox>
+                    <TextBox Text="{Binding ThisContact.Email}" x:Name="tbEmail" Style="{StaticResource textboxes}" Grid.Column="1" Grid.Row="3"></TextBox>
+                    <TextBox Text="{Binding ThisContact.Twitter}" x:Name="tbTwitter" Style="{StaticResource textboxes}" Grid.Column="1" Grid.Row="4"></TextBox>
+                    <TextBox Text="{Binding ThisContact.Facebook}" x:Name="tbFacebook" Style="{StaticResource textboxes}" Grid.Column="1" Grid.Row="5"></TextBox>
+                    <TextBox Text="{Binding ThisContact.LinkedIn}" x:Name="tbLinked" Style="{StaticResource textboxes}" Grid.Column="1" Grid.Row="6"></TextBox>
+                    <TextBox Text="{Binding ThisContact.Xing}" x:Name="tbXing" Style="{StaticResource textboxes}" Grid.Column="1" Grid.Row="7"></TextBox>
+                    <TextBox Text="{Binding ThisContact.Instagram}" x:Name="tbInsta" Style="{StaticResource textboxes}" Grid.Column="1" Grid.Row="8"></TextBox>
+                    <TextBox Text="{Binding ThisContact.Reddit}" x:Name="tbReddit" Style="{StaticResource textboxes}" Grid.Column="1" Grid.Row="9"></TextBox>
+                </Grid>
+            </Grid>
 
             <!-- Buttons -->
             <Grid x:Name="grButtonGrid">
                 <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="80" />
-                    <ColumnDefinition Width="80" />
-                    <ColumnDefinition Width="80" />
+                    <ColumnDefinition Width="77" />
+                    <ColumnDefinition Width="77" />
+                    <ColumnDefinition Width="77" />
                 </Grid.ColumnDefinitions>
                 <Grid.RowDefinitions>
                     <RowDefinition Height="44" />
@@ -85,6 +153,7 @@
                         <Setter Property="FontSize" Value="8" />
                     </Style>
                 </Grid.Resources>
+
                 <Button Grid.Row="0"
                         Grid.Column="0"
                         Content="Add"
@@ -105,8 +174,6 @@
                         Style="{StaticResource Buttons}" />
             </Grid>
         </StackPanel>
-        <Frame Grid.Column="1" Background="Brown">
-
-        </Frame>
+        <Frame Grid.Column="1" Background="Brown" Margin="0,0,10,10" />
     </Grid>
 </Window>

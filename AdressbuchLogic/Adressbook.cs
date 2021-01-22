@@ -1,6 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Collections.ObjectModel;
+﻿using System.Collections.ObjectModel;
 using System.Windows.Input;
 
 namespace AdressbuchLogic
@@ -21,6 +19,34 @@ namespace AdressbuchLogic
         {
             contactList = new ObservableCollection<Contact>();
             Command_AddUser = new AddUserCommand(this);
+        }
+
+        public Contact ThisContact { get; set; }
+
+        private Visibilitys _visibilitys;
+        public Visibilitys VisibilityItem
+        {
+            get => _visibilitys;
+            set
+            {
+                switch (value)
+                {
+                    case Visibilitys.Collapsed:
+                        
+                        _visibilitys = Visibilitys.Visible;
+                        break;
+                    case Visibilitys.Visible:
+                        _visibilitys = Visibilitys.Collapsed;
+                        break;
+                }
+            }
+        }
+
+        public enum Visibilitys
+        {
+            Collapsed,
+            Hidden,
+            Visible
         }
 
         public ICommand AddUser

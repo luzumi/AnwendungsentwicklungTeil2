@@ -5,7 +5,6 @@ namespace AdressbuchLogic
 {
     public class Contact
     {
-        private string name;
         private string city;
         private string street;
         private string houseNumber;
@@ -18,11 +17,7 @@ namespace AdressbuchLogic
         private string reddit;
         
 
-        public string Name
-        {
-            get => name;
-            set => name = value;
-        }
+        public string Name { get; set; }
 
         public string City
         {
@@ -86,7 +81,7 @@ namespace AdressbuchLogic
 
         public Contact(string pName)
         {
-            name = pName;
+            Name = pName;
         }
     }
 }
