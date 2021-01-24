@@ -8,8 +8,11 @@ namespace AdressbuchLogic
 {
     public class AdressbookViewModel : INotifyPropertyChanged
     {
-        private ObservableCollection<ContactViewModel> contactList;
-        public ICommand Command_AddUser { get; set; }
+        public event PropertyChangedEventHandler PropertyChanged;
+        public BaseCommand CommandAddUser { get; set; }
+        public BaseCommand CommandDeleteUser { get; set; }
+        public BaseCommand CommandEditUser { get; set; }
+        public BaseCommand CommandWeb { get; set; }
 
 
         public ObservableCollection<ContactViewModel> ContactList
@@ -25,20 +28,24 @@ namespace AdressbuchLogic
                 }
             }
         }
+        private ObservableCollection<ContactViewModel> contactList;
+
 
         public AdressbookViewModel()
         {
             contactList = new ObservableCollection<ContactViewModel>();
-            Command_AddUser = new AddUserCommand(this);
+            CommandAddUser = new AddUserCommand(this);
+            CommandEditUser = new EditUserCommand(this);
+            CommandDeleteUser = new DeleteUserCommand(this);
+            ContactList = new();
         }
 
-        private ContactViewModel _thisContact;
+
         public ContactViewModel ThisContact
         {
             get => _thisContact;
             set
             {
-
                 if (_thisContact != value)
 
                 {
@@ -47,45 +54,44 @@ namespace AdressbuchLogic
                 }
             }
         }
-
-        //private Visibilitys _visibilitys;
-        //public Visibilitys VisibilityItem
-        //{
-        //    get => _visibilitys;
-        //    set
-        //    {
-        //        switch (value)
-        //        {
-        //            case Visibilitys.Collapsed:
-
-        //                _visibilitys = Visibilitys.Visible;
-        //                break;
-        //            case Visibilitys.Visible:
-        //                _visibilitys = Visibilitys.Collapsed;
-        //                break;
-        //        }
-        //    }
-        //}
+        private ContactViewModel _thisContact;
 
 
-
-        private bool _ChangeView;
         public bool ChangeView
         {
             get
             {
-                return _ChangeView;
+                return _changeView;
             }
             set
             {
-                if (_ChangeView != value)
+                if (_changeView != value)
 
                 {
-                    _ChangeView = value;
+                    _changeView = value;
                     PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(ChangeView)));
                 }
             }
         }
+        private bool _changeView;
+
+        public bool ChangeEditView
+        {
+            get
+            {
+                return _changeEditView;
+            }
+            set
+            {
+                if (_changeEditView != value)
+
+                {
+                    _changeEditView = value;
+                    PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(ChangeEditView)));
+                }
+            }
+        }
+        private bool _changeEditView;
 
         
         public ICommand AddUser
@@ -114,6 +120,5 @@ namespace AdressbuchLogic
             set;
         }
 
-        public event PropertyChangedEventHandler PropertyChanged;
     }
 }

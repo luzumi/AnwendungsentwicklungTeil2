@@ -1,4 +1,10 @@
 ﻿using System.Windows;
+using System.Windows.Data;
+using System.Windows.Media;
+using System.Windows.Media.Imaging;
+using System.Windows.Navigation;
+using System.Windows.Shapes;
+
 
 namespace AdressbuchGui
 {
@@ -10,6 +16,12 @@ namespace AdressbuchGui
         public MainWindow()
         {
             InitializeComponent();
+        }
+
+        private void ShowContactDetails(object pSender, DataTransferEventArgs pE)
+        {
+            frmContent.Navigate(new WebContentPage(DataContext));
+
         }
     }
 }

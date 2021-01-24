@@ -1,4 +1,5 @@
-﻿using System.ComponentModel;
+﻿using System.Collections.ObjectModel;
+using System.ComponentModel;
 
 namespace AdressbuchLogic
 {
@@ -15,6 +16,9 @@ namespace AdressbuchLogic
         private string _xing;
         private string _instagram;
         private string _reddit;
+
+
+        public ObservableCollection<string> WebProfiles { get; set; }
 
 
         public string Name
@@ -194,8 +198,8 @@ namespace AdressbuchLogic
         }
 
         public ContactViewModel(string pName = "name",
-                                string pStreet = "street",
                                 string pCity = "city",
+                                string pStreet = "street",
                                 string pHouseNumber = "N°",
                                 string pEmail = "email",
                                 string pTwitter = "twitter",
@@ -206,8 +210,8 @@ namespace AdressbuchLogic
                                 string pReddit = "reddit" )
         {
             _name = pName;
-            _street = pStreet;
             _city = pCity;
+            _street = pStreet;
             _houseNumber = pHouseNumber;
             _email = pEmail;
             _twitter = pTwitter;

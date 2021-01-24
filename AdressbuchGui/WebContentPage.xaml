@@ -1,0 +1,77 @@
+﻿<Page x:Class="AdressbuchGui.WebContentPage"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+      xmlns:local="clr-namespace:AdressbuchGui"
+      xmlns:adressbuchLogic="clr-namespace:AdressbuchLogic;assembly=AdressbuchLogic"
+      mc:Ignorable="d"
+      d:DesignHeight="450" d:DesignWidth="560"
+      Title="WebContentPage">
+    <Page.DataContext>
+        <adressbuchLogic:AdressbookViewModel />
+    </Page.DataContext>
+
+    <Page.Resources>
+
+        <Style TargetType="Button" x:Key="TopButtons">
+            <Setter Property="Background" Value="Brown" />
+            <Setter Property="Foreground" Value="BlanchedAlmond" />
+        </Style>
+        <Style  TargetType="Label" x:Key="ContactDetails">
+            <Setter Property="Background" Value="BlanchedAlmond"></Setter>
+        </Style>
+
+    </Page.Resources>
+
+
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*" />
+            <ColumnDefinition Width="*" />
+            <ColumnDefinition Width="*" />
+            <ColumnDefinition Width="*" />
+            <ColumnDefinition Width="*" />
+            <ColumnDefinition Width="*" />
+            <ColumnDefinition Width="*" />
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="30" />
+            <RowDefinition Height="*" />
+            <RowDefinition Height="*" />
+        </Grid.RowDefinitions>
+
+        <!-- Row 0 -->
+        <Button Grid.Row="0" Grid.Column="0" Style="{StaticResource TopButtons}" Content="email" />
+        <Button Grid.Row="0" Grid.Column="1" Style="{StaticResource TopButtons}" Content="Twitter" />
+        <Button Grid.Row="0" Grid.Column="2" Style="{StaticResource TopButtons}" Content="Facebook" />
+        <Button Grid.Row="0" Grid.Column="3" Style="{StaticResource TopButtons}" Content="linkedIn" />
+        <Button Grid.Row="0" Grid.Column="4" Style="{StaticResource TopButtons}" Content="Xing" />
+        <Button Grid.Row="0" Grid.Column="5" Style="{StaticResource TopButtons}" Content="Instagram" />
+        <Button Grid.Row="0" Grid.Column="6" Style="{StaticResource TopButtons}" Content="Reddit" />
+
+        <!-- Row 1 -->
+        <!-- Kontaktdaten -->
+        <Grid  Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="2" >
+            <StackPanel>
+                <Label Height="19" Content="{Binding Path=ThisContact.Name}" Style="{StaticResource ContactDetails}"></Label>
+                <Label Height="19" Content="{Binding Path=ThisContact.City}" Style="{StaticResource ContactDetails}"></Label>
+                <Label Height="19" Content="{Binding Path=ThisContact.Street}" Style="{StaticResource ContactDetails}"></Label>
+                <Label Height="19" Content="{Binding Path=ThisContact.HouseNumber}" Style="{StaticResource ContactDetails}"></Label>
+                <Label Height="19" Content="{Binding Path=ThisContact.Email}" Style="{StaticResource ContactDetails}"></Label>
+                <Label Height="19" Content="{Binding Path=ThisContact.Twitter}" Style="{StaticResource ContactDetails}"></Label>
+                <Label Height="19" Content="{Binding Path=ThisContact.Facebook}" Style="{StaticResource ContactDetails}"></Label>
+                <Label Height="19" Content="{Binding Path=ThisContact.LinkedIn}" Style="{StaticResource ContactDetails}"></Label>
+                <Label Height="19" Content="{Binding Path=ThisContact.Xing}" Style="{StaticResource ContactDetails}"></Label>
+                <Label Height="19" Content="{Binding Path=ThisContact.Instagram}" Style="{StaticResource ContactDetails}"></Label>
+                <Label Height="19" Content="{Binding Path=ThisContact.Reddit}" Style="{StaticResource ContactDetails}"></Label>
+            </StackPanel>
+        </Grid>
+
+        <!-- Zufallseintrag -->
+        <Grid Background="Aqua" Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="2" />
+
+        <!-- Webbrowser -->
+        <Grid Background="Black" Grid.Row="1" Grid.Column="2" Grid.ColumnSpan="5" Grid.RowSpan="2" />
+    </Grid>
+</Page>

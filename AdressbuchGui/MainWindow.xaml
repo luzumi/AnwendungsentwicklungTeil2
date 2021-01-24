@@ -6,7 +6,8 @@
         xmlns:local="clr-namespace:AdressbuchGui"
         xmlns:logic="clr-namespace:AdressbuchLogic;assembly=AdressbuchLogic"
         mc:Ignorable="d"
-        Title="MainWindow" Height="480" Width="800">
+        Title="MainWindow" Height="480" Width="800"
+        x:Name="MyContacts">
     <!--wichtig fürs Binding-->
     <Window.DataContext>
         <logic:AdressbookViewModel />
@@ -25,10 +26,49 @@
                 </Setter.Value>
             </Setter>
         </Style>
+
+        <Style x:Key="ButtonStyle" TargetType="Button" >
+            <Setter Property="Margin" Value="8" />
+            <Setter Property="Background" Value="Brown" />
+            <Setter Property="Foreground" Value="AntiqueWhite" />
+            <Setter Property="BorderThickness" Value="0" />
+            <Setter Property="FontFamily" Value="Castellar" />
+            <Setter Property="FontWeight" Value="Regular" />
+            <Setter Property="FontSize" Value="8" />
+        </Style>
+
+        <Style TargetType="Button" x:Key="AddViewChange">
+            <Setter Property="Margin" Value="8" />
+            <Setter Property="Background" Value="Brown" />
+            <Setter Property="Foreground" Value="AntiqueWhite" />
+            <Setter Property="BorderThickness" Value="0" />
+            <Setter Property="FontFamily" Value="Castellar" />
+            <Setter Property="FontWeight" Value="Regular" />
+            <Setter Property="FontSize" Value="8" />
+            <Style.Triggers>
+                <DataTrigger Binding="{Binding ChangeView}" Value="true">
+                    <DataTrigger.Setters>
+                        <Setter Property="Visibility" Value="Collapsed" />
+                        <Setter Property="Content" Value="Add User" />
+                    </DataTrigger.Setters>
+                </DataTrigger>
+            </Style.Triggers>
+        </Style>
+
+        <Style x:Key="DeleteButtonStyle" TargetType="Button">
+            <Setter Property="Margin" Value="8" />
+            <Setter Property="Background" Value="Brown" />
+            <Setter Property="Foreground" Value="AntiqueWhite" />
+            <Setter Property="BorderThickness" Value="0" />
+            <Setter Property="FontFamily" Value="Castellar" />
+            <Setter Property="FontWeight" Value="Regular" />
+            <Setter Property="FontSize" Value="8" />
+
+        </Style>
     </Window.Resources>
 
-
-    <Grid>
+<!-- Grid MyContacts -->
+    <Grid >
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="240" />
             <ColumnDefinition Width="*" />
@@ -60,32 +100,38 @@
                          FocusVisualStyle="{DynamicResource MyFocusVisual}" />
             </StackPanel>
 
+            <!-- ListView und EditForm -->
             <Grid x:Name="gdListAdd">
+                <!-- ListView -->
                 <ListView x:Name="lwContactView"
                           Background="Beige"
                           Height="280"
-                          ItemsSource="{Binding ContactList, Mode=OneWay}"
-                          SelectedItem="{Binding ThisContact}">
-
+                          ItemsSource="{Binding ContactList}"
+                          SelectedItem="{Binding ThisContact}"
+                          SelectionMode="Single"
+                          Binding.TargetUpdated="ShowContactDetails">
                     <ListView.ItemTemplate>
                         <DataTemplate>
                             <StackPanel Orientation="Horizontal">
                                 <TextBlock Text="{Binding Name}"
-                                           Width="200" />
+                                           Width="200"
+                                           HorizontalAlignment="Left" />
                                 <TextBlock Text="{Binding City}"
-                                           Width="200" />
+                                           Width="200"
+                                           HorizontalAlignment="Left" />
                             </StackPanel>
                         </DataTemplate>
                     </ListView.ItemTemplate>
                 </ListView>
-
-                <Grid x:Name="grAddName"
+                
+                <!-- EditForm -->
+                <Grid x:Name="EditForm"
                       Height="280"
                       Background="LightSalmon">
                     <Grid.Style>
                         <Style>
                             <Style.Triggers>
-                                <DataTrigger Binding="{Binding ChangelemeneView}" Value="false">
+                                <DataTrigger Binding="{Binding ChangeView}" Value="false">
                                     <DataTrigger.Setters>
                                         <Setter Property="Grid.Visibility" Value="Collapsed" />
                                     </DataTrigger.Setters>
@@ -127,63 +173,74 @@
                         </Style>
                     </Grid.Resources>
 
-                    <Label Content="Name" Grid.Row="0" Grid.Column="0" />
-                    <Label Content="Street" Grid.Row="1" Grid.Column="0" />
-                    <Label Content="City" Grid.Row="2" Grid.Column="0" />
-                    <Label Content="eMail" Grid.Row="3" Grid.Column="0" />
-                    <Label Content="Twitter" Grid.Row="4" Grid.Column="0" />
-                    <Label Content="Facebook" Grid.Row="5" Grid.Column="0" />
-                    <Label Content="LinkedIn" Grid.Row="6" Grid.Column="0" />
-                    <Label Content="Xing" Grid.Row="7" Grid.Column="0" />
-                    <Label Content="Instagram" Grid.Row="8" Grid.Column="0" />
-                    <Label Content="reddit" Grid.Row="9" Grid.Column="0" />
+                    <Label Content="_Name" Target="{Binding ElementName=tb_Name}" Grid.Row="0" Grid.Column="0" />
+                    <Label Content="_City" Target="{Binding ElementName=tb_City}" Grid.Row="1" Grid.Column="0" />
+                    <Label Content="_Street" Target="{Binding ElementName=tb_Street}" Grid.Row="2" Grid.Column="0" />
+                    <Label Content="_N°" Target="{Binding ElementName=tb_HouseNumber}" Grid.Row="3" Grid.Column="0" />
+                    <Label Content="_Twitter" Target="{Binding ElementName=tb_Twitter}" Grid.Row="4" Grid.Column="0" />
+                    <Label Content="_Facebook" Target="{Binding ElementName=tb_Facebook}" Grid.Row="5" Grid.Column="0" />
+                    <Label Content="_LinkedIn" Target="{Binding ElementName=tb_LinkedIn}" Grid.Row="6" Grid.Column="0" />
+                    <Label Content="_Xing" Target="{Binding ElementName=tb_Xing}" Grid.Row="7" Grid.Column="0" />
+                    <Label Content="_Instagram" Target="{Binding ElementName=tb_Instagram}" Grid.Row="8"
+                           Grid.Column="0" />
+                    <Label Content="_Reddit" Target="{Binding ElementName=tb_Reddit}" Grid.Row="9" Grid.Column="0" />
 
                     <TextBox
+                        Name="tb_Name"
                         Text="{Binding ElementName=lwContactView, 
                         Path=SelectedItem.Name, 
                         UpdateSourceTrigger=PropertyChanged}"
                         Grid.Column="1" Grid.Row="0" />
                     <TextBox
+                        Name="tb_City"
                         Text="{Binding ElementName=lwContactView, 
                         Path=SelectedItem.City, 
                         UpdateSourceTrigger=PropertyChanged}"
                         Grid.Column="1" Grid.Row="1" />
                     <TextBox
+                        Name="tb_Street"
                         Text="{Binding ElementName=lwContactView, 
                         Path=SelectedItem.Street, 
                         UpdateSourceTrigger=PropertyChanged}"
                         Grid.Column="1" Grid.Row="2" />
                     <TextBox
+                        Name="tb_HouseNumber"
                         Text="{Binding ElementName=lwContactView, 
                         Path=SelectedItem.HouseNumber, 
                         UpdateSourceTrigger=PropertyChanged}"
                         Grid.Column="1" Grid.Row="3" />
                     <TextBox
+                        Name="tb_Twitter"
                         Text="{Binding ElementName=lwContactView, 
                         Path=SelectedItem.Twitter, 
                         UpdateSourceTrigger=PropertyChanged}"
                         Grid.Column="1" Grid.Row="4" />
                     <TextBox
+                        Name="tb_Facebook"
                         Text="{Binding ElementName=lwContactView, 
                         Path=SelectedItem.Facebook, 
                         UpdateSourceTrigger=PropertyChanged}"
                         Grid.Column="1" Grid.Row="5" />
                     <TextBox
+                        Name="tb_LinkedIn"
                         Text="{Binding ElementName=lwContactView, 
                         Path=SelectedItem.LinkedIn, 
                         UpdateSourceTrigger=PropertyChanged}"
                         Grid.Column="1" Grid.Row="6" />
                     <TextBox
+                        Name="tb_Xing"
                         Text="{Binding ElementName=lwContactView, 
                         Path=SelectedItem.Xing, 
                         UpdateSourceTrigger=PropertyChanged}"
                         Grid.Column="1" Grid.Row="7" />
                     <TextBox
+                        Name="tb_Instagram"
                         Text="{Binding ElementName=lwContactView, 
                         Path=SelectedItem.Instagram, 
                         UpdateSourceTrigger=PropertyChanged}"
                         Grid.Column="1" Grid.Row="8" />
                     <TextBox
+                        Name="tb_Reddit"
                         Text="{Binding ElementName=lwContactView, 
                         Path=SelectedItem.Reddit, 
                         UpdateSourceTrigger=PropertyChanged}"
@@ -191,7 +248,7 @@
                 </Grid>
             </Grid>
 
-            <!-- Buttons -->
+            <!-- Buttons Add, Edit, Delete, Web-->
             <Grid x:Name="grButtonGrid">
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="77" />
@@ -202,38 +259,43 @@
                     <RowDefinition Height="44" />
                     <RowDefinition Height="44" />
                 </Grid.RowDefinitions>
-                <Grid.Resources>
-                    <Style x:Key="Buttons" TargetType="Button">
-                        <Setter Property="Margin" Value="8" />
-                        <Setter Property="Background" Value="Brown" />
-                        <Setter Property="Foreground" Value="AntiqueWhite" />
-                        <Setter Property="BorderThickness" Value="0" />
-                        <Setter Property="FontFamily" Value="Castellar" />
-                        <Setter Property="FontWeight" Value="Regular" />
-                        <Setter Property="FontSize" Value="8" />
-                    </Style>
-                </Grid.Resources>
 
+                <!-- Button Add -->
                 <Button Grid.Row="0"
                         Grid.Column="0"
-                        Content="Add"
-                        Command="{Binding Command_AddUser}"
-                        Style="{StaticResource Buttons}" />
+                        Command="{Binding CommandAddUser}"
+                        Style="{StaticResource ButtonStyle}"
+                        Content="Add User" />
+
+                <!-- Button Edit -->
                 <Button Grid.Row="0"
                         Grid.Column="1"
-                        Content="Delete"
-                        Style="{StaticResource Buttons}" />
+                        Command="{Binding CommandEditUser }"
+                        Style="{StaticResource ButtonStyle}"
+                        Content="Edit User" />
+
+                <!-- Button Delete -->
                 <Button Grid.Row="0"
                         Grid.Column="2"
-                        Content="Edit"
-                        Style="{StaticResource Buttons}" />
+                        Command="{Binding CommandDeleteUser }"
+                        Style="{StaticResource ButtonStyle}"
+                        Content="Delete" />
+
+                <!-- Button Web -->
                 <Button Grid.Row="1"
                         Grid.Column="0"
                         Grid.ColumnSpan="3"
-                        Content="Open Web"
-                        Style="{StaticResource Buttons}" />
+                        Command="{Binding CommandWeb }"
+                        Style="{StaticResource ButtonStyle}"
+                        Content="Open Web" />
             </Grid>
         </StackPanel>
-        <Frame Grid.Column="1" Background="Brown" Margin="0,0,10,10" />
+
+        <!-- WebBrowser -->
+        <StackPanel x:Name="ContactViewer" Grid.Column="1" Margin="0,0,10,10" >
+            
+
+        </StackPanel>
+        <Frame Grid.Column="1" x:Name="frmContent" NavigationUIVisibility="Visible"></Frame>
     </Grid>
 </Window>
