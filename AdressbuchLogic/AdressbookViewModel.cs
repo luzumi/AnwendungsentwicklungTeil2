@@ -1,8 +1,6 @@
 ﻿using System.Collections.ObjectModel;
 using System.ComponentModel;
-using System.Runtime.CompilerServices;
 using System.Windows.Input;
-using AdressbuchLogic;
 
 namespace AdressbuchLogic
 {
@@ -37,8 +35,44 @@ namespace AdressbuchLogic
             CommandAddUser = new AddUserCommand(this);
             CommandEditUser = new EditUserCommand(this);
             CommandDeleteUser = new DeleteUserCommand(this);
-            ContactList = new();
+            ContactList = new(logic.Load());
         }
+
+        public string ContentFilter
+        {
+            get => _contentFilter;
+            set
+            {
+                if (_contentFilter != value)
+                {
+                    _contentFilter = value;
+                    reloadContacts();
+                    PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(ContactList)));
+                }
+            }
+        }
+        private string _contentFilter;
+
+        private void reloadContacts()
+        {
+            ContactList.Clear();
+            foreach (var item in ContactList)
+                if (item.FirstName.Contains(_contentFilter) ||
+                    item.LastName.Contains(_contentFilter) ||
+                    item.City.Contains(_contentFilter) ||
+                    item.Street.Contains(_contentFilter) ||
+                    item.HouseNumber.Contains(_contentFilter) ||
+                    item.Email.Contains(_contentFilter) ||
+                    item.Twitter.Contains(_contentFilter) ||
+                    item.Facebook.Contains(_contentFilter) ||
+                    item.LinkedIn.Contains(_contentFilter) ||
+                    item.Xing.Contains(_contentFilter) ||
+                    item.Instagram.Contains(_contentFilter) ||
+                    item.Reddit.Contains(_contentFilter))
+                    ContactList.Add(item);
+        }
+
+        public DataStorage logic = new();
 
 
         public ContactViewModel ThisContact
@@ -95,7 +129,7 @@ namespace AdressbuchLogic
         }
         private bool _changeEditView;
 
-        
+
         public ICommand AddUser
         {
             get;

@@ -5,7 +5,8 @@ namespace AdressbuchLogic
 {
     public class ContactViewModel : INotifyPropertyChanged
     {
-        private string _name;
+        private string _firstName;
+        private string _lastName;
         private string _street;
         private string _city;
         private string _houseNumber;
@@ -21,18 +22,34 @@ namespace AdressbuchLogic
         public ObservableCollection<string> WebProfiles { get; set; }
 
 
-        public string Name
+        public string FirstName
         {
             get
             {
-                return _name;
+                return _firstName;
             }
             set
             {
-                if (_name != value)
+                if (_firstName != value)
                 {
-                    _name = value;
-                    PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(Name)));
+                    _firstName = value;
+                    PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(FirstName)));
+                }
+            }
+        }
+        
+        public string LastName
+        {
+            get
+            {
+                return _lastName;
+            }
+            set
+            {
+                if (_lastName != value)
+                {
+                    _lastName = value;
+                    PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(LastName)));
                 }
             }
         }
@@ -197,7 +214,8 @@ namespace AdressbuchLogic
             }
         }
 
-        public ContactViewModel(string pName = "name",
+        public ContactViewModel(string pFirstName = "fname",
+                                string pLastName = "lname",
                                 string pCity = "city",
                                 string pStreet = "street",
                                 string pHouseNumber = "N°",
@@ -207,9 +225,9 @@ namespace AdressbuchLogic
                                 string pLinkedIn = "linkedIn",
                                 string pXing = "xing",
                                 string pInstagram = "instagram",
-                                string pReddit = "reddit" )
+                                string pReddit = "reddit")
         {
-            _name = pName;
+            _firstName = pFirstName;
             _city = pCity;
             _street = pStreet;
             _houseNumber = pHouseNumber;

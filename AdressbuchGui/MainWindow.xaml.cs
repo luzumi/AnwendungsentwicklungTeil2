@@ -1,5 +1,6 @@
 ﻿using System.Runtime.CompilerServices;
 using System.Windows;
+using System.Windows.Controls;
 using System.Windows.Data;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
@@ -14,16 +15,19 @@ namespace AdressbuchGui
     /// </summary>
     public partial class MainWindow : Window
     {
-        WebContentPage _page = new WebContentPage(null);
+        WebContentPage _page;
 
         public MainWindow()
         {
             InitializeComponent();
         }
 
-        private void ShowContactDetails(object pSender, DataTransferEventArgs pE)
+        private void ShowContactDetails(object pSender, SelectionChangedEventArgs pSelectionChangedEventArgs)
         {
+            _page = new WebContentPage(DataContext);
             FrmContent.Navigate(_page);
         }
+
+        
     }
 }

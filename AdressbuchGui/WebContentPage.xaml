@@ -19,6 +19,9 @@
         <Style  TargetType="Label" x:Key="ContactDetails">
             <Setter Property="Background" Value="BlanchedAlmond"></Setter>
             <Setter Property="Foreground" Value="Brown"></Setter>
+            <Setter Property="Height" Value="18"></Setter>
+            <Setter Property="VerticalContentAlignment" Value="Top"></Setter>
+            <Setter Property="Padding" Value="1"></Setter>
         </Style>
 
     </Page.Resources>
@@ -36,7 +39,7 @@
         </Grid.ColumnDefinitions>
         <Grid.RowDefinitions>
             <RowDefinition Height="30" />
-            <RowDefinition Height="*" />
+            <RowDefinition Height="198" />
             <RowDefinition Height="*" />
         </Grid.RowDefinitions>
 
@@ -53,17 +56,18 @@
         <!-- Kontaktdaten -->
         <Grid  Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="2" >
             <StackPanel >
-                <Label Height="19" Content="{Binding }" Style="{StaticResource ContactDetails}"></Label>
-                <Label Height="19" Content="{Binding Path=ThisContact.City}" Style="{StaticResource ContactDetails}"></Label>
-                <Label Height="19" Content="{Binding Path=ThisContact.Street}" Style="{StaticResource ContactDetails}"></Label>
-                <Label Height="19" Content="{Binding Path=ThisContact.HouseNumber}" Style="{StaticResource ContactDetails}"></Label>
-                <Label Height="19" Content="{Binding Path=ThisContact.Email}" Style="{StaticResource ContactDetails}"></Label>
-                <Label Height="19" Content="{Binding Path=ThisContact.Twitter}" Style="{StaticResource ContactDetails}"></Label>
-                <Label Height="19" Content="{Binding Path=ThisContact.Facebook}" Style="{StaticResource ContactDetails}"></Label>
-                <Label Height="19" Content="{Binding Path=ThisContact.LinkedIn}" Style="{StaticResource ContactDetails}"></Label>
-                <Label Height="19" Content="{Binding Path=ThisContact.Xing}" Style="{StaticResource ContactDetails}"></Label>
-                <Label Height="19" Content="{Binding Path=ThisContact.Instagram}" Style="{StaticResource ContactDetails}"></Label>
-                <Label Height="19" Content="{Binding Path=ThisContact.Reddit}" Style="{StaticResource ContactDetails}"></Label>
+                <Label Content="{Binding Path=ThisContact.FirstName}" Style="{StaticResource ContactDetails}"></Label>
+                <Label Content="{Binding Path=ThisContact.LastName}" Style="{StaticResource ContactDetails}"></Label>
+                <Label Content="{Binding Path=ThisContact.City}" Style="{StaticResource ContactDetails}"></Label>
+                <Label Content="{Binding Path=ThisContact.Street}" Style="{StaticResource ContactDetails}"></Label>
+                <Label Content="{Binding Path=ThisContact.HouseNumber}" Style="{StaticResource ContactDetails}"></Label>
+                <Label Content="{Binding Path=ThisContact.Email}" Style="{StaticResource ContactDetails}"></Label>
+                <Label Content="{Binding Path=ThisContact.Twitter}" Style="{StaticResource ContactDetails}"></Label>
+                <Label Content="{Binding Path=ThisContact.Facebook}" Style="{StaticResource ContactDetails}"></Label>
+                <Label Content="{Binding Path=ThisContact.LinkedIn}" Style="{StaticResource ContactDetails}"></Label>
+                <Label Content="{Binding Path=ThisContact.Xing}" Style="{StaticResource ContactDetails}"></Label>
+                <Label Content="{Binding Path=ThisContact.Instagram}" Style="{StaticResource ContactDetails}"></Label>
+                <Label Content="{Binding Path=ThisContact.Reddit}" Style="{StaticResource ContactDetails}"></Label>
             </StackPanel>
         </Grid>
 
@@ -74,5 +78,14 @@
         <Frame Background="Black" Grid.Row="1" Grid.Column="2" Grid.ColumnSpan="5" Grid.RowSpan="2" Margin="0,0,10,10">
             
         </Frame>
+            <StackPanel Grid.Row="1" Grid.Column="2" Grid.ColumnSpan="5" Grid.RowSpan="2">
+                <WebBrowser 
+                            x:Name="brwTwitter" 
+                            Margin="0,0,10,10"
+                            Navigating="BrowserNavigateTo">
+
+                </WebBrowser>
+            </StackPanel>
+        
     </Grid>
 </Page>

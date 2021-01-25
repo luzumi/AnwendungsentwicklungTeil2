@@ -1,12 +1,13 @@
 ﻿using System;
 using System.ComponentModel;
+using System.Linq;
 using System.Windows.Input;
 
 namespace AdressbuchLogic
 {
     public class EditUserCommand : BaseCommand
     {
-        public EditUserCommand( AdressbookViewModel pParent) : base(pParent){}
+        public EditUserCommand(AdressbookViewModel pParent) : base(pParent) { }
 
         #region Implementation of BaseCommand
 
@@ -24,12 +25,13 @@ namespace AdressbuchLogic
                 ContactViewModel cm = new ContactViewModel();
                 _parent.ThisContact = cm;
             }
+            else
+            {
+                _parent.logic.Save(_parent.ContactList.ToList());
+            }
 
             _parent.ChangeView = !_parent.ChangeView;
         }
-
-
-        
 
         #endregion
     }

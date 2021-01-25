@@ -24,7 +24,8 @@ namespace AdressbuchLogic
         #endregion
     }
 }
-// string pName = "name",
+// string pFirstName = "fname",
+// string pLastName = "lname",
 // string pCity = "city",
 // string pStreet = "street",
 // string pHouseNumber = "N°",

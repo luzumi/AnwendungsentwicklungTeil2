@@ -45,7 +45,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Login", "Login\Login.csproj
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AdressbuchGui", "AdressbuchGui\AdressbuchGui.csproj", "{D8A429F4-D633-46B6-9E2E-8DCB951570E9}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AdressbuchLogic", "AdressbuchLogic\AdressbuchLogic.csproj", "{728F427A-FDF2-4AF7-9C88-DB29C357C220}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AdressbuchLogic", "AdressbuchLogic\AdressbuchLogic.csproj", "{CE70724B-BDC1-4BE7-968C-3209574E094A}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -117,10 +117,10 @@ Global
 		{D8A429F4-D633-46B6-9E2E-8DCB951570E9}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{D8A429F4-D633-46B6-9E2E-8DCB951570E9}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{D8A429F4-D633-46B6-9E2E-8DCB951570E9}.Release|Any CPU.Build.0 = Release|Any CPU
-		{728F427A-FDF2-4AF7-9C88-DB29C357C220}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{728F427A-FDF2-4AF7-9C88-DB29C357C220}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{728F427A-FDF2-4AF7-9C88-DB29C357C220}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{728F427A-FDF2-4AF7-9C88-DB29C357C220}.Release|Any CPU.Build.0 = Release|Any CPU
+		{CE70724B-BDC1-4BE7-968C-3209574E094A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{CE70724B-BDC1-4BE7-968C-3209574E094A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{CE70724B-BDC1-4BE7-968C-3209574E094A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{CE70724B-BDC1-4BE7-968C-3209574E094A}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
