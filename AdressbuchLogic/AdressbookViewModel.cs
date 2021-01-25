@@ -17,23 +17,23 @@ namespace AdressbuchLogic
 
         public ObservableCollection<ContactViewModel> ContactList
         {
-            get => contactList;
+            get => _contactList;
             set
             {
-                if (contactList != value)
+                if (_contactList != value)
 
                 {
-                    contactList = value;
+                    _contactList = value;
                     PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(ContactList)));
                 }
             }
         }
-        private ObservableCollection<ContactViewModel> contactList;
+        private ObservableCollection<ContactViewModel> _contactList;
 
 
         public AdressbookViewModel()
         {
-            contactList = new ObservableCollection<ContactViewModel>();
+            _contactList = new ObservableCollection<ContactViewModel>();
             CommandAddUser = new AddUserCommand(this);
             CommandEditUser = new EditUserCommand(this);
             CommandDeleteUser = new DeleteUserCommand(this);
@@ -47,9 +47,11 @@ namespace AdressbuchLogic
             set
             {
                 if (_thisContact != value)
-
                 {
                     _thisContact = value;
+                    
+                    (CommandDeleteUser as DeleteUserCommand)?.RaiseCanExecuteChanged(); 
+                    (CommandEditUser as EditUserCommand)?.RaiseCanExecuteChanged(); 
                     PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(ThisContact)));
                 }
             }

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Runtime.CompilerServices;
 using System.Text;
 using System.Windows;
 using System.Windows.Controls;
@@ -18,10 +19,18 @@ namespace AdressbuchGui
     /// </summary>
     public partial class WebContentPage : Page
     {
-        public WebContentPage(Object Context)
+        
+
+        public WebContentPage(Object pDataContext)
         {
             InitializeComponent();
-            DataContext = Context;
+            DataContext = pDataContext;
+        }
+
+        public WebContentPage()
+        {
+            InitializeComponent();
+            DataContext = this.DataContext;
         }
     }
 }

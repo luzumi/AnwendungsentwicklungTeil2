@@ -8,9 +8,7 @@
       mc:Ignorable="d"
       d:DesignHeight="450" d:DesignWidth="560"
       Title="WebContentPage">
-    <Page.DataContext>
-        <adressbuchLogic:AdressbookViewModel />
-    </Page.DataContext>
+    
 
     <Page.Resources>
 
@@ -20,6 +18,7 @@
         </Style>
         <Style  TargetType="Label" x:Key="ContactDetails">
             <Setter Property="Background" Value="BlanchedAlmond"></Setter>
+            <Setter Property="Foreground" Value="Brown"></Setter>
         </Style>
 
     </Page.Resources>
@@ -42,19 +41,19 @@
         </Grid.RowDefinitions>
 
         <!-- Row 0 -->
-        <Button Grid.Row="0" Grid.Column="0" Style="{StaticResource TopButtons}" Content="email" />
-        <Button Grid.Row="0" Grid.Column="1" Style="{StaticResource TopButtons}" Content="Twitter" />
-        <Button Grid.Row="0" Grid.Column="2" Style="{StaticResource TopButtons}" Content="Facebook" />
-        <Button Grid.Row="0" Grid.Column="3" Style="{StaticResource TopButtons}" Content="linkedIn" />
-        <Button Grid.Row="0" Grid.Column="4" Style="{StaticResource TopButtons}" Content="Xing" />
-        <Button Grid.Row="0" Grid.Column="5" Style="{StaticResource TopButtons}" Content="Instagram" />
-        <Button Grid.Row="0" Grid.Column="6" Style="{StaticResource TopButtons}" Content="Reddit" />
+        <Button Grid.Row="0" Grid.Column="0" Margin="0,0,0,0" Style="{StaticResource TopButtons}" Content="email" />
+        <Button Grid.Row="0" Grid.Column="1" Margin="0,0,0,0" Style="{StaticResource TopButtons}" Content="Twitter" />
+        <Button Grid.Row="0" Grid.Column="2" Margin="0,0,0,0" Style="{StaticResource TopButtons}" Content="Facebook" />
+        <Button Grid.Row="0" Grid.Column="3" Margin="0,0,0,0" Style="{StaticResource TopButtons}" Content="linkedIn" />
+        <Button Grid.Row="0" Grid.Column="4" Margin="0,0,0,0" Style="{StaticResource TopButtons}" Content="Xing" />
+        <Button Grid.Row="0" Grid.Column="5" Margin="0,0,0,0" Style="{StaticResource TopButtons}" Content="Instagram" />
+        <Button Grid.Row="0" Grid.Column="6" Margin="0,0,10,0" Style="{StaticResource TopButtons}" Content="Reddit" />
 
         <!-- Row 1 -->
         <!-- Kontaktdaten -->
         <Grid  Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="2" >
-            <StackPanel>
-                <Label Height="19" Content="{Binding Path=ThisContact.Name}" Style="{StaticResource ContactDetails}"></Label>
+            <StackPanel >
+                <Label Height="19" Content="{Binding }" Style="{StaticResource ContactDetails}"></Label>
                 <Label Height="19" Content="{Binding Path=ThisContact.City}" Style="{StaticResource ContactDetails}"></Label>
                 <Label Height="19" Content="{Binding Path=ThisContact.Street}" Style="{StaticResource ContactDetails}"></Label>
                 <Label Height="19" Content="{Binding Path=ThisContact.HouseNumber}" Style="{StaticResource ContactDetails}"></Label>
@@ -69,9 +68,11 @@
         </Grid>
 
         <!-- Zufallseintrag -->
-        <Grid Background="Aqua" Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="2" />
+        <Grid Background="Aqua" Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="2" Margin="0,0,0,10"/>
 
         <!-- Webbrowser -->
-        <Grid Background="Black" Grid.Row="1" Grid.Column="2" Grid.ColumnSpan="5" Grid.RowSpan="2" />
+        <Frame Background="Black" Grid.Row="1" Grid.Column="2" Grid.ColumnSpan="5" Grid.RowSpan="2" Margin="0,0,10,10">
+            
+        </Frame>
     </Grid>
 </Page>
