@@ -9,10 +9,15 @@ namespace AdressbuchLogic
 
         public override void Execute(object parameter)
         {
-            
+            _parent.InternetAdress = parameter as string;
         }
         
-        public WebCommand( AdressbookViewModel pParent) : base(pParent){}
+        public override bool CanExecute(object parameter)
+        {
+            return base.CanExecute(parameter);
+        }
+
+        public WebCommand( AdressbuchViewModel pParent) : base(pParent){}
 
         #endregion
     }

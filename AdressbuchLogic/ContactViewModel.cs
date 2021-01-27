@@ -5,8 +5,8 @@ namespace AdressbuchLogic
 {
     public class ContactViewModel : INotifyPropertyChanged
     {
-        private string _firstName;
-        private string _lastName;
+        private string _firstName = "Daniel";
+        private string _lastName = "Neubieser";
         private string _street;
         private string _city;
         private string _houseNumber;
@@ -214,20 +214,21 @@ namespace AdressbuchLogic
             }
         }
 
-        public ContactViewModel(string pFirstName = "fname",
-                                string pLastName = "lname",
-                                string pCity = "city",
-                                string pStreet = "street",
-                                string pHouseNumber = "N°",
-                                string pEmail = "email",
-                                string pTwitter = "twitter",
-                                string pFacebook = "facebook",
-                                string pLinkedIn = "linkedIn",
-                                string pXing = "xing",
-                                string pInstagram = "instagram",
-                                string pReddit = "reddit")
+        public ContactViewModel(string pFirstName = "",
+                                string pLastName = "",
+                                string pCity = "",
+                                string pStreet = "",
+                                string pHouseNumber = "",
+                                string pEmail = "",
+                                string pTwitter = "",
+                                string pFacebook = "",
+                                string pLinkedIn = "",
+                                string pXing = "",
+                                string pInstagram = "",
+                                string pReddit = "")
         {
             _firstName = pFirstName;
+            _lastName = pLastName;
             _city = pCity;
             _street = pStreet;
             _houseNumber = pHouseNumber;

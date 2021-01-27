@@ -8,7 +8,7 @@ namespace AdressbuchLogic
     {
         #region Implementation of BaseCommand
 
-        public AddUserCommand(AdressbookViewModel pParent) : base(pParent) { }
+        public AddUserCommand(AdressbuchViewModel pParent) : base(pParent) { }
 
 
         public override void Execute(object parameter)

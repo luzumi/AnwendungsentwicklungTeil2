@@ -4,33 +4,48 @@
       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
       xmlns:local="clr-namespace:AdressbuchGui"
-      xmlns:adressbuchLogic="clr-namespace:AdressbuchLogic;assembly=AdressbuchLogic"
+      xmlns:logic="clr-namespace:AdressbuchLogic;assembly=AdressbuchLogic"
+      xmlns:cef="clr-namespace:CefSharp.Wpf;assembly=CefSharp.Wpf"
+      xmlns:system="clr-namespace:System;assembly=mscorlib"
+      xmlns:system1="clr-namespace:System;assembly=System.Runtime"
+      xmlns:adressbuchLogic="clr-namespace:AdressbuchLogic"
       mc:Ignorable="d"
       d:DesignHeight="450" d:DesignWidth="560"
       Title="WebContentPage">
-    
+
 
     <Page.Resources>
+
 
         <Style TargetType="Button" x:Key="TopButtons">
             <Setter Property="Background" Value="Brown" />
             <Setter Property="Foreground" Value="BlanchedAlmond" />
         </Style>
-        <Style  TargetType="Label" x:Key="ContactDetails">
-            <Setter Property="Background" Value="BlanchedAlmond"></Setter>
-            <Setter Property="Foreground" Value="Brown"></Setter>
-            <Setter Property="Height" Value="18"></Setter>
-            <Setter Property="VerticalContentAlignment" Value="Top"></Setter>
-            <Setter Property="Padding" Value="1"></Setter>
+        <Style TargetType="Label" x:Key="ContactDetails">
+            <Setter Property="Background" Value="BlanchedAlmond" />
+            <Setter Property="Foreground" Value="Brown" />
+            <Setter Property="Height" Value="18" />
+            <Setter Property="VerticalContentAlignment" Value="Top" />
+            <Setter Property="HorizontalContentAlignment" Value="Center" />
+            <Setter Property="Padding" Value="1" />
+            <Setter Property="BorderThickness" Value="0,0,0,1" />
         </Style>
+
+        <adressbuchLogic:InternetStringConverter x:Key="InternetStringConverter"/>
+        <system:String x:Key="ButtonLinkedInName">LinkedInButton</system:String>
+        <system:String x:Key="ButtonFacebookName">FacebookButton</system:String>
+        <system:String x:Key="ButtonTwitterName">TwitterButton</system:String>
+        <system:String x:Key="ButtonXingName">XingButton</system:String>
+        <system:String x:Key="ButtonInstagramName">InstagramButton</system:String>
+        <system:String x:Key="ButtonRedditName">RedditButton</system:String>
 
     </Page.Resources>
 
 
     <Grid>
         <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="*" />
-            <ColumnDefinition Width="*" />
+            <ColumnDefinition Width="80" />
+            <ColumnDefinition Width="80" />
             <ColumnDefinition Width="*" />
             <ColumnDefinition Width="*" />
             <ColumnDefinition Width="*" />
@@ -39,53 +54,149 @@
         </Grid.ColumnDefinitions>
         <Grid.RowDefinitions>
             <RowDefinition Height="30" />
-            <RowDefinition Height="198" />
+            <RowDefinition Height="218" />
             <RowDefinition Height="*" />
         </Grid.RowDefinitions>
 
         <!-- Row 0 -->
-        <Button Grid.Row="0" Grid.Column="0" Margin="0,0,0,0" Style="{StaticResource TopButtons}" Content="email" />
-        <Button Grid.Row="0" Grid.Column="1" Margin="0,0,0,0" Style="{StaticResource TopButtons}" Content="Twitter" />
-        <Button Grid.Row="0" Grid.Column="2" Margin="0,0,0,0" Style="{StaticResource TopButtons}" Content="Facebook" />
-        <Button Grid.Row="0" Grid.Column="3" Margin="0,0,0,0" Style="{StaticResource TopButtons}" Content="linkedIn" />
-        <Button Grid.Row="0" Grid.Column="4" Margin="0,0,0,0" Style="{StaticResource TopButtons}" Content="Xing" />
-        <Button Grid.Row="0" Grid.Column="5" Margin="0,0,0,0" Style="{StaticResource TopButtons}" Content="Instagram" />
-        <Button Grid.Row="0" Grid.Column="6" Margin="0,0,10,0" Style="{StaticResource TopButtons}" Content="Reddit" />
+        <!--email-->
+        <Button Grid.Row="0" Grid.Column="0" 
+                Margin="0,0,0,0" 
+                Style="{StaticResource TopButtons}" 
+                Content="email" />
+
+        <!--Twitter-->
+        <Button Grid.Row="0" Grid.Column="1" 
+                Margin="0,0,0,0" 
+                Style="{StaticResource TopButtons}" 
+                Name="TwitterButton"
+                Command ="{Binding CommandWeb}">
+            <Button.CommandParameter >
+                <MultiBinding Converter="{StaticResource InternetStringConverter}" >
+                    <Binding ElementName="{StaticResource ButtonTwitterName}" Mode="OneWay"></Binding> <!--für den switch-->
+                    <Binding Path="ThisContact.Facebook"/>
+                </MultiBinding>
+            </Button.CommandParameter>
+            Twitter
+        </Button>
+
+        <!--Facebook-->
+        <Button Grid.Row="0" Grid.Column="2" 
+                Margin="0,0,0,0" 
+                Style="{StaticResource TopButtons}" 
+                Name="FacebookButton"
+                Command ="{Binding CommandWeb}">
+            <Button.CommandParameter >
+                <MultiBinding Converter="{StaticResource InternetStringConverter}" >
+                    <Binding ElementName="{StaticResource ButtonFacebookName}" Mode="OneWay"></Binding> <!--für den switch-->
+                    <Binding Path="ThisContact.Facebook"/>
+                </MultiBinding>
+            </Button.CommandParameter>
+            Facebook
+        </Button>
+
+        <!--LinkedIn-->
+        <Button Grid.Row="0" Grid.Column="3" 
+                Margin="0,0,0,0" 
+                Style="{StaticResource TopButtons}"
+                Command ="{Binding CommandWeb}"
+                Name="LinkedInButton">
+            <Button.CommandParameter >
+                <MultiBinding Converter="{StaticResource InternetStringConverter}" >
+                    <Binding ElementName="{StaticResource ButtonLinkedInName}" Mode="OneWay"></Binding> <!--für den switch-->
+                    <Binding Path="ThisContact.FirstName"/>
+                    <Binding Path="ThisContact.LastName" />
+                </MultiBinding>
+            </Button.CommandParameter>
+            LinkedIn
+        </Button>
+
+        <!--Xing-->
+        <Button Grid.Row="0" Grid.Column="4"
+                Margin="0,0,0,0" 
+                Style="{StaticResource TopButtons}" 
+                Command ="{Binding CommandWeb}"
+                Name="XingButton">
+            <Button.CommandParameter >
+                <MultiBinding Converter="{StaticResource InternetStringConverter}" >
+                    <Binding ElementName="{StaticResource ButtonXingName}" Mode="OneWay"></Binding> <!--für den switch-->
+                    <Binding Path="ThisContact.FirstName"/>
+                    <Binding Path="ThisContact.LastName" />
+                </MultiBinding>
+            </Button.CommandParameter>
+            Xing
+        </Button>
+
+        <!--Instagram-->
+        <Button Grid.Row="0" Grid.Column="5" 
+                Margin="0,0,0,0" 
+                Style="{StaticResource TopButtons}" 
+                Command ="{Binding CommandWeb}"
+                Name="InstagramButton">
+            <Button.CommandParameter >
+                <MultiBinding Converter="{StaticResource InternetStringConverter}" >
+                    <Binding ElementName="{StaticResource ButtonInstagramName}" Mode="OneWay"></Binding> <!--für den switch-->
+                    <Binding Path="ThisContact.Instagram"/>
+                </MultiBinding>
+            </Button.CommandParameter>
+            Instagram
+        </Button>
+
+        <!--Reddit-->
+        <Button Grid.Row="0" Grid.Column="6" 
+                Margin="0,0,10,0" 
+                Style="{StaticResource TopButtons}" 
+                Command ="{Binding CommandWeb}"
+                Name="RedditButton">
+            <Button.CommandParameter >
+                <MultiBinding Converter="{StaticResource InternetStringConverter}" >
+                    <Binding ElementName="{StaticResource ButtonRedditName}" Mode="OneWay"></Binding> <!--für den switch-->
+                    <Binding Path="ThisContact.Reddit"/>
+                </MultiBinding>
+            </Button.CommandParameter>
+            Reddit
+        </Button>
 
         <!-- Row 1 -->
         <!-- Kontaktdaten -->
-        <Grid  Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="2" >
-            <StackPanel >
-                <Label Content="{Binding Path=ThisContact.FirstName}" Style="{StaticResource ContactDetails}"></Label>
-                <Label Content="{Binding Path=ThisContact.LastName}" Style="{StaticResource ContactDetails}"></Label>
-                <Label Content="{Binding Path=ThisContact.City}" Style="{StaticResource ContactDetails}"></Label>
-                <Label Content="{Binding Path=ThisContact.Street}" Style="{StaticResource ContactDetails}"></Label>
-                <Label Content="{Binding Path=ThisContact.HouseNumber}" Style="{StaticResource ContactDetails}"></Label>
-                <Label Content="{Binding Path=ThisContact.Email}" Style="{StaticResource ContactDetails}"></Label>
-                <Label Content="{Binding Path=ThisContact.Twitter}" Style="{StaticResource ContactDetails}"></Label>
-                <Label Content="{Binding Path=ThisContact.Facebook}" Style="{StaticResource ContactDetails}"></Label>
-                <Label Content="{Binding Path=ThisContact.LinkedIn}" Style="{StaticResource ContactDetails}"></Label>
-                <Label Content="{Binding Path=ThisContact.Xing}" Style="{StaticResource ContactDetails}"></Label>
-                <Label Content="{Binding Path=ThisContact.Instagram}" Style="{StaticResource ContactDetails}"></Label>
-                <Label Content="{Binding Path=ThisContact.Reddit}" Style="{StaticResource ContactDetails}"></Label>
+        <Grid Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="2" Margin="5,0,0,0">
+            <StackPanel>
+                <Label x:Name="lblFirstName" Content="{Binding Path=ThisContact.FirstName}"
+                       Style="{StaticResource ContactDetails}" ToolTip="FirstName" />
+                <Label x:Name="lblLastName" Content="{Binding Path=ThisContact.LastName}"
+                       Style="{StaticResource ContactDetails}" ToolTip="LastName" />
+                <Label x:Name="lblCity" Content="{Binding Path=ThisContact.City}"
+                       Style="{StaticResource ContactDetails}" ToolTip="City" />
+                <Label x:Name="lblStreet" Content="{Binding Path=ThisContact.Street}"
+                       Style="{StaticResource ContactDetails}" ToolTip="Street" />
+                <Label x:Name="lblHouseNumber" Content="{Binding Path=ThisContact.HouseNumber}"
+                       Style="{StaticResource ContactDetails}" ToolTip="HouseNumber" />
+                <Label x:Name="lblEmail" Content="{Binding Path=ThisContact.Email}"
+                       Style="{StaticResource ContactDetails}" ToolTip="eMail" />
+                <Label x:Name="lblTwitter" Content="{Binding Path=ThisContact.Twitter}"
+                       Style="{StaticResource ContactDetails}" ToolTip="Twitter" />
+                <Label x:Name="lblFacebook" Content="{Binding Path=ThisContact.Facebook}"
+                       Style="{StaticResource ContactDetails}" ToolTip="Facebook" />
+                <Label x:Name="lblLinkedIn" Content="{Binding Path=ThisContact.LinkedIn}"
+                       Style="{StaticResource ContactDetails}" ToolTip="LinkedIn" />
+                <Label x:Name="lblXing" Content="{Binding Path=ThisContact.Xing}"
+                       Style="{StaticResource ContactDetails}" ToolTip="Xing" />
+                <Label x:Name="lblInstagram" Content="{Binding Path=ThisContact.Instagram}"
+                       Style="{StaticResource ContactDetails}" ToolTip="Instagram" />
+                <Label x:Name="lblReddit" Content="{Binding Path=ThisContact.Reddit}"
+                       Style="{StaticResource ContactDetails}" ToolTip="Reddit" />
             </StackPanel>
         </Grid>
 
         <!-- Zufallseintrag -->
-        <Grid Background="Aqua" Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="2" Margin="0,0,0,10"/>
+        <Grid Background="Aqua" Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="2" Margin="5,0,0,10" />
 
         <!-- Webbrowser -->
-        <Frame Background="Black" Grid.Row="1" Grid.Column="2" Grid.ColumnSpan="5" Grid.RowSpan="2" Margin="0,0,10,10">
-            
-        </Frame>
-            <StackPanel Grid.Row="1" Grid.Column="2" Grid.ColumnSpan="5" Grid.RowSpan="2">
-                <WebBrowser 
-                            x:Name="brwTwitter" 
-                            Margin="0,0,10,10"
-                            Navigating="BrowserNavigateTo">
+        <Frame Background="Black" Grid.Row="1" Grid.Column="2" Grid.ColumnSpan="5" Grid.RowSpan="2" Margin="0,0,10,10" />
 
-                </WebBrowser>
-            </StackPanel>
-        
+        <StackPanel Grid.Row="1" Grid.Column="2" Grid.ColumnSpan="5" Grid.RowSpan="2" Height="420">
+            <cef:ChromiumWebBrowser x:Name="ChromWebBrowser" Height="410" Address="{Binding Path=InternetAdress}" />
+        </StackPanel>
+
     </Grid>
 </Page>

@@ -5,7 +5,7 @@ namespace AdressbuchLogic
 {
     public class DeleteUserCommand : BaseCommand
     {
-        public DeleteUserCommand(AdressbookViewModel pParent) : base(pParent) {}
+        public DeleteUserCommand(AdressbuchViewModel pParent) : base(pParent) {}
 
         #region Implementation of BaseCommand
 

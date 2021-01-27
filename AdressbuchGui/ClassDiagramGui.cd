@@ -1,0 +1,66 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ClassDiagram MajorVersion="1" MinorVersion="1">
+  <Class Name="AdressbuchGui.App">
+    <Position X="0.5" Y="0.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>App.xaml.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="AdressbuchGui.MainWindow" BaseTypeListCollapsed="true">
+    <Position X="3.5" Y="0.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAQAAAAAAAAAAAAAIAAAAAAAAAAAAAA=</HashCode>
+      <FileName>MainWindow.xaml.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.547" Collapsed="true" />
+  </Class>
+  <Class Name="AdressbuchGui.UserViewModel">
+    <Position X="2" Y="0.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAIAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>UserViewModel.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="AdressbuchGui.WebContentPage" BaseTypeListCollapsed="true">
+    <Position X="5" Y="0.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>gAAAAAAAAAIACgAAAAAAQAIQAAAAACAAAAAAAAAAAAE=</HashCode>
+      <FileName>WebContentPage.xaml.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="AdressbuchLogic.AddUserCommand">
+    <Position X="0.5" Y="10" Width="1.5" />
+    <TypeIdentifier />
+  </Class>
+  <Class Name="AdressbuchLogic.BaseCommand">
+    <Position X="5" Y="6.5" Width="1.5" />
+    <TypeIdentifier />
+  </Class>
+  <Class Name="AdressbuchLogic.DeleteUserCommand">
+    <Position X="3.5" Y="10" Width="1.5" />
+    <TypeIdentifier />
+  </Class>
+  <Class Name="AdressbuchLogic.EditUserCommand">
+    <Position X="2" Y="10" Width="1.5" />
+    <TypeIdentifier />
+  </Class>
+  <Class Name="AdressbuchLogic.WebCommand">
+    <Position X="5" Y="10" Width="1.5" />
+    <TypeIdentifier />
+  </Class>
+  <Class Name="AdressbuchLogic.AdressbuchViewModel">
+    <Position X="0.5" Y="4.5" Width="1.5" />
+    <TypeIdentifier />
+  </Class>
+  <Class Name="AdressbuchLogic.ContactViewModel">
+    <Position X="2.25" Y="4.5" Width="1.5" />
+    <TypeIdentifier />
+  </Class>
+  <Class Name="AdressbuchLogic.DataStorage">
+    <Position X="4" Y="4.5" Width="1.5" />
+    <TypeIdentifier />
+  </Class>
+  <Font Name="Segoe UI" Size="9" />
+</ClassDiagram>

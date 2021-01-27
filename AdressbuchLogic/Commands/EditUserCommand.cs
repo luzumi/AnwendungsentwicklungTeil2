@@ -1,24 +1,21 @@
-﻿using System;
-using System.ComponentModel;
-using System.Linq;
-using System.Windows.Input;
+﻿using System.Linq;
 
 namespace AdressbuchLogic
 {
     public class EditUserCommand : BaseCommand
     {
-        public EditUserCommand(AdressbookViewModel pParent) : base(pParent) { }
+        public EditUserCommand(AdressbuchViewModel pParent) : base(pParent) { }
 
         #region Implementation of BaseCommand
 
-        public override bool CanExecute(object parameter)
+        public override bool CanExecute(object pArameter)
         {
-            // return _parent.ThisContact != null;
-            return true;
+            return _parent.ThisContact != null;
+            
         }
 
 
-        public override void Execute(object parameter)
+        public override void Execute(object pArameter)
         {
             if (!_parent.ChangeView)
             {

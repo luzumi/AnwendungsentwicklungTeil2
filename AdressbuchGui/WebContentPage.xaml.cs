@@ -12,35 +12,79 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using AdressbuchLogic;
 
 namespace AdressbuchGui
 {
     /// <summary>
     /// Interaktionslogik für WebContentPage.xaml
     /// </summary>
-    public partial class WebContentPage : Page
+    public partial class WebContentPage
     {
-        private ObservableCollection<UserViewModer> Items;
+        private ObservableCollection<UserViewModel> Items;
 
-        public WebContentPage(Object pDataContext)
+        /*public WebContentPage(Object pDataContext)
         {
             InitializeComponent();
             DataContext = pDataContext;
+        }*/
+
+        public WebContentPage() 
+        {
+            InitializeComponent(); 
+            /*DataContext = this;
+            Items = new();
+            Items.Add(new UserViewModel("https://www.reddit.com/r/Luzumi/"));*/
         }
 
-        public WebContentPage()
-        {
-            InitializeComponent();
-            DataContext = this;
-            Items = new();
-            Items.Add(new UserViewModer("https://social.msdn.microsoft.com/Forums/en-US/491abb68-ad60-43f5-9923-246096be4b39/how-to-open-a-wpf-page-in-a-grid?forum=wpf"));
-        }
+
 
         private void BrowserNavigateTo(object pSender, NavigatingCancelEventArgs pNavigatingCancelEventArgs)
         {
-            Items.Add(new UserViewModer(pNavigatingCancelEventArgs.Uri.OriginalString));
+            Items.Add(new UserViewModel(pNavigatingCancelEventArgs.Uri.OriginalString));
         }
 
-        
+        private void ButtonReddit_OnClick(object pSender, RoutedEventArgs pE)
+        {
+            (DataContext as AdressbuchViewModel).InternetAdress = String.Format($"https://www.reddit.com/r/{lblReddit.Content}/");
+        }
+
+        private void ButtonInsragram_OnClick(object pSender, RoutedEventArgs pE)
+        {
+            (DataContext as AdressbuchViewModel).InternetAdress = "https://www.instagram.com/?hl=de";
+        }
+
+        private void ButtonXing_OnClick(object pSender, RoutedEventArgs pE)
+        {
+            ChromWebBrowser.Address = "https://www.xing.com/";
+        }
+        /*
+        private void ButtonLinkedIn_OnClick(object pSender, RoutedEventArgs pE)
+        {
+            if (lblFirstName != null && lblLastName != null)
+            {
+                ChromWebBrowser.Address =
+                    $"https://de.linkedin.com/pub/dir?firstName={lblFirstName.Content}&lastName={lblLastName.Content}&trk=public_profile_people-search-bar_search-submit";
+            }
+            else if (lblLinkedIn != null)
+            {
+                ChromWebBrowser.Address = "https://de.linkedin.com";
+            }
+        }
+        */
+        private void ButtonFacebook_OnClick(object pSender, RoutedEventArgs pE)
+        {
+            ChromWebBrowser.Address = "https://de-de.facebook.com";
+        }
+
+        private void ButtonTwitter_OnClick(object pSender, RoutedEventArgs pE)
+        {
+            ChromWebBrowser.Address = "https://twitter.com/?lang=de";
+        }
+
+        private void ButtonEmail_OnClick(object pSender, RoutedEventArgs pE)
+        {
+            ChromWebBrowser.Address = $"https://www.reddit.com/r/Luzumi/";
+        }
     }
 }

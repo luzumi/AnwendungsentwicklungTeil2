@@ -24,7 +24,8 @@ namespace AdressbuchGui
 
         private void ShowContactDetails(object pSender, SelectionChangedEventArgs pSelectionChangedEventArgs)
         {
-            _page = new WebContentPage(DataContext);
+            _page = new WebContentPage();
+            _page.DataContext = this.DataContext;
             FrmContent.Navigate(_page);
         }
 

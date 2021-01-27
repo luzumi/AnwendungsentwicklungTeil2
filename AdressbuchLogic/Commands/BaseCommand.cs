@@ -5,10 +5,10 @@ namespace AdressbuchLogic
 {
     public abstract class BaseCommand : ICommand
     {
-        protected readonly AdressbookViewModel _parent;
+        protected readonly AdressbuchViewModel _parent;
         public event EventHandler CanExecuteChanged;
         public abstract void Execute(object parameter);
-        public BaseCommand(AdressbookViewModel parent) => _parent = parent;
+        public BaseCommand(AdressbuchViewModel parent) => _parent = parent;
         public virtual bool CanExecute(object parameter) {return true;}
         public void RaiseCanExecuteChanged() => CanExecuteChanged?.Invoke(this, EventArgs.Empty);
     }
