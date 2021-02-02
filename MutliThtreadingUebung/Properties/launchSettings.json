@@ -1,0 +1,8 @@
+{
+  "profiles": {
+    "MutliThreadingUebung": {
+      "commandName": "Project",
+      "nativeDebugging": true
+    }
+  }
+}

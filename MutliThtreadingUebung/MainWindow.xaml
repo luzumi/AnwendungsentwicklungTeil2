@@ -1,0 +1,40 @@
+﻿<Window x:Class="MutliThreadingUebung.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:MutliThreadingUebung"
+        mc:Ignorable="d"
+        Title="MainWindow" Height="450" Width="800">
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="130"/>
+            <ColumnDefinition Width="*"/>
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="30"/>
+            <RowDefinition Height="30"/>
+            <RowDefinition Height="30"/>
+        </Grid.RowDefinitions>
+
+        <Button Grid.Column="0" Grid.Row="0" Content="Start" Click="btnStart_Click"/>
+        <StatusBar Grid.Column="1" Grid.Row="0">
+            <StatusBarItem>
+                <ProgressBar x:Name="ProgressBar" Maximum="1000" Width="400" Height="20"/>
+            </StatusBarItem>
+            <Separator/>
+            <TextBlock x:Name="tbResult" Width="100"/>
+        </StatusBar>
+        <Button Grid.Column="0" Grid.Row="1" Content="Stop" Click="btnStop_Click" />
+        <Label Grid.Column="1" Grid.Row="1" Name="Label" Content="0"></Label>
+        <Label Grid.Column="0" Grid.Row="2" Content="Anzahl Kerne (1-7)"></Label>
+        <Slider Grid.Column="1" Grid.Row="2"  x:Name="Slider" Value="1" Minimum="1" Maximum="7" TickPlacement="BottomRight" TickFrequency="1" IsSnapToTickEnabled="True">
+            <Slider.Background>
+                <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
+                    <GradientStop Color="Black"/>
+                    <GradientStop Color="#FFD93131" Offset="1"/>
+                </LinearGradientBrush>
+            </Slider.Background>
+        </Slider>
+    </Grid>
+</Window>
