@@ -36,6 +36,7 @@ namespace MutliThreadingUebung
         private async void btnStart_Click(object pSender, RoutedEventArgs pE)
         {
             _randomArray = new byte[1_000_000];
+            _result = 0;
             ProgressBar.Value = 0;
             _progressPerMill = 0;
             _threads = new Task[7];
