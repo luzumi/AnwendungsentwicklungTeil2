@@ -9,28 +9,21 @@ namespace AdressbuchLogic
     {
         #region Implementation of IMultiValueConverter
 
-        public object Convert(object[] pValues, Type pTargetType, object pArameter, 
+        public object Convert(object[] pValues, Type pTargetType, object pArameter,
             CultureInfo pCulture)
         {
-            switch ((pValues[0] as Button)?.Name)
+            return (pValues[0] as Button)?.Name switch
             {
-                case "LinkedInButton":
-                    return
-                        $"https://de.linkedin.com/pub/dir?firstName={pValues[1]}&lastName={pValues[2]}&trk=public_profile_people-search-bar_search-submit";
-                case "FacebookButton":
-                    return $"https://de-de.facebook.com/";
-                case "XingButton":
-                    return $"https://www.xing.com/";
-                case "TwitterButton":
-                    return $"https://twitter.com/?lang=de";
-                case "InstagramButton":
-                    return $"https://www.instagram.com/?hl=de";
-                case "RedditButton":
-                    return $"https://www.reddit.com/r/{pValues[1]}/";
-                case "emailButton":
-                default:
-                    return "";
-            }
+                "LinkedInButton" =>
+                    $"https://de.linkedin.com/pub/dir?firstName={pValues[1]}&lastName={pValues[2]}&trk=public_profile_people-search-bar_search-submit",
+                "FacebookButton" => $"https://de-de.facebook.com/",
+                "XingButton" => $"https://www.xing.com/",
+                "TwitterButton" => $"https://twitter.com/?lang=de",
+                "InstagramButton" => $"https://www.instagram.com/?hl=de",
+                "RedditButton" => $"https://www.reddit.com/r/{pValues[1]}/",
+                "emailButton" => "",
+                _ => ""
+            };
         }
 
         public object[] ConvertBack(object pValue, Type[] pTargetTypes, object pArameter, CultureInfo pCulture)

@@ -1,7 +1,4 @@
-﻿using System;
-using System.Windows.Input;
-
-namespace AdressbuchLogic
+﻿namespace AdressbuchLogic
 {
     public class WebCommand : BaseCommand
     {
@@ -11,13 +8,13 @@ namespace AdressbuchLogic
         {
             _parent.InternetAdress = parameter as string;
         }
-        
+
         public override bool CanExecute(object parameter)
         {
             return base.CanExecute(parameter);
         }
 
-        public WebCommand( AdressbuchViewModel pParent) : base(pParent){}
+        public WebCommand(AdressbuchViewModel pParent) : base(pParent) { }
 
         #endregion
     }

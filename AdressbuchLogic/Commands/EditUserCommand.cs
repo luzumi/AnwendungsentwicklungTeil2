@@ -11,7 +11,7 @@ namespace AdressbuchLogic
         public override bool CanExecute(object pArameter)
         {
             return _parent.ThisContact != null;
-            
+
         }
 
 

@@ -7,7 +7,7 @@
         public UserViewModel(string pOriginalString)
         {
             this._originalString = pOriginalString;
-            
+
         }
     }
 }

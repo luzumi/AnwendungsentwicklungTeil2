@@ -81,9 +81,9 @@ namespace AdressbuchLogic
                 if (_thisContact != value)
                 {
                     _thisContact = value;
-                    
-                    (CommandDeleteUser as DeleteUserCommand)?.RaiseCanExecuteChanged(); 
-                    (CommandEditUser as EditUserCommand)?.RaiseCanExecuteChanged(); 
+
+                    (CommandDeleteUser as DeleteUserCommand)?.RaiseCanExecuteChanged();
+                    (CommandEditUser as EditUserCommand)?.RaiseCanExecuteChanged();
                     PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(ThisContact)));
                 }
             }
@@ -93,10 +93,7 @@ namespace AdressbuchLogic
 
         public bool ChangeView
         {
-            get
-            {
-                return _changeView;
-            }
+            get => _changeView;
             set
             {
                 if (_changeView != value)
@@ -114,6 +111,7 @@ namespace AdressbuchLogic
         {
             ContactList.Clear();
             foreach (var item in ContactList)
+            {
                 if (item.FirstName.Contains(_contentFilter) ||
                     item.LastName.Contains(_contentFilter) ||
                     item.City.Contains(_contentFilter) ||
@@ -126,7 +124,10 @@ namespace AdressbuchLogic
                     item.Xing.Contains(_contentFilter) ||
                     item.Instagram.Contains(_contentFilter) ||
                     item.Reddit.Contains(_contentFilter))
+                {
                     ContactList.Add(item);
+                }
+            }
         }
     }
 }

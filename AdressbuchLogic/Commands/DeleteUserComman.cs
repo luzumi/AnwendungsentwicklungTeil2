@@ -1,11 +1,8 @@
-﻿using System;
-using System.Windows.Input;
-
-namespace AdressbuchLogic
+﻿namespace AdressbuchLogic
 {
     public class DeleteUserCommand : BaseCommand
     {
-        public DeleteUserCommand(AdressbuchViewModel pParent) : base(pParent) {}
+        public DeleteUserCommand(AdressbuchViewModel pParent) : base(pParent) { }
 
         #region Implementation of BaseCommand
 
@@ -13,13 +10,13 @@ namespace AdressbuchLogic
         {
             return _parent.ThisContact != null;
         }
-        
+
         public override void Execute(object parameter)
         {
             _parent.ContactList.Remove(_parent.ThisContact);
             _parent.ThisContact = null;
         }
-        
+
 
         #endregion
     }

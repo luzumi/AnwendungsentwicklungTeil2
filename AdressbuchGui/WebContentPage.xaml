@@ -3,16 +3,17 @@
       xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-      xmlns:local="clr-namespace:AdressbuchGui"
       xmlns:logic="clr-namespace:AdressbuchLogic;assembly=AdressbuchLogic"
-      xmlns:cef="clr-namespace:CefSharp.Wpf;assembly=CefSharp.Wpf"
       xmlns:system="clr-namespace:System;assembly=mscorlib"
-      xmlns:system1="clr-namespace:System;assembly=System.Runtime"
       xmlns:adressbuchLogic="clr-namespace:AdressbuchLogic"
+      xmlns:wpf="clr-namespace:CefSharp.Wpf;assembly=CefSharp.Wpf"
       mc:Ignorable="d"
       d:DesignHeight="450" d:DesignWidth="560"
       Title="WebContentPage">
 
+    <Page.DataContext>
+        <logic:AdressbuchViewModel />
+    </Page.DataContext>
 
     <Page.Resources>
 
@@ -31,7 +32,7 @@
             <Setter Property="BorderThickness" Value="0,0,0,1" />
         </Style>
 
-        <adressbuchLogic:InternetStringConverter x:Key="InternetStringConverter"/>
+        <adressbuchLogic:InternetStringConverter x:Key="InternetStringConverter" />
         <system:String x:Key="ButtonLinkedInName">LinkedInButton</system:String>
         <system:String x:Key="ButtonFacebookName">FacebookButton</system:String>
         <system:String x:Key="ButtonTwitterName">TwitterButton</system:String>
@@ -60,51 +61,51 @@
 
         <!-- Row 0 -->
         <!--email-->
-        <Button Grid.Row="0" Grid.Column="0" 
-                Margin="0,0,0,0" 
-                Style="{StaticResource TopButtons}" 
+        <Button Grid.Row="0" Grid.Column="0"
+                Margin="0,0,0,0"
+                Style="{StaticResource TopButtons}"
                 Content="email" />
 
         <!--Twitter-->
-        <Button Grid.Row="0" Grid.Column="1" 
-                Margin="0,0,0,0" 
-                Style="{StaticResource TopButtons}" 
+        <Button Grid.Row="0" Grid.Column="1"
+                Margin="0,0,0,0"
+                Style="{StaticResource TopButtons}"
                 Name="TwitterButton"
-                Command ="{Binding CommandWeb}">
-            <Button.CommandParameter >
-                <MultiBinding Converter="{StaticResource InternetStringConverter}" >
-                    <Binding ElementName="{StaticResource ButtonTwitterName}" Mode="OneWay"></Binding> <!--für den switch-->
-                    <Binding Path="ThisContact.Facebook"/>
+                Command="{Binding CommandWeb}">
+            <Button.CommandParameter>
+                <MultiBinding Converter="{StaticResource InternetStringConverter}">
+                    <Binding ElementName="{StaticResource ButtonTwitterName}" Mode="OneWay" /> <!--für den switch-->
+                    <Binding Path="ThisContact.Facebook" />
                 </MultiBinding>
             </Button.CommandParameter>
             Twitter
         </Button>
 
         <!--Facebook-->
-        <Button Grid.Row="0" Grid.Column="2" 
-                Margin="0,0,0,0" 
-                Style="{StaticResource TopButtons}" 
+        <Button Grid.Row="0" Grid.Column="2"
+                Margin="0,0,0,0"
+                Style="{StaticResource TopButtons}"
                 Name="FacebookButton"
-                Command ="{Binding CommandWeb}">
-            <Button.CommandParameter >
-                <MultiBinding Converter="{StaticResource InternetStringConverter}" >
-                    <Binding ElementName="{StaticResource ButtonFacebookName}" Mode="OneWay"></Binding> <!--für den switch-->
-                    <Binding Path="ThisContact.Facebook"/>
+                Command="{Binding CommandWeb}">
+            <Button.CommandParameter>
+                <MultiBinding Converter="{StaticResource InternetStringConverter}">
+                    <Binding ElementName="{StaticResource ButtonFacebookName}" Mode="OneWay" /> <!--für den switch-->
+                    <Binding Path="ThisContact.Facebook" />
                 </MultiBinding>
             </Button.CommandParameter>
             Facebook
         </Button>
 
         <!--LinkedIn-->
-        <Button Grid.Row="0" Grid.Column="3" 
-                Margin="0,0,0,0" 
+        <Button Grid.Row="0" Grid.Column="3"
+                Margin="0,0,0,0"
                 Style="{StaticResource TopButtons}"
-                Command ="{Binding CommandWeb}"
+                Command="{Binding CommandWeb}"
                 Name="LinkedInButton">
-            <Button.CommandParameter >
-                <MultiBinding Converter="{StaticResource InternetStringConverter}" >
-                    <Binding ElementName="{StaticResource ButtonLinkedInName}" Mode="OneWay"></Binding> <!--für den switch-->
-                    <Binding Path="ThisContact.FirstName"/>
+            <Button.CommandParameter>
+                <MultiBinding Converter="{StaticResource InternetStringConverter}">
+                    <Binding ElementName="{StaticResource ButtonLinkedInName}" Mode="OneWay" /> <!--für den switch-->
+                    <Binding Path="ThisContact.FirstName" />
                     <Binding Path="ThisContact.LastName" />
                 </MultiBinding>
             </Button.CommandParameter>
@@ -113,14 +114,14 @@
 
         <!--Xing-->
         <Button Grid.Row="0" Grid.Column="4"
-                Margin="0,0,0,0" 
-                Style="{StaticResource TopButtons}" 
-                Command ="{Binding CommandWeb}"
+                Margin="0,0,0,0"
+                Style="{StaticResource TopButtons}"
+                Command="{Binding CommandWeb}"
                 Name="XingButton">
-            <Button.CommandParameter >
-                <MultiBinding Converter="{StaticResource InternetStringConverter}" >
-                    <Binding ElementName="{StaticResource ButtonXingName}" Mode="OneWay"></Binding> <!--für den switch-->
-                    <Binding Path="ThisContact.FirstName"/>
+            <Button.CommandParameter>
+                <MultiBinding Converter="{StaticResource InternetStringConverter}">
+                    <Binding ElementName="{StaticResource ButtonXingName}" Mode="OneWay" /> <!--für den switch-->
+                    <Binding Path="ThisContact.FirstName" />
                     <Binding Path="ThisContact.LastName" />
                 </MultiBinding>
             </Button.CommandParameter>
@@ -128,30 +129,30 @@
         </Button>
 
         <!--Instagram-->
-        <Button Grid.Row="0" Grid.Column="5" 
-                Margin="0,0,0,0" 
-                Style="{StaticResource TopButtons}" 
-                Command ="{Binding CommandWeb}"
+        <Button Grid.Row="0" Grid.Column="5"
+                Margin="0,0,0,0"
+                Style="{StaticResource TopButtons}"
+                Command="{Binding CommandWeb}"
                 Name="InstagramButton">
-            <Button.CommandParameter >
-                <MultiBinding Converter="{StaticResource InternetStringConverter}" >
-                    <Binding ElementName="{StaticResource ButtonInstagramName}" Mode="OneWay"></Binding> <!--für den switch-->
-                    <Binding Path="ThisContact.Instagram"/>
+            <Button.CommandParameter>
+                <MultiBinding Converter="{StaticResource InternetStringConverter}">
+                    <Binding ElementName="{StaticResource ButtonInstagramName}" Mode="OneWay" /> <!--für den switch-->
+                    <Binding Path="ThisContact.Instagram" />
                 </MultiBinding>
             </Button.CommandParameter>
             Instagram
         </Button>
 
         <!--Reddit-->
-        <Button Grid.Row="0" Grid.Column="6" 
-                Margin="0,0,10,0" 
-                Style="{StaticResource TopButtons}" 
-                Command ="{Binding CommandWeb}"
+        <Button Grid.Row="0" Grid.Column="6"
+                Margin="0,0,10,0"
+                Style="{StaticResource TopButtons}"
+                Command="{Binding CommandWeb}"
                 Name="RedditButton">
-            <Button.CommandParameter >
-                <MultiBinding Converter="{StaticResource InternetStringConverter}" >
-                    <Binding ElementName="{StaticResource ButtonRedditName}" Mode="OneWay"></Binding> <!--für den switch-->
-                    <Binding Path="ThisContact.Reddit"/>
+            <Button.CommandParameter>
+                <MultiBinding Converter="{StaticResource InternetStringConverter}">
+                    <Binding ElementName="{StaticResource ButtonRedditName}" Mode="OneWay" /> <!--für den switch-->
+                    <Binding Path="ThisContact.Reddit" />
                 </MultiBinding>
             </Button.CommandParameter>
             Reddit
@@ -189,13 +190,16 @@
         </Grid>
 
         <!-- Zufallseintrag -->
-        <Grid Background="Aqua" Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="2" Margin="5,0,0,10" />
+        <Grid Background="Brown"
+              Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="2"
+              Margin="5,0,0,10">
+        </Grid>
 
         <!-- Webbrowser -->
         <Frame Background="Black" Grid.Row="1" Grid.Column="2" Grid.ColumnSpan="5" Grid.RowSpan="2" Margin="0,0,10,10" />
 
         <StackPanel Grid.Row="1" Grid.Column="2" Grid.ColumnSpan="5" Grid.RowSpan="2" Height="420">
-            <cef:ChromiumWebBrowser x:Name="ChromWebBrowser" Height="410" Address="{Binding Path=InternetAdress}" />
+            <wpf:ChromiumWebBrowser x:Name="ChromWebBrowser" Height="410" Address="{Binding Path=InternetAdress}" />
         </StackPanel>
 
     </Grid>

@@ -24,10 +24,7 @@ namespace AdressbuchLogic
 
         public string FirstName
         {
-            get
-            {
-                return _firstName;
-            }
+            get => _firstName;
             set
             {
                 if (_firstName != value)
@@ -37,13 +34,10 @@ namespace AdressbuchLogic
                 }
             }
         }
-        
+
         public string LastName
         {
-            get
-            {
-                return _lastName;
-            }
+            get => _lastName;
             set
             {
                 if (_lastName != value)
@@ -56,10 +50,7 @@ namespace AdressbuchLogic
 
         public string City
         {
-            get
-            {
-                return _city;
-            }
+            get => _city;
             set
             {
                 if (_city != value)
@@ -72,10 +63,7 @@ namespace AdressbuchLogic
 
         public string Street
         {
-            get
-            {
-                return _street;
-            }
+            get => _street;
             set
             {
                 if (_street != value)
@@ -88,10 +76,7 @@ namespace AdressbuchLogic
 
         public string HouseNumber
         {
-            get
-            {
-                return _houseNumber;
-            }
+            get => _houseNumber;
             set
             {
                 if (_city != value)
@@ -104,10 +89,7 @@ namespace AdressbuchLogic
 
         public string Email
         {
-            get
-            {
-                return _email;
-            }
+            get => _email;
             set
             {
                 if (_email != value)
@@ -120,10 +102,7 @@ namespace AdressbuchLogic
 
         public string Twitter
         {
-            get
-            {
-                return _twitter;
-            }
+            get => _twitter;
             set
             {
                 if (_twitter != value)
@@ -136,10 +115,7 @@ namespace AdressbuchLogic
 
         public string Facebook
         {
-            get
-            {
-                return _facebook;
-            }
+            get => _facebook;
             set
             {
                 if (_facebook != value)
@@ -152,10 +128,7 @@ namespace AdressbuchLogic
 
         public string LinkedIn
         {
-            get
-            {
-                return _linkedIn;
-            }
+            get => _linkedIn;
             set
             {
                 if (_linkedIn != value)
@@ -168,10 +141,7 @@ namespace AdressbuchLogic
 
         public string Xing
         {
-            get
-            {
-                return _xing;
-            }
+            get => _xing;
             set
             {
                 if (_xing != value)
@@ -184,10 +154,7 @@ namespace AdressbuchLogic
 
         public string Instagram
         {
-            get
-            {
-                return _instagram;
-            }
+            get => _instagram;
             set
             {
                 if (_instagram != value)
@@ -200,10 +167,7 @@ namespace AdressbuchLogic
 
         public string Reddit
         {
-            get
-            {
-                return _reddit;
-            }
+            get => _reddit;
             set
             {
                 if (_reddit != value)

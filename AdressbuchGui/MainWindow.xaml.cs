@@ -1,11 +1,5 @@
-﻿using System.Runtime.CompilerServices;
-using System.Windows;
+﻿using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
 
 
 namespace AdressbuchGui
@@ -24,11 +18,10 @@ namespace AdressbuchGui
 
         private void ShowContactDetails(object pSender, SelectionChangedEventArgs pSelectionChangedEventArgs)
         {
-            _page = new WebContentPage();
-            _page.DataContext = this.DataContext;
+            _page = new WebContentPage { DataContext = this.DataContext };
             FrmContent.Navigate(_page);
         }
 
-        
+
     }
 }

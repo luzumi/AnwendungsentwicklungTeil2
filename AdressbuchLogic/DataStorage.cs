@@ -7,7 +7,7 @@ namespace AdressbuchLogic
     public class DataStorage
     {
 
-        
+
         public void Save(List<ContactViewModel> pListContacts)
         {
             SQLiteConnectionStringBuilder builder = new();
@@ -18,7 +18,7 @@ namespace AdressbuchLogic
             {
                 con.Open();
                 // check if new db-file or existing
-                
+
                 var command = con.CreateCommand();
                 command.CommandText = "SELECT count(name) FROM sqlite_master WHERE type = 'table' AND name = 'Contacts'";
                 var result = command.ExecuteScalar();
@@ -65,7 +65,7 @@ namespace AdressbuchLogic
             }
         }
 
-        public List<ContactViewModel>  Load()
+        public List<ContactViewModel> Load()
         {
             SQLiteConnectionStringBuilder builder = new();
             builder.Version = 3;
@@ -87,6 +87,7 @@ namespace AdressbuchLogic
 
 
                     while (reader.Read())
+                    {
                         resultList.Add(new ContactViewModel(
                             reader.IsDBNull(0) ? "" : reader.GetString(0),
                             reader.IsDBNull(1) ? "" : reader.GetString(1),
@@ -100,8 +101,9 @@ namespace AdressbuchLogic
                             reader.IsDBNull(9) ? "" : reader.GetString(9),
                             reader.IsDBNull(10) ? "" : reader.GetString(10),
                             reader.IsDBNull(11) ? "" : reader.GetString(11)));
+                    }
                 }
-                
+
 
             }
             return resultList;
