@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Windows;
+using System.Windows.Controls;
 
 
 namespace MutliThreadingUebung
@@ -20,6 +21,7 @@ namespace MutliThreadingUebung
         private Task[] _threads;
         int _progressPerMill;
         Object _sync = new();
+        private Updater[] updater = new Updater[7];
 
 
         public MainWindow()
@@ -37,38 +39,16 @@ namespace MutliThreadingUebung
         {
             _randomArray = new byte[1_000_000];
             _result = 0;
-            ProgressBar.Value = 0;
             _progressPerMill = 0;
             _threads = new Task[7];
             _sumCancelSource = new CancellationTokenSource();
+            
             //CreateRandomArray
             //await CreateRandomArray(cores, partSize);
             CreateRandomArray(_sumProgress, _sumCancelSource.Token, 0, _randomArray.Length);
 
-            //solange was in der queue ist, den threads in der Liste einen task mit einem queue geben
-            int SegmentLaenge = _randomArray.Length / (7) +
-                                _randomArray.Length % (7);
-
-            {
-                ArraySegment<byte> arrayS = (new ArraySegment<byte>(_randomArray, 0, SegmentLaenge));
-
-                _threads[0] = new Task(() => SumPartArray(_sumProgress, _sumCancelSource.Token, arrayS));
-            }
-
-            int SegmentBase = _randomArray.Length / (7);
-
-            for (int i = 0; i < _threads.Length - 1; i++)
-            {
-                var arrayS = new ArraySegment<byte>(_randomArray, SegmentLaenge + i * SegmentBase, SegmentBase);
-                _threads[i + 1] = new Task(() => SumPartArray(_sumProgress, _sumCancelSource.Token, arrayS));
-            }
-
-            foreach (var item in _threads)
-            {
-                item.Start();
-            }
-
-            await Task.WhenAll(_threads);
+            
+            await SumPartitionalArrayWithThreads();
 
             //SumRandomArray
             //await SumRandomArray(cores, partSize);
@@ -78,7 +58,43 @@ namespace MutliThreadingUebung
             GC.Collect(GC.MaxGeneration, GCCollectionMode.Forced, true);
         }
 
-        
+        private async Task SumPartitionalArrayWithThreads()
+        {
+            int segmentLaenge = _randomArray.Length / (7) +
+                                _randomArray.Length % (7);
+
+            {
+                ArraySegment<byte> arrayS = (new ArraySegment<byte>(_randomArray, 0, segmentLaenge));
+                updater[0] = new Updater();
+                Grid.SetColumn(updater[0].ProgressBar, 0); // button in spalte positionieren
+                Grid.SetRow(updater[0].ProgressBar, 1); // button in zeile positionieren
+                Progressbars.Children.Add(updater[0].ProgressBar);
+                _threads[0] = new Task(() => SumPartArray(updater[0].SumProgress, _sumCancelSource.Token, arrayS));
+            }
+
+            int segmentBase = _randomArray.Length / (7);
+
+            for (int i = 0; i < _threads.Length - 1; i++)
+            {
+                int count = i;
+                updater[count] = new Updater();
+                Grid.SetColumn(updater[count].ProgressBar, count); // button in spalte positionieren
+                Grid.SetRow(updater[count].ProgressBar, 1); // button in zeile positionieren
+                updater[count].ProgressBar.Margin = new Thickness(3, 0, 0, 0);
+                Progressbars.Children.Add(updater[count].ProgressBar);
+                var arrayS = new ArraySegment<byte>(_randomArray, segmentLaenge + count * segmentBase, segmentBase);
+                _threads[count + 1] = new Task(() => SumPartArray(updater[count].SumProgress, _sumCancelSource.Token, arrayS));
+            }
+
+            foreach (var item in _threads)
+            {
+                item.Start();
+            }
+
+            await Task.WhenAll(_threads);
+        }
+
+
         private async Task SumRandomArray(int sliderVaule, int partSize)
         {
             _result = 0;
@@ -156,7 +172,7 @@ namespace MutliThreadingUebung
             ArraySegment<byte> pArray)
         {
             long sum = 0;
-
+            _progressPerMill = 0;
             if (pArray != null)
             {
                 for (int pos = 0; pos < pArray.Count; pos++)
