@@ -43,32 +43,27 @@ namespace MutliThreadingUebung
             _threads = new Task[7];
             _sumCancelSource = new CancellationTokenSource();
             
-            //CreateRandomArray
-            //await CreateRandomArray(cores, partSize);
             CreateRandomArray(_sumProgress, _sumCancelSource.Token, 0, _randomArray.Length);
 
+            await SumPartitionalArrayWithThreadsAsync().ConfigureAwait(false);
             
-            await SumPartitionalArrayWithThreads();
-
-            //SumRandomArray
-            //await SumRandomArray(cores, partSize);
-
-            //writeLabel
             Label.Content = _result.ToString();
             GC.Collect(GC.MaxGeneration, GCCollectionMode.Forced, true);
         }
 
-        private async Task SumPartitionalArrayWithThreads()
+        private async Task SumPartitionalArrayWithThreadsAsync()
         {
             int segmentLaenge = _randomArray.Length / (7) +
                                 _randomArray.Length % (7);
 
             {
                 ArraySegment<byte> arrayS = (new ArraySegment<byte>(_randomArray, 0, segmentLaenge));
+
                 updater[0] = new Updater();
                 Grid.SetColumn(updater[0].ProgressBar, 0); // button in spalte positionieren
                 Grid.SetRow(updater[0].ProgressBar, 1); // button in zeile positionieren
                 Progressbars.Children.Add(updater[0].ProgressBar);
+
                 _threads[0] = new Task(() => SumPartArray(updater[0].SumProgress, _sumCancelSource.Token, arrayS));
             }
 
@@ -77,12 +72,10 @@ namespace MutliThreadingUebung
             for (int i = 0; i < _threads.Length - 1; i++)
             {
                 int count = i;
-                updater[count] = new Updater();
-                Grid.SetColumn(updater[count].ProgressBar, count); // button in spalte positionieren
-                Grid.SetRow(updater[count].ProgressBar, 1); // button in zeile positionieren
-                updater[count].ProgressBar.Margin = new Thickness(3, 0, 0, 0);
-                Progressbars.Children.Add(updater[count].ProgressBar);
                 var arrayS = new ArraySegment<byte>(_randomArray, segmentLaenge + count * segmentBase, segmentBase);
+
+                CreateProgressBar(count);
+
                 _threads[count + 1] = new Task(() => SumPartArray(updater[count].SumProgress, _sumCancelSource.Token, arrayS));
             }
 
@@ -90,8 +83,17 @@ namespace MutliThreadingUebung
             {
                 item.Start();
             }
+            
+        }
 
-            await Task.WhenAll(_threads);
+        public int SegmentLänge { get; set; }
+        private void CreateProgressBar(int count)
+        {
+            updater[count] = new Updater();
+            Grid.SetColumn(updater[count].ProgressBar, count); // button in spalte positionieren
+            Grid.SetRow(updater[count].ProgressBar, 1); // button in zeile positionieren
+            updater[count].ProgressBar.Margin = new Thickness(3, 0, 0, 0);
+            Progressbars.Children.Add(updater[count].ProgressBar);
         }
 
 
@@ -138,36 +140,7 @@ namespace MutliThreadingUebung
                 }
             }
         }
-
-
-        //private void CreateRandomArray(IProgress<int> pSumProgress, int pStart, int pEnd)
-        //{
-        //    Random rndGen = new();
-
-        //    for (int position = pStart; position < pEnd; position++)
-        //    {
-        //        _randomArray[position] = (byte)rndGen.Next(256);
-        //        if (position % (_randomArray.Length / 10) == 0)
-        //        {
-        //            pSumProgress.Report(++_progressPerMill);
-        //        }
-        //    }
-        //}
-
-        //private void CreateQueuedArray()
-        //{
-        //    int partSize = _randomArray.Length / 100;
-        //    int endSize = _randomArray.Length / 100 + _randomArray.Length % 100;
-        //    for (int i = 0; i < _randomArray.Length; i++)
-        //    {
-        //        CreateRandomArray(_sumProgress, i * partSize, i * endSize);
-        //        if (_sumCancelSource.IsCancellationRequested)
-        //        {
-        //            return;
-        //        }
-        //    }
-        //}
-
+        
         private void SumPartArray(IProgress<int> pSumProgress, CancellationToken pToken,
             ArraySegment<byte> pArray)
         {
