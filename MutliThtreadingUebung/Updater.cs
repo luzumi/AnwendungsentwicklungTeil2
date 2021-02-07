@@ -3,12 +3,12 @@ using System.Windows.Controls;
 
 namespace MutliThreadingUebung
 {
-    class Updater
+    class ArrayPackage
     {
         public ProgressBar ProgressBar;
         public Progress<int> SumProgress;
 
-        public Updater()
+        public ArrayPackage()
         {
             ProgressBar = new ProgressBar();
             SumProgress = new(Report);

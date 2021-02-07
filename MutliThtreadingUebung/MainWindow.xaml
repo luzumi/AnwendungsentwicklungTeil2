@@ -16,7 +16,7 @@
             <RowDefinition Height="30"/>
             <RowDefinition Height="30"/>
             <RowDefinition Height="30"/>
-            <RowDefinition Height="30"/>
+            <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
 
         <Button Grid.Column="0" Grid.Row="0" Content="Start" Click="btnStart_Click"/>
@@ -38,33 +38,17 @@
                 </LinearGradientBrush>
             </Slider.Background>
         </Slider>
-        <Grid x:Name="Progressbars" Grid.Column="1" Grid.ColumnSpan="2" Grid.Row="3">
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="40"></ColumnDefinition>
-                <ColumnDefinition Width="40"></ColumnDefinition>
-                <ColumnDefinition Width="40"></ColumnDefinition>
-                <ColumnDefinition Width="40"></ColumnDefinition>
-                <ColumnDefinition Width="40"></ColumnDefinition>
-                <ColumnDefinition Width="40"></ColumnDefinition>
-                <ColumnDefinition Width="40"></ColumnDefinition>
-                <ColumnDefinition Width="40"></ColumnDefinition>
-                <ColumnDefinition Width="40"></ColumnDefinition>
-                <ColumnDefinition Width="40"></ColumnDefinition>
-            </Grid.ColumnDefinitions>
-            <Grid.RowDefinitions>
-                <RowDefinition Height="15"></RowDefinition>
-                <RowDefinition Height="15"></RowDefinition>
-                <RowDefinition Height="15"></RowDefinition>
-                <RowDefinition Height="15"></RowDefinition>
-                <RowDefinition Height="15"></RowDefinition>
-                <RowDefinition Height="15"></RowDefinition>
-                <RowDefinition Height="15"></RowDefinition>
-                <RowDefinition Height="15"></RowDefinition>
-                <RowDefinition Height="15"></RowDefinition>
-                <RowDefinition Height="15"></RowDefinition>
-            </Grid.RowDefinitions>
+        <WrapPanel x:Name="Progressbars" Grid.Column="1" Grid.ColumnSpan="2" Grid.Row="3" Width="480">
+            <WrapPanel.Resources>
+                <Style TargetType="ProgressBar">
+                    <Setter Property="Margin" Value="1"></Setter>
+                    <Setter Property="Width" Value="10"></Setter>
+                    <Setter Property="Height" Value="10"></Setter>
+                </Style>
+            </WrapPanel.Resources>
+            
         
-                <!--<ProgressBar x:Name="Core1" Maximum="1000" Width="40" Height="15"/>
+            <!--<ProgressBar x:Name="Core1" Maximum="1000" Width="40" Height="15"/>
             
                 <ProgressBar x:Name="Core2" Maximum="1000" Width="40" Height="15"/>
            
@@ -78,6 +62,6 @@
          
                 <ProgressBar x:Name="Core7" Maximum="1000" Width="40" Height="15"/>-->
            
-        </Grid>
+        </WrapPanel>
     </Grid>
 </Window>
