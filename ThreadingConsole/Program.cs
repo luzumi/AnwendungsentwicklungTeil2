@@ -5,7 +5,7 @@ namespace ThreadingConsole
 {
     class Program
     {
-        static Object sync = new Object();
+        static readonly Object sync = new Object();
 
         static void Main()
         {

@@ -8,7 +8,8 @@ namespace AdressbuchLogic
         protected readonly AdressbuchViewModel _parent;
         public event EventHandler CanExecuteChanged;
         public abstract void Execute(object parameter);
-        public BaseCommand(AdressbuchViewModel parent)
+
+        protected BaseCommand(AdressbuchViewModel parent)
         {
             _parent = parent;
         }
