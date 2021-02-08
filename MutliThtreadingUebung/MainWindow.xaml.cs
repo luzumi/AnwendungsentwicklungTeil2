@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Windows;
@@ -14,19 +15,21 @@ namespace MutliThreadingUebung
         CancellationTokenSource _sumCancelSource;
         byte[] _randomArray;
         private long _result;
-        private Task<long>[] _threads;
+        private List<Task<long>> _threads;
         private Task[] _threadsWithoutReturn;
         int _progressPerMill;
-        Object _sync = new();
-        private int _core = 7;
+        readonly Object _sync = new();
+        private readonly int _core = Environment.ProcessorCount - 1;
         private ArrayPackage<long, byte>[] _updater;
-        const int parts = 100;
+        const int Parts = 300;
         private int _refreshRate;
-        public int RefreshRate {
-            get                         //1_000_000.
-                                        //10000
+
+        public int RefreshRate
+        {
+            get //1_000_000.
+            //10000
             {
-                _refreshRate = _randomArray.Length / parts / 50;
+                _refreshRate = _randomArray.Length / Parts / 50;
                 return _refreshRate;
             }
             set => _refreshRate = value;
@@ -39,28 +42,23 @@ namespace MutliThreadingUebung
             InitializeComponent();
         }
 
-        private void UpdateProgressBar(byte pNewValue)
-        {
-            ProgressBar.Value = pNewValue;
-        }
-
         private async void btnStart_Click(object pSender, RoutedEventArgs pE)
         {
-            _randomArray = new byte[1_000_000];
+            _randomArray = new byte[1_000_000_000];
             _result = 0;
             _progressPerMill = 0;
-            _threads = new Task<long>[_core];
+            _threads = new List<Task<long>>(_core);
             _threadsWithoutReturn = new Task[_core];
             _sumCancelSource = new CancellationTokenSource();
-            _updater = new ArrayPackage<long, byte>[parts]; //_core];
+            _updater = new ArrayPackage<long, byte>[Parts]; //_core];
 
-            CreateProgressBars(parts);
+            CreateProgressBars(Parts);
 
 
             await Task.Run(() => CreateArraySegmentedAsync(_updater, _sumCancelSource.Token))
                 .ConfigureAwait(true);
 
-            _result += await Task.Run(() => GetArrayResult(_updater, _sumCancelSource.Token))
+            _result += await Task.Run(() => GetArrayResult(_sumCancelSource.Token), _sumCancelSource.Token)
                 .ConfigureAwait(true);
 
 
@@ -76,16 +74,27 @@ namespace MutliThreadingUebung
 
         private void CreateProgressBars(int pParts)
         {
+            int offset = 0;
             int segmentLength = _randomArray.Length / pParts;
             for (int i = 0; i < pParts; i++)
             {
-                int ii = i;
-                int offset = (ii == 0)
-                    ? 0
-                    : (ii - 1) * segmentLength + (segmentLength + _randomArray.Length % pParts);
-                int count = segmentLength + _randomArray.Length % pParts;
-                _updater[ii] = new ArrayPackage<long, byte>(new ArraySegment<byte>(_randomArray, offset, count));
-                Progressbars.Children.Add(_updater[ii].ProgressBar);
+                int count;
+
+                switch (i)
+                {
+                    case 0:
+                        offset = 0;
+                        count = segmentLength + _randomArray.Length % pParts;
+                        break;
+
+                    default:
+                        offset = i * segmentLength + (_randomArray.Length % pParts);
+                        count = segmentLength;
+                        break;
+                }
+
+                _updater[i] = new ArrayPackage<long, byte>(new ArraySegment<byte>(_randomArray, offset, count));
+                Progressbars.Children.Add(_updater[i].ProgressBar);
             }
         }
 
@@ -94,9 +103,13 @@ namespace MutliThreadingUebung
             for (int i = 0; i < pPackage.Length; i++)
             {
                 var partIndex = i;
-                if (_threads != null)
+                if (i == 250)
+                    partIndex = i;
+                if (_threadsWithoutReturn != null)
                 {
-                    _threadsWithoutReturn[partIndex % _core] = new Task(() => FillPackage(pPackage, pToken, partIndex: partIndex),
+                    var data = pPackage[partIndex];
+                    _threadsWithoutReturn[partIndex % _core] = new Task(
+                        () => FillPackage(data, pToken),
                         _sumCancelSource.Token);
 
                     _threadsWithoutReturn[partIndex % _core].Start();
@@ -107,23 +120,25 @@ namespace MutliThreadingUebung
 
                 if (partIndex % _core == _core - 1)
                 {
-                    Task.WhenAny(_threadsWithoutReturn!);
+                    Task.WhenAll(_threadsWithoutReturn!);
                 }
 
                 //FillPackage(pPackage, pToken, partIndex);
             }
+
+            Task.WhenAll(_threadsWithoutReturn!);
         }
 
-        private void FillPackage(ArrayPackage<long, byte>[] pPackage, CancellationToken pToken, int partIndex)
+        private void FillPackage(ArrayPackage<long, byte> pPackage, CancellationToken pToken)
         {
             _progressPerMill = 0;
             Random rndGen = new();
-            int length = pPackage[partIndex].Segment.Count;
+            int length = pPackage.Segment.Count;
             for (int i = 0; i < length; i++)
             {
-                pPackage[partIndex].Segment[i] = 1; //(byte)rndGen.Next(256);
-                
-                if (i % RefreshRate == 0) pPackage[partIndex].Progress.Report(++_progressPerMill);
+                pPackage.Segment[i] = (byte)rndGen.Next(256);
+
+                if (i % RefreshRate == 0) pPackage.Progress.Report(++_progressPerMill);
 
                 if (pToken.IsCancellationRequested)
                 {
@@ -132,22 +147,21 @@ namespace MutliThreadingUebung
             }
         }
 
-        private long GetArrayResult(ArrayPackage<long, byte>[] pSegmentArray, CancellationToken pToken)
+        private long GetArrayResult(CancellationToken pToken)
         {
             long sum = 0;
-            for (int i = 0; i < parts; i++)
+            for (int i = 0; i < Parts; i++)
             {
                 var partIndex = i;
+                var data = _updater[partIndex];
                 if (_threads != null)
                 {
-                    _threads[partIndex % _core] = new Task<long>(() => (SumRandomArray(_updater[partIndex], pToken)),
-                        _sumCancelSource.Token);
-
-                    _threads[partIndex % _core].Start();
+                    _threads.Add(Task.Run(() => (SumRandomArray(data, pToken)),
+                        _sumCancelSource.Token));
                 }
 
                 if (pToken.IsCancellationRequested)
-                    return pSegmentArray[partIndex].Result;
+                    return data.Result;
 
                 if (partIndex % _core == _core - 1)
                 {
@@ -156,9 +170,19 @@ namespace MutliThreadingUebung
                     {
                         sum += item.Result;
                     }
+
+                    _threads.Clear();
                 }
             }
 
+            Task.WhenAll(_threads!);
+
+            foreach (var item in _threads)
+            {
+                sum += item.Result;
+            }
+
+            //sum += item.Result; //fehlt
             return sum;
         }
 
@@ -180,6 +204,11 @@ namespace MutliThreadingUebung
         }
 
         #region OldMethods
+
+        private void UpdateProgressBar(byte pNewValue)
+        {
+            ProgressBar.Value = pNewValue;
+        }
 
         private long SumRandomArray(IProgress<int> pSumProgress, CancellationToken pToken, int pStart, int pEnd)
         {
@@ -206,14 +235,14 @@ namespace MutliThreadingUebung
             return sum;
         }
 
-        long SumPartitionalArrayWithThreadsAsync(int pPackage, CancellationToken pToken)
+        long SumParthhitionalArrayWithThreadsAsync(int pPackage, CancellationToken pToken)
         {
             long sumThread = 0;
             int package = pPackage;
 
             if (_threads != null)
             {
-                _threads[package % _core] = new Task<long>(() => GetArrayResult(_updater, pToken),
+                _threads[package % _core] = new Task<long>(() => GetArrayResult(pToken),
                     _sumCancelSource.Token);
 
                 _threads[package % _core].Start();
@@ -228,7 +257,7 @@ namespace MutliThreadingUebung
                 {
                     Task.WhenAll(_threads);
                     var index = 0;
-                    for (; index < _threads.Length; index++)
+                    for (; index < _threads.Count; index++)
                     {
                         var b = _threads[index];
                         sumThread += b.Result;
