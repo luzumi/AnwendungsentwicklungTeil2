@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 
 namespace ChatServerGUI
 {
@@ -8,15 +9,18 @@ namespace ChatServerGUI
         {
             Console.WriteLine("Hallo, ich bin ein Chat server Verwaltungsprogramm");
             Console.WriteLine("Sie können jetzt kommandos eingeben");
-            Console.WriteLine("   /start    startet den Server und wartet auf Verbindungen");
-            Console.WriteLine("   /stop     trennt alle verbindungen und fährt den server herunter");
-            Console.WriteLine("   /status   gibt den Verbindungsstatus zurück");
-            Console.WriteLine("   /send <Message>  sendet eine Nachricht an den Client");
+            Console.WriteLine("   /start            startet den Server und Reader und wartet auf Verbindungen");
+            Console.WriteLine("   /stop             trennt alle verbindungen und fährt den server herunter");
+            Console.WriteLine("   /status           gibt den Verbindungsstatus zurück");
+            Console.WriteLine("   /send <Message>   sendet eine Nachricht an den Client");
+            Console.WriteLine("   /shutdown         Ende Gelände");
 
             ChatServerLogic.ChatServer chatServer = new((x) => Console.WriteLine("Empfangen: {0}", x));
+
 #if DEBUG
-            chatServer.StartAsync();
+            chatServer.StartListenerAsync();
 #endif
+
             string input;
             string command;
             while (true)
@@ -28,25 +32,23 @@ namespace ChatServerGUI
                 switch (command)
                 {
                     case "/start":
-                        if (chatServer.IsConnected)
-                            Console.WriteLine("Client ist bereits verbunden");
-                        else
-                            chatServer.StartAsync();
+                        chatServer.StartListenerAsync();
                         break;
                     case "/stop":
-                        Console.WriteLine("Beende Server");
-                        chatServer.Stop();
-                        Console.ReadLine();
-                        return;
+                        chatServer.StopListener();
+                        break;
                     case "/status":
-                        if (chatServer.IsConnected)
-                            Console.WriteLine("Client ist Verbunden");
-                        else
-                            Console.WriteLine("keine Verbindung");
+                        List<string> status = chatServer.GetConnectionStatus();
+                        foreach (var stat in status) Console.WriteLine(stat);
                         break;
                     case "/send":
                         chatServer.SendMessage(input[6..]);
                         break;
+                    case "/shutdown":
+                        Console.WriteLine("ENDE");
+                        chatServer.StopListener();
+                        chatServer.Kick();
+                        return;
                     default:
                         Console.WriteLine("unbekanntes Kommando : {0}", command);
                         break;

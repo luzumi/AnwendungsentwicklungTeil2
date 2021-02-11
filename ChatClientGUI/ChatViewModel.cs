@@ -58,7 +58,8 @@ namespace ChatClientGUI
         {
             Command_Connect = new GenericCommand(Connect);
             Command_Send = new GenericCommand(SendNewMessage, () => IsConnected);
-            logic = new(DisplayRecievedMessage);
+            logic = new(DisplayReceivedMessage);
+            logic.OnConnectionStatus = ConnectionStatusChange;
             Messages = string.Empty;
             NewMessage = string.Empty;
         }
@@ -66,12 +67,11 @@ namespace ChatClientGUI
         private void SendNewMessage()
         {
             logic.SendMessage(_newMessage);
-            Messages += Environment.NewLine + "You  > " + _newMessage;
             NewMessage = string.Empty;
             ScrollDownMethod?.Invoke();
         }
 
-        private void DisplayRecievedMessage(string ReceivedMessage)
+        private void DisplayReceivedMessage(string ReceivedMessage)
         {
             Messages += Environment.NewLine + "Other> " + ReceivedMessage;
             UiDispatcher.Invoke(() => ScrollDownMethod?.Invoke());
@@ -87,6 +87,14 @@ namespace ChatClientGUI
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(ConnectionColor)));
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(ButtonText)));
             (Command_Send as GenericCommand)?.RaiseCanExecuteChanged();
+        }
+
+        private void ConnectionStatusChange()
+        {
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(IsConnected)));
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(ConnectionColor)));
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(ButtonText)));
+            UiDispatcher?.Invoke(((GenericCommand) Command_Send).RaiseCanExecuteChanged);
         }
     }
 }

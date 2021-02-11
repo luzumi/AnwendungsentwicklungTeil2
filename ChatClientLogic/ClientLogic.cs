@@ -11,13 +11,10 @@ namespace ChatClientLogic
         private TcpClient connection;
         private readonly Action<string> onNewMessage;
         CancellationTokenSource cts;
+        public Action OnConnectionStatus;
 
         public bool IsConnected => connection != null && connection.Connected;
-
-        public ClientLogic(Action<string> OnNewMessage)
-        {
-            onNewMessage = OnNewMessage;
-        }
+        public ClientLogic(Action<string> onNewMessage) => this.onNewMessage = onNewMessage;
 
         public bool Start()
         {
@@ -33,7 +30,7 @@ namespace ChatClientLogic
             }
 
             cts = new();
-            _ = Task.Run(recieve, cts.Token);
+            _ = Task.Run(Receive, cts.Token);
             return true;
         }
 
@@ -51,7 +48,7 @@ namespace ChatClientLogic
             connection?.Close();
         }
 
-        private async void recieve()
+        private async void Receive()
         {
             string message;
             byte[] data = new byte[1024];
@@ -66,21 +63,22 @@ namespace ChatClientLogic
                 catch (Exception)
                 {
                     // wenn fehler bei der übertragung stattfinden (server down, netzwerk down)
-                    connection.Close();
-                    return;
+                    break;
                 }
 
                 if (receivedBytes < 1)
                 {
                     // server hat verbindung regulär getrennt
-                    connection.Close();
-                    return;
+                    break;
                 }
 
                 // nachricht empfangen
                 message = Encoding.ASCII.GetString(data, 0, receivedBytes);
                 onNewMessage.Invoke(message);
             }
+
+            connection.Close();
+            OnConnectionStatus?.Invoke();
         }
     }
 }
