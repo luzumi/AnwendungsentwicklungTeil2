@@ -47,10 +47,9 @@
                 HorizontalContentAlignment="Left"
                 Margin="1,0,0,0" />
         <!-- MessagesView -->
-        <ScrollViewer x:Name="SvMessages"
+        <ScrollViewer x:Name="SvMessages" 
                       Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="2">
-            <TextBlock
-                Text="{Binding Messages}"
+            <TextBlock Text="{Binding Messages}"
                 Background="Cornsilk"
                 TextWrapping="Wrap"/>
         </ScrollViewer>

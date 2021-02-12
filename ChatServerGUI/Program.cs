@@ -22,12 +22,15 @@ namespace ChatServerGUI
 #endif
 
             string input;
-            string command;
+            string command = String.Empty;
             while (true)
             {
                 input = Console.ReadLine();
-                int spaceID = input.IndexOf(" ");
-                command = input.Substring(0, (spaceID > 0 ? spaceID : input.Length));
+                if (input != null)
+                {
+                    int spaceId = input.IndexOf(" ", StringComparison.Ordinal);
+                    command = input.Substring(0, (spaceId > 0 ? spaceId : input.Length));
+                }
 
                 switch (command)
                 {
@@ -42,7 +45,7 @@ namespace ChatServerGUI
                         foreach (var stat in status) Console.WriteLine(stat);
                         break;
                     case "/send":
-                        chatServer.SendMessage(input[6..]);
+                        chatServer.SendMessage(input?[6..]);
                         break;
                     case "/shutdown":
                         Console.WriteLine("ENDE");

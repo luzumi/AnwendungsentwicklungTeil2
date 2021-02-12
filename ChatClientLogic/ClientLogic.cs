@@ -3,54 +3,57 @@ using System.Net.Sockets;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
+using ChatMessages;
 
 namespace ChatClientLogic
 {
     public class ClientLogic
     {
-        private TcpClient connection;
-        private readonly Action<string> onNewMessage;
-        CancellationTokenSource cts;
+        private TcpClient _connection;
+        private readonly Action<string> _onNewMessage;
+        CancellationTokenSource _cts;
         public Action OnConnectionStatus;
 
-        public bool IsConnected => connection != null && connection.Connected;
-        public ClientLogic(Action<string> onNewMessage) => this.onNewMessage = onNewMessage;
+        public bool IsConnected => _connection != null && _connection.Connected;
+        public ClientLogic(Action<string> onNewMessage) => this._onNewMessage = onNewMessage;
 
         public bool Start()
         {
-            connection = new TcpClient();
+            _connection = new TcpClient();
 
             try
             {
-                connection.Connect("127.0.0.1", 1337);
+                _connection.Connect("127.0.0.1", 1337);
             }
             catch (Exception)
             {
                 return false;
             }
 
-            cts = new();
-            _ = Task.Run(Receive, cts.Token);
+            _cts = new();
+            _ = Task.Run(Receive, _cts.Token);
             return true;
         }
 
-        public void SendMessage(string Message)
+        public void SendMessage(string pMessage)
         {
-            if (connection == null || !connection.Connected) return;
-            byte[] data;
-            data = Encoding.ASCII.GetBytes(Message);
-            connection.GetStream().Write(data, 0, data.Length);
+            if (_connection == null || !_connection.Connected) return;
+            MessageBroadCast mbc = new();
+            mbc.DataType = Datatypes.Text;
+            mbc.Sender = "huhih";
+            mbc.Data = pMessage.ConvertToArray();
+
+            _connection.GetStream().Write(mbc.ToArray(), 0, mbc.GetSize());
         }
 
         public void Stop()
         {
-            cts.Cancel();
-            connection?.Close();
+            _cts.Cancel();
+            _connection?.Close();
         }
 
         private async void Receive()
         {
-            string message;
             byte[] data = new byte[1024];
             int receivedBytes;
 
@@ -58,7 +61,7 @@ namespace ChatClientLogic
             {
                 try
                 {
-                    receivedBytes = await connection.GetStream().ReadAsync(data.AsMemory(0, data.Length), cts.Token);
+                    receivedBytes = await _connection.GetStream().ReadAsync(data.AsMemory(0, data.Length), _cts.Token);
                 }
                 catch (Exception)
                 {
@@ -73,11 +76,11 @@ namespace ChatClientLogic
                 }
 
                 // nachricht empfangen
-                message = Encoding.ASCII.GetString(data, 0, receivedBytes);
-                onNewMessage.Invoke(message);
+                var message = MessageBroadCast.FromArray(data[..receivedBytes]);
+                _onNewMessage.Invoke(message.Data.ConvertToString()); //TODO erstes Zeichen wird verschluckt
             }
 
-            connection.Close();
+            _connection.Close();
             OnConnectionStatus?.Invoke();
         }
     }

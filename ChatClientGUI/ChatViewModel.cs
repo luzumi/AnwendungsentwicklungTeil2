@@ -1,25 +1,26 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Collections.ObjectModel;
 using System.ComponentModel;
-using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Threading;
+using ChatClientLogic;
 
 namespace ChatClientGUI
 {
     class ChatViewModel : INotifyPropertyChanged
     {
-        public ICommand Command_Connect { get; init; }
-        public ICommand Command_Send { get; init; }
+        public ICommand Command_Connect { get; }
+        public ICommand Command_Send { get; }
         public event PropertyChangedEventHandler PropertyChanged;
-        public Brush ConnectionColor
-        {
-            get => IsConnected ? Brushes.Green : Brushes.Red;
-        }
+        public Action ScrollDownMethod;
+        private readonly ClientLogic _logic;
 
+
+        public bool IsConnected { get => _logic.IsConnected; }
         public string ButtonText => IsConnected ? " Disconnect" : " Connect";
+        public Dispatcher UiDispatcher { get; internal set; }
+        public Brush ConnectionColor => IsConnected ? Brushes.Green : Brushes.Red;
+
 
         public string Messages
         {
@@ -49,39 +50,35 @@ namespace ChatClientGUI
         }
         private string _newMessage;
 
-        public Action ScrollDownMethod;
-        private readonly ChatClientLogic.ClientLogic logic;
-        public bool IsConnected { get => logic.IsConnected; }
-        public Dispatcher UiDispatcher { get; internal set; }
+        
 
         public ChatViewModel()
         {
             Command_Connect = new GenericCommand(Connect);
             Command_Send = new GenericCommand(SendNewMessage, () => IsConnected);
-            logic = new(DisplayReceivedMessage);
-            logic.OnConnectionStatus = ConnectionStatusChange;
+            _logic = new ClientLogic(DisplayReceivedMessage) {OnConnectionStatus = ConnectionStatusChange};
             Messages = string.Empty;
             NewMessage = string.Empty;
         }
 
         private void SendNewMessage()
         {
-            logic.SendMessage(_newMessage);
+            _logic.SendMessage(_newMessage);
             NewMessage = string.Empty;
             ScrollDownMethod?.Invoke();
         }
 
-        private void DisplayReceivedMessage(string ReceivedMessage)
+        private void DisplayReceivedMessage(string receivedMessage)
         {
-            Messages += Environment.NewLine + "Other> " + ReceivedMessage;
+            Messages += Environment.NewLine + "Other> " + receivedMessage;
             UiDispatcher.Invoke(() => ScrollDownMethod?.Invoke());
         }
         private void Connect()
         {
             if (IsConnected)
-                logic.Stop();
+                _logic.Stop();
             else
-                logic.Start();
+                _logic.Start();
 
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(IsConnected)));
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(ConnectionColor)));
