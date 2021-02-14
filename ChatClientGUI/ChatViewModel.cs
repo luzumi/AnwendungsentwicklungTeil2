@@ -18,6 +18,20 @@ namespace ChatClientGUI
 
         public bool IsConnected { get => _logic.IsConnected; }
         public string ButtonText => IsConnected ? " Disconnect" : " Connect";
+
+        public string UserName
+        {
+            get
+            {
+                return _userName;
+            }
+            set
+            {
+                _userName = value;
+            }
+        }
+        private string _userName = "Your Name";
+
         public Dispatcher UiDispatcher { get; internal set; }
         public Brush ConnectionColor => IsConnected ? Brushes.Green : Brushes.Red;
 
@@ -43,7 +57,7 @@ namespace ChatClientGUI
             {
                 if (_newMessage != value)
                 {
-                    _newMessage = value;
+                    _newMessage =  value;
                     PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(NewMessage)));
                 }
             }
@@ -63,14 +77,14 @@ namespace ChatClientGUI
 
         private void SendNewMessage()
         {
-            _logic.SendMessage(_newMessage);
+            _logic.SendMessage(UserName + ": " + _newMessage);
             NewMessage = string.Empty;
             ScrollDownMethod?.Invoke();
         }
 
         private void DisplayReceivedMessage(string receivedMessage)
         {
-            Messages += Environment.NewLine + "Other> " + receivedMessage;
+            Messages += Environment.NewLine + receivedMessage;
             UiDispatcher.Invoke(() => ScrollDownMethod?.Invoke());
         }
         private void Connect()

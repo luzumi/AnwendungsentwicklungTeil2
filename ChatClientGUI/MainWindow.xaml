@@ -12,6 +12,7 @@
     <Grid Margin="3" Background="OldLace">
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="*" />
+            <ColumnDefinition Width="*" />
             <ColumnDefinition Width="100" />
         </Grid.ColumnDefinitions>
         <Grid.RowDefinitions>
@@ -19,39 +20,52 @@
             <RowDefinition Height="*" />
             <RowDefinition Height="30" />
         </Grid.RowDefinitions>
+
         <!-- ConnectButtonRow -->
-        <StackPanel Grid.Column="1">
-            <StackPanel Orientation="Horizontal">
-                <Button Command="{Binding Command_Connect}">
-                    <Button.Content>
-                        <StackPanel Orientation="Horizontal">
-                            <TextBlock Width="70" Text="{Binding ButtonText}"
-                                       VerticalAlignment="Center" />
-                            <Ellipse Width="15" Height="15" Margin="5"
-                                     Fill="{Binding ConnectionColor}" />
-                        </StackPanel>
-                    </Button.Content>
-                </Button>
-            </StackPanel>
-        </StackPanel>
+        <Grid ColumnSpan="3">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="100" />
+            </Grid.ColumnDefinitions>
+            <TextBox Grid.Column="0" x:Name="TbUserName" 
+                     Text="{Binding UserName}" 
+                     VerticalContentAlignment="Center"/>
+            <PasswordBox Grid.Column="1" x:Name="TbPassword" 
+                     PasswordChar="*"
+                     VerticalContentAlignment="Center"/>
+            <Button Grid.Column="2" Command="{Binding Command_Connect}">
+                <Button.Content>
+                    <StackPanel Orientation="Horizontal">
+                        <TextBlock Width="70" Text="{Binding ButtonText}"
+                                   VerticalAlignment="Center" />
+                        <Ellipse Width="15" Height="15" Margin="5"
+                                 Fill="{Binding ConnectionColor}" />
+                    </StackPanel>
+                </Button.Content>
+            </Button>
+        </Grid>
+
         <!-- Write/Send Row -->
-        <TextBox Grid.Row="2"  Grid.Column="0" x:Name="TbMessage" 
+        <TextBox Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="2" x:Name="TbMessage"
                  Text="{Binding NewMessage, UpdateSourceTrigger=PropertyChanged}"
                  IsEnabled="{Binding IsConnected}"
-                 Background="AntiqueWhite" />
-        <Button Grid.Row="2" Grid.Column="1" Content=" Send =>" IsDefault="true" Width="100"
+                 Background="AntiqueWhite"
+                 SpellCheck.IsEnabled="True"/>
+        <Button Grid.Row="2" Grid.Column="2" Content=" Send =>" IsDefault="true"
                 Command="{Binding Command_Send}"
                 CommandParameter="{Binding ElementName=TbMessage, Path=Text}"
                 Background="{Binding ConnectionColor}"
                 IsEnabled="{Binding IsConnected}"
-                HorizontalContentAlignment="Left"
-                Margin="1,0,0,0" />
+                HorizontalContentAlignment="Center"
+                Width="100"/>
+
         <!-- MessagesView -->
-        <ScrollViewer x:Name="SvMessages" 
-                      Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="2">
+        <ScrollViewer x:Name="SvMessages"
+                      Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="3">
             <TextBlock Text="{Binding Messages}"
-                Background="Cornsilk"
-                TextWrapping="Wrap"/>
+                       Background="Cornsilk"
+                       TextWrapping="Wrap" />
         </ScrollViewer>
     </Grid>
 </Window>

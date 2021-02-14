@@ -12,7 +12,7 @@ namespace ChatServerLogic
     {
         private readonly TcpListener _listener;
         private readonly LinkedList<ConnectionInfo> _connectionList;
-
+        private ConnectionInfo ci;
 
         private readonly Action<string> _onMessageReceived;
         readonly CancellationTokenSource ctsListener;
@@ -24,9 +24,9 @@ namespace ChatServerLogic
         public bool IsReaderRunning { get; } //TODO:???????
 
 
-        public ChatServer(Action<string> RecieveMethod)
+        public ChatServer(Action<string> ReceiveMethod)
         {
-            _onMessageReceived = RecieveMethod;
+            _onMessageReceived = ReceiveMethod;
             _listener = new(System.Net.IPAddress.Any, 1337);
             ctsListener = new();
             ctsReader = new();
@@ -44,10 +44,10 @@ namespace ChatServerLogic
             while (!ctsListener.IsCancellationRequested)
             {
                 TcpClient newClient = await Task.Run(() => _listener.AcceptTcpClient());
-                ConnectionInfo ci = new();
+                ci = new();
                 ci.ReaderTask = Task.Run(() => Receive(ci), ctsReader.Token);
                 ci.Tcp = newClient;
-                ci.UserName = "afdkag";     //TODO Namen einbauen
+                ci.UserName = "//TODO Namen einbauen";     //TODO Namen einbauen
                 _connectionList.AddLast(ci);
                 _onMessageReceived.Invoke("Client verbindet sich");
             }
@@ -70,12 +70,15 @@ namespace ChatServerLogic
             Kick();
         }
 
-        public void SendMessage(string Message)
+        public void SendMessage(string pMessage)
         {
-            var data = Message.ConvertToArray();
+            MessageBroadCast mbc = new();
+            mbc.DataType = Datatypes.Text;
+            mbc.Sender = "ServerMessage";
+            mbc.Data = (mbc.Sender + ": " + pMessage).ConvertToArray();
             foreach (var client in _connectionList)
             {
-                if (client.Tcp.Connected) client.Tcp.GetStream().Write(data, 0, data.Length);
+                if (client.Tcp.Connected) client.Tcp.GetStream().Write(mbc.ToArray(), 0, mbc.GetSize());
             }
         }
 
@@ -99,7 +102,7 @@ namespace ChatServerLogic
 
                 if (recievedBytes < 1)
                 {
-                    _onMessageReceived.Invoke("Weniger als 1 byte empfangen, beende verbindung");
+                    _onMessageReceived.Invoke($"VerbindungsAbbruch von Client {pClient.UserName}");
                     break;
                 }
 
@@ -147,7 +150,7 @@ namespace ChatServerLogic
                     case MessageTypes.ViewAllClients:
                         break;
                     default:
-                        throw new ArgumentOutOfRangeException();
+                        throw new ArgumentOutOfRangeException(nameof(pClient));
                 }
             }
 
@@ -162,10 +165,9 @@ namespace ChatServerLogic
             resultList.Add($"Listener : {IsListenerRunning}");
             resultList.Add($"Reader : {IsReaderRunning}");
 
-            int counter = 0;
             foreach (var client in _connectionList)
             {
-                resultList.Add($"Client: {counter++} {client.Tcp.Connected} " +
+                resultList.Add($"Client: {client.UserName} {client.Tcp.Connected} " +
                                $"IP: {client.Tcp.Client.RemoteEndPoint}");
             }
 

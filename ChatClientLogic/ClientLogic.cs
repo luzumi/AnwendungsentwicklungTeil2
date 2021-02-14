@@ -77,7 +77,7 @@ namespace ChatClientLogic
 
                 // nachricht empfangen
                 var message = MessageBroadCast.FromArray(data[..receivedBytes]);
-                _onNewMessage.Invoke(message.Data.ConvertToString()); //TODO erstes Zeichen wird verschluckt
+                _onNewMessage.Invoke(message.Data.ConvertToString());
             }
 
             _connection.Close();

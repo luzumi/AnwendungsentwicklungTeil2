@@ -37,12 +37,12 @@ namespace ChatMessages
 
         public static MessageBroadCast FromArray(byte[] pArray)
         {
-            if (pArray is null || pArray.Length < 3) throw new ArgumentException();
+            if (pArray is null || pArray.Length < 3) throw new ArgumentException("Error MBC 040");
 
             MessageBroadCast m = new ();
-            int lenghtSender = pArray[2];
-            m.Sender = pArray[3..(3 + lenghtSender)].ConvertToString();
-            m.Data = pArray[(3 + lenghtSender  )..];
+            int lengthSender = pArray[2];
+            m.Sender = pArray[3..(3 + lengthSender)].ConvertToString();
+            m.Data = pArray[(3 + lengthSender  )..];
 
             return m;
         }

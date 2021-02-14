@@ -1,4 +1,6 @@
-﻿namespace ChatClientGUI
+﻿using System.Windows;
+
+namespace ChatClientGUI
 {
     /// <summary>
     /// Interaction logic for MainWindow.xaml
