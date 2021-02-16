@@ -1,8 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Net.Sockets;
 using System.Threading.Tasks;
-using System.Text;
 using System.Threading;
 using ChatMessages;
 
@@ -12,7 +12,7 @@ namespace ChatServerLogic
     {
         private readonly TcpListener _listener;
         private readonly LinkedList<ConnectionInfo> _connectionList;
-        private ConnectionInfo ci;
+        private List<Room> _roomList;
 
         private readonly Action<string> _onMessageReceived;
         readonly CancellationTokenSource ctsListener;
@@ -31,6 +31,8 @@ namespace ChatServerLogic
             ctsListener = new();
             ctsReader = new();
             _connectionList = new();
+            _roomList = new();
+            _roomList.Add(new Room("Lobby"));
         }
 
         public async void StartListenerAsync()
@@ -44,12 +46,12 @@ namespace ChatServerLogic
             while (!ctsListener.IsCancellationRequested)
             {
                 TcpClient newClient = await Task.Run(() => _listener.AcceptTcpClient());
-                ci = new();
-                ci.ReaderTask = Task.Run(() => Receive(ci), ctsReader.Token);
-                ci.Tcp = newClient;
-                ci.UserName = "//TODO Namen einbauen";     //TODO Namen einbauen
-                _connectionList.AddLast(ci);
-                _onMessageReceived.Invoke("Client verbindet sich");
+                ConnectionInfo connInfo = new();
+                connInfo.ReaderTask = Task.Run(() => Receive(connInfo), ctsReader.Token);
+                connInfo.Tcp = newClient;
+                _connectionList.AddLast(connInfo);
+                _onMessageReceived.Invoke($"Client {newClient.Client.RemoteEndPoint} verbindet sich");
+                _roomList[0]._roomMember.AddFirst(connInfo);
             }
 
             _onMessageReceived.Invoke("stoppe Listener");
@@ -72,9 +74,8 @@ namespace ChatServerLogic
 
         public void SendMessage(string pMessage)
         {
-            MessageBroadCast mbc = new();
+            MessageBroadCast mbc = new("ServerMessage");
             mbc.DataType = Datatypes.Text;
-            mbc.Sender = "ServerMessage";
             mbc.Data = (mbc.Sender + ": " + pMessage).ConvertToArray();
             foreach (var client in _connectionList)
             {
@@ -102,16 +103,43 @@ namespace ChatServerLogic
 
                 if (recievedBytes < 1)
                 {
-                    _onMessageReceived.Invoke($"VerbindungsAbbruch von Client {pClient.UserName}");
+                    _onMessageReceived.Invoke($"VerbindungsAbbruch von Client {pClient.ciUserName}");
                     break;
                 }
 
                 switch ((MessageTypes)data[0])
                 {
                     case MessageTypes.Login:
+                        var loginMessage = MessageLogin.FromArray(data[..recievedBytes]);
+                        bool success = true;
+                        foreach (var connectionInfo in _connectionList)
+                        {
+                            if (connectionInfo.ciUserName == loginMessage.userName)
+                            {
+                                //TODO: fehlerbehandlung
+                                MessageDirect m = new MessageDirect();
+                                success = false;
+                                break;
+                            }
+                        }
+
+                        if (success)
+                        {
+                            MessageLoginStatus ls = new();
+                            ls.loginState = LoginStates.LoginSuccessfully;
+                        }
+                        else
+                        {
+                            MessageLoginStatus ls = new();
+                            ls.loginState = LoginStates.LoginFail;
+                        }
+
+                        pClient.ciUserName = loginMessage.userName;
+                        _onMessageReceived(loginMessage.userName);
                         break;
                     case MessageTypes.Logout:
                         break;
+
                     case MessageTypes.Broadcast:
                         foreach (var client in _connectionList)
                         {
@@ -122,19 +150,22 @@ namespace ChatServerLogic
                             _onMessageReceived(MessageBroadCast.FromArray(data[..recievedBytes]).Data
                                 .ConvertToString());
                         break;
+
                     case MessageTypes.DirectMessage:
                         var messageDirect = MessageDirect.FromArray(data[..recievedBytes]);
                         foreach (var client in _connectionList)
                         {
-                            if (client.UserName == messageDirect.TargetName)
+                            if (client.ciUserName == messageDirect.TargetName)
                             {
                                 client.Tcp.GetStream().Write(data, 0, recievedBytes);
                                 break;
                             }
                         }
+
                         if ((Datatypes)data[1] == Datatypes.Text)
                             _onMessageReceived(messageDirect._data.ConvertToString());
                         break;
+
                     case MessageTypes.JoinGroup:
                         break;
                     case MessageTypes.LeaveGroup:
@@ -148,6 +179,33 @@ namespace ChatServerLogic
                     case MessageTypes.ViewRequest:
                         break;
                     case MessageTypes.ViewAllClients:
+
+                        MessageViewAllClients md = new();
+                        md.TargetName = data[3..(data[2])].ConvertToString();
+                        md.SenderName = "UserList";
+
+                        ConnectionInfo[] ci = new ConnectionInfo[_connectionList.Count];
+
+                        byte[] listBytes = new byte[32];
+                        int startIndex = 5;
+
+                        for (int i = 0; i < _connectionList.Count; i++)
+                        {
+                            _connectionList.CopyTo(ci, i);
+                            listBytes = (Environment.NewLine + ci[i].ciUserName).ConvertToArray() ;
+                            startIndex += listBytes.Length;
+                            Array.Copy(listBytes, 0, md._data, startIndex, listBytes.Length);
+                        }
+                        
+                        foreach (var client in _connectionList)
+                        {
+                            if (client.ciUserName == md.TargetName)
+                            {
+                                client.Tcp.GetStream().Write(md._data, 0, md.GetSize());
+                                break;
+                            }
+                        }
+
                         break;
                     default:
                         throw new ArgumentOutOfRangeException(nameof(pClient));
@@ -167,7 +225,7 @@ namespace ChatServerLogic
 
             foreach (var client in _connectionList)
             {
-                resultList.Add($"Client: {client.UserName} {client.Tcp.Connected} " +
+                resultList.Add($"Client: {client.ciUserName ?? "noUsername"} {client.Tcp.Connected} " +
                                $"IP: {client.Tcp.Client.RemoteEndPoint}");
             }
 

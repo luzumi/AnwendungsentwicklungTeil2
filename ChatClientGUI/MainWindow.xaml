@@ -28,16 +28,30 @@
                 <ColumnDefinition Width="*" />
                 <ColumnDefinition Width="100" />
             </Grid.ColumnDefinitions>
-            <TextBox Grid.Column="0" x:Name="TbUserName" 
+            <local:ClickSelectTextBox Grid.Column="0"
                      Text="{Binding UserName}" 
-                     VerticalContentAlignment="Center"/>
-            <PasswordBox Grid.Column="1" x:Name="TbPassword" 
+                     VerticalContentAlignment="Center"
+                     Visibility="{Binding VisibilityTextBox}"
+                     SelectionStart="0"
+                     SelectionLength="9">
+            </local:ClickSelectTextBox>
+            <StackPanel Grid.Column="0" Orientation="Horizontal">
+                <Label Content="Timestamp" Visibility="{Binding VisibilityNoTextBox}"/>      
+                <CheckBox IsChecked="{Binding CbTimeStamp, Mode=TwoWay}" 
+                          Visibility="{Binding VisibilityNoTextBox}"
+                          VerticalContentAlignment="Center"/>
+            </StackPanel>
+                     
+            <PasswordBox Grid.Column="1"
                      PasswordChar="*"
-                     VerticalContentAlignment="Center"/>
-            <Button Grid.Column="2" Command="{Binding Command_Connect}">
+                     VerticalContentAlignment="Center"
+                     Visibility="{Binding VisibilityTextBox}"/>
+            <Button Grid.Column="2" 
+                    Command="{Binding Command_Connect}">
                 <Button.Content>
                     <StackPanel Orientation="Horizontal">
-                        <TextBlock Width="70" Text="{Binding ButtonText}"
+                        <TextBlock Width="70" 
+                                   Text="{Binding ButtonText}"
                                    VerticalAlignment="Center" />
                         <Ellipse Width="15" Height="15" Margin="5"
                                  Fill="{Binding ConnectionColor}" />
@@ -47,7 +61,7 @@
         </Grid>
 
         <!-- Write/Send Row -->
-        <TextBox Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="2" x:Name="TbMessage"
+        <local:ClickSelectTextBox Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="2" x:Name="TbMessage"
                  Text="{Binding NewMessage, UpdateSourceTrigger=PropertyChanged}"
                  IsEnabled="{Binding IsConnected}"
                  Background="AntiqueWhite"

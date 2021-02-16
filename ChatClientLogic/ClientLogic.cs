@@ -17,7 +17,7 @@ namespace ChatClientLogic
         public bool IsConnected => _connection != null && _connection.Connected;
         public ClientLogic(Action<string> onNewMessage) => this._onNewMessage = onNewMessage;
 
-        public bool Start()
+        public bool Start(string pUserName)
         {
             _connection = new TcpClient();
 
@@ -30,6 +30,10 @@ namespace ChatClientLogic
                 return false;
             }
 
+
+            MessageLogin m = new MessageLogin(pUserName);
+            _connection.GetStream().Write(m.ToArray());
+
             _cts = new();
             _ = Task.Run(Receive, _cts.Token);
             return true;
@@ -38,9 +42,8 @@ namespace ChatClientLogic
         public void SendMessage(string pMessage)
         {
             if (_connection == null || !_connection.Connected) return;
-            MessageBroadCast mbc = new();
+            MessageBroadCast mbc = new(pSender:"test");
             mbc.DataType = Datatypes.Text;
-            mbc.Sender = "huhih";
             mbc.Data = pMessage.ConvertToArray();
 
             _connection.GetStream().Write(mbc.ToArray(), 0, mbc.GetSize());

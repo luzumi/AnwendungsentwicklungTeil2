@@ -15,7 +15,7 @@ namespace ChatServerGUI
             Console.WriteLine("   /send <Message>   sendet eine Nachricht an den Client");
             Console.WriteLine("   /shutdown         Ende Gelände");
 
-            ChatServerLogic.ChatServer chatServer = new((x) => Console.WriteLine("Empfangen: {0}", x));
+            ChatServerLogic.ChatServer chatServer = new((s) => Console.WriteLine($"Empfangen: {s}"));
 
 #if DEBUG
             chatServer.StartListenerAsync();
@@ -28,8 +28,8 @@ namespace ChatServerGUI
                 input = Console.ReadLine();
                 if (input != null)
                 {
-                    int spaceId = input.IndexOf(" ", StringComparison.Ordinal);
-                    command = input.Substring(0, (spaceId > 0 ? spaceId : input.Length));
+                    int spaceIndex = input.IndexOf(" ", StringComparison.Ordinal);
+                    command = input.Substring(0, (spaceIndex > 0 ? spaceIndex : input.Length));
                 }
 
                 switch (command)

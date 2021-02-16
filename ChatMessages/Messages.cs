@@ -6,7 +6,6 @@ namespace ChatMessages
 {
     class MessageClientAdd : Message
     {
-        private int clientId;
         public MessageClientAdd()
         {
             MessageType = MessageTypes.ClientAdd;
@@ -56,29 +55,6 @@ namespace ChatMessages
         public MessageViewRequest()
         {
             MessageType = MessageTypes.ViewRequest;
-        }
-
-        public override int GetSize()
-        {
-            throw new System.NotImplementedException();
-        }
-
-        public override byte[] ToArray()
-        {
-            throw new System.NotImplementedException();
-        }
-
-        public static Message FromArray(byte[] pArray)
-        {
-            throw new System.NotImplementedException();
-        }
-    }
-
-    class MessageViewAllClients : Message
-    {
-        public MessageViewAllClients()
-        {
-            MessageType = MessageTypes.ViewAllClients;
         }
 
         public override int GetSize()

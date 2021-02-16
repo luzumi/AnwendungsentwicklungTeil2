@@ -1,7 +1,9 @@
 ﻿using System;
 using System.ComponentModel;
+using System.Windows.Controls;
 using System.Windows.Input;
 using System.Windows.Media;
+using System.Windows.Media.TextFormatting;
 using System.Windows.Threading;
 using ChatClientLogic;
 
@@ -16,8 +18,16 @@ namespace ChatClientGUI
         private readonly ClientLogic _logic;
 
 
+        public Dispatcher UiDispatcher { get; internal set; }
+        public Brush ConnectionColor => IsConnected ? Brushes.Green : Brushes.Red;
         public bool IsConnected { get => _logic.IsConnected; }
+        public bool IsNotConnected { get => !_logic.IsConnected; }
+        public string VisibilityTextBox => _logic.IsConnected? "Hidden" : "Visible";
+        public string VisibilityNoTextBox => !_logic.IsConnected? "Hidden" : "Visible";
         public string ButtonText => IsConnected ? " Disconnect" : " Connect";
+        public bool CbTimeStamp { get; set; }
+        
+
 
         public string UserName
         {
@@ -32,8 +42,6 @@ namespace ChatClientGUI
         }
         private string _userName = "Your Name";
 
-        public Dispatcher UiDispatcher { get; internal set; }
-        public Brush ConnectionColor => IsConnected ? Brushes.Green : Brushes.Red;
 
 
         public string Messages
@@ -77,7 +85,10 @@ namespace ChatClientGUI
 
         private void SendNewMessage()
         {
-            _logic.SendMessage(UserName + ": " + _newMessage);
+            string message = CbTimeStamp
+                ? DateTime.Now.ToShortTimeString() + ": " + UserName + ": " + _newMessage
+                : UserName + ": " + _newMessage;
+            _logic.SendMessage(message);
             NewMessage = string.Empty;
             ScrollDownMethod?.Invoke();
         }
@@ -92,19 +103,27 @@ namespace ChatClientGUI
             if (IsConnected)
                 _logic.Stop();
             else
-                _logic.Start();
+            {
+                _logic.Start(UserName);
+            }
 
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(IsConnected)));
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(IsNotConnected)));
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(ConnectionColor)));
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(ButtonText)));
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(VisibilityTextBox)));
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(VisibilityNoTextBox)));
             (Command_Send as GenericCommand)?.RaiseCanExecuteChanged();
         }
 
         private void ConnectionStatusChange()
         {
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(IsConnected)));
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(IsNotConnected)));
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(ConnectionColor)));
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(ButtonText)));
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(VisibilityTextBox)));
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(VisibilityNoTextBox)));
             UiDispatcher?.Invoke(((GenericCommand) Command_Send).RaiseCanExecuteChanged);
         }
     }

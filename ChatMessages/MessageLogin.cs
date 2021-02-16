@@ -5,38 +5,40 @@ using System.Text;
 
 namespace ChatMessages
 {
-    class MessageLogin : Message
+    public class MessageLogin : Message
     {
-        public MessageLogin()
+        public MessageLogin(string pUserName)
         {
             MessageType = MessageTypes.Login;
+            userName = pUserName;
         }
 
-        private const int passwordLenght = 32;
-        public string _userName;
-        public byte[] _passwort;
+        private const int passwordLength = 32;
+        public byte[] _password = {1, 2, 3};
+        public byte[] Data;
+
         public override int GetSize()
         {
-            return 1 + _passwort.Length + (_userName.Length * 2);
+            return 3 + _password.Length + userName.Length;
         }
 
         public override byte[] ToArray()
         {
-            byte[] data = new byte[this.GetSize()];
-            data[0] = (byte)MessageType;
-            Array.Copy(_passwort, 0, data, 1, _passwort.Length);
-            var nameArray = _userName.ConvertToArray();
-            Array.Copy(nameArray, 0, data, 1 + _passwort.Length, nameArray.Length);
-            return data;
+            Data = new byte[this.GetSize()];
+            Data[0] = (byte)MessageType;
+            Data[1] = (byte)userName.Length;
+            Data[2] = (byte)_password.Length;
+            var nameArray = userName.ConvertToArray();
+            Array.Copy(nameArray, 0, Data, 3, nameArray.Length);
+            Array.Copy(_password, 0, Data, 3 + nameArray.Length, _password.Length);
+            return Data;
         }
 
         public static MessageLogin FromArray(byte[] pData)
         {
-            if (pData is null || pData.Length != 1) throw new ArgumentException();
-            MessageLogin m = new();
-            m.MessageType = (MessageTypes)pData[0];
-            m._passwort = pData[0..passwordLenght];
-            m._userName = pData[34..].ConvertToString();
+            if (pData is null || pData.Length < 3) throw new ArgumentException();
+            MessageLogin m = new((pData[3.. (3 + pData[1])]).ConvertToString());
+            m._password = pData[(3 + pData[1]) .. ];
             return m;
         }
     }

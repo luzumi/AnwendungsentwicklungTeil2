@@ -10,9 +10,10 @@ namespace ChatMessages
         public byte[] Data;
         public string Sender;
         public Datatypes DataType;
-        public MessageBroadCast()
+        public MessageBroadCast(string pSender)
         {
             MessageType = MessageTypes.Broadcast;
+            Sender = pSender;
         }
 
         public override int GetSize()
@@ -39,7 +40,7 @@ namespace ChatMessages
         {
             if (pArray is null || pArray.Length < 3) throw new ArgumentException("Error MBC 040");
 
-            MessageBroadCast m = new ();
+            MessageBroadCast m = new (pArray[3..(3 + pArray[2])].ConvertToString());
             int lengthSender = pArray[2];
             m.Sender = pArray[3..(3 + lengthSender)].ConvertToString();
             m.Data = pArray[(3 + lengthSender  )..];
