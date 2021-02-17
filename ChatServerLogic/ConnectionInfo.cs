@@ -17,7 +17,7 @@ namespace ChatServerLogic
 
     public class Room
     {
-        private string _RoomName;
+        public string _RoomName;
         public LinkedList<ConnectionInfo> _roomMember;
 
         public Room(string pRoomName)

@@ -7,45 +7,50 @@ namespace ChatMessages
 {
     public class MessageBroadCast : Message
     {
-        public byte[] Data;
-        public string Sender;
-        public Datatypes DataType;
-        public MessageBroadCast(string pSender)
+        public DataType ContentType;
+        public byte[] Content;
+
+        public MessageBroadCast()
         {
             MessageType = MessageTypes.Broadcast;
-            Sender = pSender;
         }
+
 
         public override int GetSize()
         {
-            return 3 + Sender.Length + Data.Length;
+            return 3 + userName.Length + Content.Length;
         }
 
+        /// <summary>
+        /// Never used
+        /// </summary>
+        /// <returns></returns>
         public override byte[] ToArray()
         {
-            byte[] result = new byte[this.GetSize()];
-            result[0] = (byte)MessageType;
-            result[1] = (byte)DataType;
-            result[2] = (byte)Sender.Length;
-
-            var sender = Sender.ConvertToArray();
-            Array.Copy(sender, 0, result, 3, sender.Length);
-
-            
-            Array.Copy(Data, 0, result, 3 + sender.Length , Data.Length);
-            return result;
+            byte[] data = new byte[GetSize()];
+            data[0] = (byte)MessageType;
+            data[1] = (byte)ContentType;
+            data[2] = (byte)userName.Length;
+            var arr = userName.ConvertToArray();
+            Array.Copy(arr, 0, data, 3, arr.Length);
+            Array.Copy(Content, 0, data, 3 + arr.Length, Content.Length);
+            return data;
         }
 
-        public static MessageBroadCast FromArray(byte[] pArray)
+
+        /// <summary>
+        /// zusammensetzen eines empfangenen Pakets
+        /// </summary>
+        /// <param name="pArray"></param>
+        /// <returns></returns>
+        public MessageBroadCast(byte[] pArray)
         {
             if (pArray is null || pArray.Length < 3) throw new ArgumentException("Error MBC 040");
-
-            MessageBroadCast m = new (pArray[3..(3 + pArray[2])].ConvertToString());
+            MessageType = (MessageTypes)pArray[0];
+            ContentType = (DataType)pArray[1];
             int lengthSender = pArray[2];
-            m.Sender = pArray[3..(3 + lengthSender)].ConvertToString();
-            m.Data = pArray[(3 + lengthSender  )..];
-
-            return m;
+            userName = pArray[3..(3 + lengthSender)].ConvertToString();
+            Content = pArray[(3 + lengthSender)..];
         }
     }
 }

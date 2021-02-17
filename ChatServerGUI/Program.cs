@@ -45,7 +45,7 @@ namespace ChatServerGUI
                         foreach (var stat in status) Console.WriteLine(stat);
                         break;
                     case "/send":
-                        chatServer.SendMessage(input?[6..]);
+                        chatServer.SendBroadcastMessage(input?[6..]);
                         break;
                     case "/shutdown":
                         Console.WriteLine("ENDE");

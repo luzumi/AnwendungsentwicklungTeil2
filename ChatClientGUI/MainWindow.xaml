@@ -6,11 +6,15 @@
         xmlns:local="clr-namespace:ChatClientGUI"
         mc:Ignorable="d"
         Title="MainWindow" Height="400" Width="350">
+
     <Window.DataContext>
         <local:ChatViewModel />
     </Window.DataContext>
+
+
     <Grid Margin="3" Background="OldLace">
         <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="10" />
             <ColumnDefinition Width="*" />
             <ColumnDefinition Width="*" />
             <ColumnDefinition Width="100" />
@@ -21,36 +25,39 @@
             <RowDefinition Height="30" />
         </Grid.RowDefinitions>
 
+
         <!-- ConnectButtonRow -->
-        <Grid ColumnSpan="3">
+        <Grid Grid.Column="0" Grid.Row="0" ColumnSpan="4">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="*" />
                 <ColumnDefinition Width="*" />
-                <ColumnDefinition Width="100" />
+                <ColumnDefinition Width="Auto" />
             </Grid.ColumnDefinitions>
             <local:ClickSelectTextBox Grid.Column="0"
-                     Text="{Binding UserName}" 
-                     VerticalContentAlignment="Center"
-                     Visibility="{Binding VisibilityTextBox}"
-                     SelectionStart="0"
-                     SelectionLength="9">
-            </local:ClickSelectTextBox>
+                                      Text="{Binding UserName}"
+                                      VerticalContentAlignment="Center"
+                                      Visibility="{Binding VisibilityTextBox}"
+                                      SelectionStart="0"
+                                      SelectionLength="9" />
             <StackPanel Grid.Column="0" Orientation="Horizontal">
-                <Label Content="Timestamp" Visibility="{Binding VisibilityNoTextBox}"/>      
-                <CheckBox IsChecked="{Binding CbTimeStamp, Mode=TwoWay}" 
+                <CheckBox IsChecked="{Binding CbTimeStamp, Mode=TwoWay}"
                           Visibility="{Binding VisibilityNoTextBox}"
-                          VerticalContentAlignment="Center"/>
+                          VerticalContentAlignment="Center" />
+                <Label Content="Timestamp" Visibility="{Binding VisibilityNoTextBox}" />
             </StackPanel>
-                     
+
             <PasswordBox Grid.Column="1"
-                     PasswordChar="*"
-                     VerticalContentAlignment="Center"
-                     Visibility="{Binding VisibilityTextBox}"/>
-            <Button Grid.Column="2" 
-                    Command="{Binding Command_Connect}">
+                         x:Name="TbPassword"
+                         PasswordChar="*"
+                         VerticalContentAlignment="Center"
+                         IsEnabled="{Binding IsNotConnected}"
+                         Visibility="{Binding VisibilityTextBox}"/>
+            <Button Grid.Column="2"
+                    Command="{Binding CommandConnect}"
+                    CommandParameter="{Binding ElementName=TbPassword}">
                 <Button.Content>
                     <StackPanel Orientation="Horizontal">
-                        <TextBlock Width="70" 
+                        <TextBlock Width="70"
                                    Text="{Binding ButtonText}"
                                    VerticalAlignment="Center" />
                         <Ellipse Width="15" Height="15" Margin="5"
@@ -59,27 +66,48 @@
                 </Button.Content>
             </Button>
         </Grid>
-
         <!-- Write/Send Row -->
-        <local:ClickSelectTextBox Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="2" x:Name="TbMessage"
-                 Text="{Binding NewMessage, UpdateSourceTrigger=PropertyChanged}"
-                 IsEnabled="{Binding IsConnected}"
-                 Background="AntiqueWhite"
-                 SpellCheck.IsEnabled="True"/>
-        <Button Grid.Row="2" Grid.Column="2" Content=" Send =>" IsDefault="true"
-                Command="{Binding Command_Send}"
+        <local:ClickSelectTextBox Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="3" x:Name="TbMessage"
+                                  Text="{Binding NewMessage, UpdateSourceTrigger=PropertyChanged}"
+                                  IsEnabled="{Binding IsConnected}"
+                                  Background="AntiqueWhite"
+                                  SpellCheck.IsEnabled="True" />
+        <Button Grid.Row="2" Grid.Column="3" Content=" Send =>" IsDefault="true"
+                Command="{Binding CommandSend}"
                 CommandParameter="{Binding ElementName=TbMessage, Path=Text}"
                 Background="{Binding ConnectionColor}"
                 IsEnabled="{Binding IsConnected}"
                 HorizontalContentAlignment="Center"
-                Width="100"/>
+                Width="100" />
 
         <!-- MessagesView -->
         <ScrollViewer x:Name="SvMessages"
-                      Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="3">
+                      Grid.Row="1" Grid.Column="2" Grid.ColumnSpan="2">
             <TextBlock Text="{Binding Messages}"
                        Background="Cornsilk"
                        TextWrapping="Wrap" />
         </ScrollViewer>
+
+        <Button Grid.Column="0" Grid.Row="1"
+                Command="{Binding CommandViewUserList}"
+                CommandParameter="{Binding ElementName=TbMessage}"
+                IsEnabled="{Binding IsConnected}">
+            <Polygon Points="0,14 6,7 0,0" Fill="Black" />
+        </Button>
+        <ListView Grid.Column="1" Grid.Row="1" Grid.ColumnSpan="1">
+            <Style TargetType="ListView">
+                <Setter Property="Background" Value="DarkGray"/>
+                <Setter Property="ItemsSource" Value="{Binding UserList}"/>
+                <Style.Triggers>
+                    <DataTrigger Binding="{Binding ButtonViewUserList}" Value="false">
+                        <Setter Property="Visibility" Value="Visible"/>
+                    </DataTrigger>
+                    <DataTrigger Binding="{Binding ButtonViewUserList}" Value="true">
+                        <Setter Property="Visibility" Value="Hidden"/>
+                    </DataTrigger>
+                </Style.Triggers>
+            </Style>
+
+        </ListView>
     </Grid>
 </Window>

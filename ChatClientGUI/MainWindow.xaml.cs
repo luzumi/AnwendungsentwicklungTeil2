@@ -14,6 +14,7 @@ namespace ChatClientGUI
             vm.ScrollDownMethod = SvMessages.ScrollToBottom;
             vm.UiDispatcher = Dispatcher;
             DataContext = vm;
+            
         }
     }
 }

@@ -27,21 +27,23 @@ namespace ChatMessages
         }
     }
 
-    class MessageClientRemove : Message
+    public class MessageClientKick : Message
     {
-        public MessageClientRemove()
+        public MessageClientKick()
         {
             MessageType = MessageTypes.ClientRemove;
         }
 
         public override int GetSize()
         {
-            throw new System.NotImplementedException();
+            return 1;
         }
 
         public override byte[] ToArray()
         {
-            throw new System.NotImplementedException();
+            byte[] data = new byte[1];
+            data[0] = (byte)MessageType;
+            return data;
         }
 
         public static Message FromArray(byte[] pArray)

@@ -7,13 +7,15 @@ namespace ChatMessages
 {
     public class MessageLogin : Message
     {
+        public byte[] Password;
+        public string UserName;
         public MessageLogin(string pUserName)
         {
             MessageType = MessageTypes.Login;
             userName = pUserName;
         }
 
-        private const int passwordLength = 32;
+        //private const int passwordLength = 32;
         public byte[] _password = {1, 2, 3};
         public byte[] Data;
 
@@ -34,9 +36,14 @@ namespace ChatMessages
             return Data;
         }
 
+        /// <summary>
+        /// zusammensetzen eines empfangenen Pakets
+        /// </summary>
+        /// <param name="pArray"></param>
+        /// <returns></returns>
         public static MessageLogin FromArray(byte[] pData)
         {
-            if (pData is null || pData.Length < 3) throw new ArgumentException();
+            if (pData is null || pData.Length < 3) throw new ArgumentException("Error MessageLogin fromArray");
             MessageLogin m = new((pData[3.. (3 + pData[1])]).ConvertToString());
             m._password = pData[(3 + pData[1]) .. ];
             return m;

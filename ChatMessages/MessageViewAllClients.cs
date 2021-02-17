@@ -1,42 +1,68 @@
 ﻿// corat::WPFFIrstSteps.ChatMessages.MessageViewAllClients.cs::022021
 
 using System;
+using System.Collections.Generic;
+using Microsoft.VisualBasic;
 
 namespace ChatMessages
 {
     public class MessageViewAllClients : Message
     {
-        public byte[] _data;
-        public string SenderName;
+        public byte[] Data;
+        public List<string> UserList;
         public string TargetName;
-        public Datatypes DataType;
+
         public MessageViewAllClients()
         {
             MessageType = MessageTypes.ViewAllClients;
-            DataType = Datatypes.Text;
+            UserList = new();
+        }
+
+        public MessageViewAllClients(byte[] pArray)
+        {
+            if (pArray == null)
+            {
+                throw new ArgumentNullException(nameof(pArray));
+            }
+
+            UserList = new(pArray[1..^1].ToString()?.Split(";") ?? Array.Empty<string>());
         }
 
         public override int GetSize()
         {
-            throw new System.NotImplementedException();
+            int count = 1;
+            foreach (var item in UserList)
+            {
+                count += item.Length + 1;
+            }
+
+            return count;
         }
 
         public override byte[] ToArray()
         {
-            byte[] result = new byte[this.GetSize()];
-            result[0] = (byte)MessageType;
-            result[1] = (byte)DataType;
-            result[2] = (byte)SenderName.Length;
-
-            var sender = SenderName.ConvertToArray();
-            Array.Copy(sender, 0, result, 4, sender.Length);
-
-            return result;
+            byte[] data = new byte[GetSize()];
+            data[0] = (byte)MessageType;
+            int pos = 1;
+            for (int i = 0; i < UserList.Count; i++)
+            {
+                byte[] nameArray = UserList[i].ConvertToArray();
+                Array.Copy(nameArray,0,data,pos,nameArray.Length);
+                pos += nameArray.Length;
+                data[pos] = ";".ConvertToArray()[0];
+                pos++;
+            }
+            return data;
         }
 
+        /// <summary>
+        /// zusammensetzen eines empfangenen Pakets
+        /// </summary>
+        /// <param name="pArray"></param>
+        /// <returns></returns>
         public static Message FromArray(byte[] pArray)
         {
-            if (pArray is null || pArray.Length > 2) throw new ArgumentException();
+            if (pArray is null || pArray.Length > 2) throw new ArgumentException("Error MessageViewAllClients fromArray");
 
             MessageDirect m = new MessageDirect();
             int lenghtSender = pArray[2];

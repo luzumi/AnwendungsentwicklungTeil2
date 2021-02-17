@@ -8,6 +8,11 @@ namespace ChatMessages
         public string userName;
 
         public abstract int GetSize();
+
+        /// <summary>
+        /// zusammensetzen eines zu sendenes paketes
+        /// </summary>
+        /// <returns></returns>
         public abstract byte[] ToArray();
         
     }

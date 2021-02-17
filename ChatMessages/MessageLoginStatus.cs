@@ -6,8 +6,8 @@ namespace ChatMessages
 {
     public class MessageLoginStatus : Message
     {
-        const int SessionIdLenght = 4;
-        private byte[] _sessionId = new byte[SessionIdLenght];
+        //const int SessionIdLenght = 4;
+        //public byte[] _sessionId = new byte[SessionIdLenght];
         public LoginStates loginState;
 
         public MessageLoginStatus()
@@ -22,13 +22,18 @@ namespace ChatMessages
 
         public override byte[] ToArray()
         {
-            byte[] data = new byte[1];
+            byte[] data = new byte[2];
             data[0] = (byte)MessageType;
             data[1] = (byte)loginState;
 
             return data;
         }
 
+        /// <summary>
+        /// zusammensetzen eines empfangenen Pakets
+        /// </summary>
+        /// <param name="pArray"></param>
+        /// <returns></returns>
         public static MessageLoginStatus FromArray(byte[] pArray)
         {
             if (pArray is null || pArray.Length != 1) throw new ArgumentException("Error MLS 33");
