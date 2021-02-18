@@ -113,7 +113,7 @@ namespace ChatServerLogic
                             if (success)
                             {
                                 MessageLoginStatus ls = new();
-                                ls.loginState = LoginStates.LoginSuccessfully;
+                                ls.loginState = MessageTypes.LoginSuccessfully;
                                 pClient.ciUserName = loginMessage.userName;
                                 pClient.Tcp.GetStream().Write(ls.ToArray());
 
@@ -131,7 +131,7 @@ namespace ChatServerLogic
                             else
                             {
                                 MessageLoginStatus ls = new();
-                                ls.loginState = LoginStates.LoginFail;
+                                ls.loginState = MessageTypes.LoginFail;
                                 pClient.Tcp.GetStream().Write(ls.ToArray());
                             }
 

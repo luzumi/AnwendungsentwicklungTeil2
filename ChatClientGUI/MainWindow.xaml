@@ -41,9 +41,9 @@
                                       SelectionLength="9" />
             <StackPanel Grid.Column="0" Orientation="Horizontal">
                 <CheckBox IsChecked="{Binding CbTimeStamp, Mode=TwoWay}"
-                          Visibility="{Binding VisibilityNoTextBox}"
+                          Visibility="{Binding VisibilityPasswordBox}"
                           VerticalContentAlignment="Center" />
-                <Label Content="Timestamp" Visibility="{Binding VisibilityNoTextBox}" />
+                <Label Content="Timestamp" Visibility="{Binding VisibilityPasswordBox}" />
             </StackPanel>
 
             <PasswordBox Grid.Column="1"
@@ -94,20 +94,10 @@
                 IsEnabled="{Binding IsConnected}">
             <Polygon Points="0,14 6,7 0,0" Fill="Black" />
         </Button>
-        <ListView Grid.Column="1" Grid.Row="1" Grid.ColumnSpan="1">
-            <Style TargetType="ListView">
-                <Setter Property="Background" Value="DarkGray"/>
-                <Setter Property="ItemsSource" Value="{Binding UserList}"/>
-                <Style.Triggers>
-                    <DataTrigger Binding="{Binding ButtonViewUserList}" Value="false">
-                        <Setter Property="Visibility" Value="Visible"/>
-                    </DataTrigger>
-                    <DataTrigger Binding="{Binding ButtonViewUserList}" Value="true">
-                        <Setter Property="Visibility" Value="Hidden"/>
-                    </DataTrigger>
-                </Style.Triggers>
-            </Style>
-
+        <ListView Grid.Column="1" Grid.Row="1" Grid.ColumnSpan="2" Margin="0,0,94,0"
+                  ItemsSource="{Binding UserList}" 
+                  SelectedItem="{Binding SelectedTarget}" 
+                  SelectionMode="Single">
         </ListView>
     </Grid>
 </Window>

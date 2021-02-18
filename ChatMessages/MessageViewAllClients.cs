@@ -6,18 +6,30 @@ using Microsoft.VisualBasic;
 
 namespace ChatMessages
 {
+    /// <summary>
+    /// Fordert eine Übersicht der verbundenen User an
+    /// - erbt von <see cref="Message"></see>
+    /// </summary>
     public class MessageViewAllClients : Message
     {
         public byte[] Data;
         public List<string> UserList;
         public string TargetName;
 
+        /// <summary>
+        /// Fordert eine Übersicht der verbundenen User an
+        /// </summary>
         public MessageViewAllClients()
         {
             MessageType = MessageTypes.ViewAllClients;
             UserList = new();
         }
 
+        /// <summary>
+        /// Fordert eine Übersicht der verbundenen User an
+        /// </summary>
+        /// <param name="pArray"> DatenStream</param>
+        /// <exception cref="ArgumentNullException"> DatenStream Ist <c>null</c> </exception>
         public MessageViewAllClients(byte[] pArray)
         {
             if (pArray == null)
@@ -28,6 +40,10 @@ namespace ChatMessages
             UserList = new(pArray[1..^1].ToString()?.Split(";") ?? Array.Empty<string>());
         }
 
+        /// <summary>
+        /// Zählt die Anzahl der verbundenen User
+        /// </summary>
+        /// <returns> VerbundeneUserAnzahl</returns>
         public override int GetSize()
         {
             int count = 1;
@@ -39,6 +55,10 @@ namespace ChatMessages
             return count;
         }
 
+        /// <summary>
+        /// Wandelt Nachricht in NachrichtenStream um
+        /// </summary>
+        /// <returns>NachrichtenStream</returns>
         public override byte[] ToArray()
         {
             byte[] data = new byte[GetSize()];
@@ -58,8 +78,8 @@ namespace ChatMessages
         /// <summary>
         /// zusammensetzen eines empfangenen Pakets
         /// </summary>
-        /// <param name="pArray"></param>
-        /// <returns></returns>
+        /// <param name="pArray"> NachrichtenStream</param>
+        /// <returns> gibt eine Direktnachricht zurück</returns>
         public static Message FromArray(byte[] pArray)
         {
             if (pArray is null || pArray.Length > 2) throw new ArgumentException("Error MessageViewAllClients fromArray");

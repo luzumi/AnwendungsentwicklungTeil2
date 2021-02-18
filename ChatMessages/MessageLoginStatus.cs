@@ -8,7 +8,7 @@ namespace ChatMessages
     {
         //const int SessionIdLenght = 4;
         //public byte[] _sessionId = new byte[SessionIdLenght];
-        public LoginStates loginState;
+        public MessageTypes loginState;
 
         public MessageLoginStatus()
         {
@@ -39,7 +39,7 @@ namespace ChatMessages
             if (pArray is null || pArray.Length != 1) throw new ArgumentException("Error MLS 33");
             MessageLoginStatus m = new();
             m.MessageType = (MessageTypes)pArray[0];
-            m.loginState = (LoginStates)pArray[1];
+            m.loginState = (MessageTypes)pArray[1];
             
             return m;
         }

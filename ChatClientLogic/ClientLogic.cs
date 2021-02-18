@@ -55,6 +55,11 @@ namespace ChatClientLogic
             return true;
         }
 
+        /// <summary>
+        /// Sendet Nachricht an alle Clients weiter
+        /// </summary>
+        /// <param name="pMessage"> zu sendende Nachricht </param>
+        /// <param name="pUserName"> Name des sendenden Users</param>
         public void SendMessage(string pMessage, string pUserName)
         {
             if (_connection == null || !_connection.Connected) return;
@@ -67,14 +72,21 @@ namespace ChatClientLogic
             _connection.GetStream().Write(mbc.ToArray() /*, 0, mbc.GetSize()*/);
         }
 
+        /// <summary>
+        /// Trennt Verbind des Clients vom Server
+        /// </summary>
         public void Stop()
         {
             _cts.Cancel();
             _connection?.Close();
         }
 
+        /// <summary>
+        /// empfängt Nachricht und handelt diese
+        /// </summary>
         private async void Receive()
         {
+            
             byte[] data = new byte[1024];
             int receivedBytes;
 
@@ -100,67 +112,77 @@ namespace ChatClientLogic
                 else
                 {
                     // nachricht empfangen
-                    switch ((MessageTypes)data[0])
-                    {
-                        case MessageTypes.Login:
-                            IsLoggedIn = true;
-                            _onNewMessage.Invoke("Server: Login erfolgreich");
-                            break;
-                        case MessageTypes.LoginFail:
-                            IsLoggedIn = false;
-                            _onNewMessage.Invoke("Server: Login abgelehnt"); //todo grund angeben
-                            break;
-                        case MessageTypes.KickFromServer:
-                            IsLoggedIn = false;
-                            _connection.Close();
-                            _onNewMessage.Invoke("Server: Sie wurden vom Server getrennt");
-                            break;
-                        case MessageTypes.ServerShutdown:
-                            IsLoggedIn = false;
-                            _connection.Close();
-                            _onNewMessage("Server: Heruntergefahren");
-                            break;
-                        case MessageTypes.DirectMessage:
-                            MessageDirect md = new(data[0..receivedBytes]);
-                            if (md.DataType is Datatypes.Text)
-                                _onNewMessage("Direktnachricht " + md.SenderName + "> " + md._data.ConvertToString());
-                            else
-                                // todo: bild und datei-daten
-                                throw new NotImplementedException("Bisher nur Textnachrichten unterstützt");
-                            break;
-                        case MessageTypes.GroupMessage:
-                            MessageGroup mr = new(data[0..receivedBytes]);
-                            if (mr.ContentType == DataType.Text)
-                                _onNewMessage(mr.SenderName + "> " + mr._data.ConvertToString());
-                            else
-                                // todo: bild und datei-daten
-                                throw new NotImplementedException("Bisher nur Textnachrichten unterstützt");
-                            break;
-                        case MessageTypes.Broadcast:
-                            MessageBroadCast mb = new(data[..receivedBytes]);
-                            if (mb.ContentType == DataType.Text)
-                                _onNewMessage(mb.userName + ": " + mb.Content.ConvertToString());
-                            else
-                                // todo: bild und datei-daten
-                                throw new NotImplementedException("Bisher nur Textnachrichten unterstützt");
-                            break;
-                        case MessageTypes.BanFromServer:
-                            _connection.Close();
-                            _onNewMessage.Invoke("Server: Sie wurden vom Server verbannt");
-                            break;
-                        case MessageTypes.ViewAllClients:
-                            MessageViewAllClients mul = new(data[..receivedBytes]);
-                            onNewUserList(mul.UserList);
-                            break;
-                        default:
-                            //todo: mehr nachrichten implementieren
-                            throw new NotImplementedException(
-                                $"Nachrichtenart {(MessageTypes)data[0]} nicht unterstützt");
-                    }
+                    HandleMessage(data, receivedBytes);
                 }
             }
 
             OnConnectionStatus?.Invoke();
+        }
+
+        /// <summary>
+        /// Prüft empfangene Nachricht auf NachrichtenTyp und handelt diese
+        /// </summary>
+        /// <param name="data"> NachrichtenStream </param>
+        /// <param name="receivedBytes"> Länge des NachrichtenStreams </param>
+        private void HandleMessage(byte[] data, int receivedBytes)
+        {
+            switch ((MessageTypes) data[0])
+            {
+                case MessageTypes.Login:
+                    IsLoggedIn = true;
+                    _onNewMessage.Invoke("Server: Login erfolgreich");
+                    break;
+                case MessageTypes.LoginFail:
+                    IsLoggedIn = false;
+                    _onNewMessage.Invoke("Server: Login abgelehnt"); //todo grund angeben
+                    break;
+                case MessageTypes.KickFromServer:
+                    IsLoggedIn = false;
+                    _connection.Close();
+                    _onNewMessage.Invoke("Server: Sie wurden vom Server getrennt");
+                    break;
+                case MessageTypes.ServerShutdown:
+                    IsLoggedIn = false;
+                    _connection.Close();
+                    _onNewMessage("Server: Heruntergefahren");
+                    break;
+                case MessageTypes.DirectMessage:
+                    MessageDirect md = new(data[0..receivedBytes]);
+                    if (md.DataType is Datatypes.Text)
+                        _onNewMessage("Direktnachricht " + md.SenderName + "> " + md._data.ConvertToString());
+                    else
+                        // todo: bild und datei-daten
+                        throw new NotImplementedException("Bisher nur Textnachrichten unterstützt");
+                    break;
+                case MessageTypes.GroupMessage:
+                    MessageGroup mr = new(data[0..receivedBytes]);
+                    if (mr.ContentType == DataType.Text)
+                        _onNewMessage(mr.SenderName + "> " + mr._data.ConvertToString());
+                    else
+                        // todo: bild und datei-daten
+                        throw new NotImplementedException("Bisher nur Textnachrichten unterstützt");
+                    break;
+                case MessageTypes.Broadcast:
+                    MessageBroadCast mb = new(data[..receivedBytes]);
+                    if (mb.ContentType == DataType.Text)
+                        _onNewMessage(mb.userName + ": " + mb.Content.ConvertToString());
+                    else
+                        // todo: bild und datei-daten
+                        throw new NotImplementedException("Bisher nur Textnachrichten unterstützt");
+                    break;
+                case MessageTypes.BanFromServer:
+                    _connection.Close();
+                    _onNewMessage.Invoke("Server: Sie wurden vom Server verbannt");
+                    break;
+                case MessageTypes.ViewAllClients:
+                    MessageViewAllClients mul = new(data[..receivedBytes]);
+                    onNewUserList(mul.UserList);
+                    break;
+                default:
+                    //todo: mehr nachrichten implementieren
+                    throw new NotImplementedException(
+                        $"Nachrichtenart {(MessageTypes) data[0]} nicht unterstützt");
+            }
         }
 
 
