@@ -6,7 +6,11 @@ using System.Windows.Input;
 using System.Windows.Media;
 
 namespace ChatClientGUI
+
 {
+    /// <summary>
+    /// Scrollt die Textbox automatisch nach unten
+    /// </summary>
     public class ClickSelectTextBox : TextBox
     {
         public ClickSelectTextBox()
@@ -42,8 +46,7 @@ namespace ChatClientGUI
 
         private static void SelectAllText(object sender, RoutedEventArgs e)
         {
-            var textBox = e.OriginalSource as TextBox;
-            if (textBox != null)
+            if (e.OriginalSource is TextBox textBox)
                 textBox.SelectAll();
         }
     }

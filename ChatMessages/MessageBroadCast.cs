@@ -5,11 +5,17 @@ using System.Text;
 
 namespace ChatMessages
 {
+    /// <summary>
+    /// Nachricht an alle Clients
+    /// </summary>
     public class MessageBroadCast : Message
     {
         public DataType ContentType;
         public byte[] Content;
 
+        /// <summary>
+        /// Nachricht an alle Clients
+        /// </summary>
         public MessageBroadCast()
         {
             MessageType = MessageTypes.Broadcast;
@@ -21,10 +27,7 @@ namespace ChatMessages
             return 3 + userName.Length + Content.Length;
         }
 
-        /// <summary>
-        /// Never used
-        /// </summary>
-        /// <returns></returns>
+
         public override byte[] ToArray()
         {
             byte[] data = new byte[GetSize()];

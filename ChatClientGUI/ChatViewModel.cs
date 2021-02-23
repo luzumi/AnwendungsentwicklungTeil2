@@ -39,38 +39,44 @@ namespace ChatClientGUI
         public bool IsConnected { get => _logic.IsConnected; }
 
         /// <summary>
-        /// <code>Property <see cref="bool"/></code> <c>ChatServerLogic</c>  ist nicht verbunden
+        /// Property <see cref="bool"/> <c>ChatServerLogic</c>  ist nicht verbunden
         /// </summary>
         public bool IsNotConnected { get => !_logic.IsConnected; }
 
         /// <summary>
-        /// <code>Property <see cref="string"/> Hidden/Visible</code> stellt Sichtbarkeit einer <seealso cref="TextBox"> TextBox </seealso> um
+        /// <code>Property <see cref="string"/> Hidden/Visible</code>
+        /// stellt Sichtbarkeit einer <seealso cref="TextBox"> TextBox </seealso> um
         /// </summary>
         public string VisibilityTextBox => _logic.IsConnected ? "Hidden" : "Visible";
 
         /// <summary>
-        /// <code>Property <see cref="string"/> Hidden/Visible</code> stellt Sichtbarkeit einer <seealso cref="PasswordBox"> PasswordBox </seealso> um
+        /// <code>Property <see cref="string"/> Hidden/Visible</code>
+        /// stellt Sichtbarkeit einer <seealso cref="PasswordBox"> PasswordBox </seealso> um
         /// </summary>
         public string VisibilityPasswordBox => !_logic.IsConnected ? "Hidden" : "Visible";
 
         /// <summary>
-        /// <code>Property <see cref="string"/> Disconnect/Connect</code> legt anhand des VerbingsStatus des Clients die
+        /// <code>Property <see cref="string"/> Disconnect/Connect</code>
+        /// legt anhand des VerbingsStatus des Clients die
         /// Beschriftung eines <seealso cref="Button"> Button </seealso> fest
         /// </summary>
         public string ButtonText => IsConnected ? " Disconnect" : " Connect";
 
         /// <summary>
-        /// <code>Property <see cref="bool"/> Timestamp On/off </code> legt fest ob ein Timestamp der nachricht hinzugefügt wird
+        /// <code>Property <see cref="bool"/> Timestamp On/off </code>
+        /// legt fest ob ein Timestamp der nachricht hinzugefügt wird
         /// </summary>
-        public bool CbTimeStamp { get; set; }
+        public bool CbTimeStamp { get; set; } 
 
         /// <summary>
-        /// <code>Property <see cref="bool"/> <see cref="UserList"/> ist sichtbar/versteckt </code> 
+        /// <code>Property <see cref="bool"/> <see cref="UserList"/>
+        /// ist sichtbar/versteckt </code> 
         /// </summary>
         public bool ButtonViewUserList { get; set; }
 
         /// <summary>
-        /// <code>Property <see cref="string"/> Hidden/Visible</code> stellt Sichtbarkeit einer <seealso cref="ListBox"/> <see cref="UserList"/> um
+        /// <code>Property <see cref="string"/> Hidden/Visible</code>
+        /// stellt Sichtbarkeit einer <seealso cref="ListBox"/> <see cref="UserList"/> um
         /// </summary>
         public string ViewUserListVisibility => !ButtonViewUserList ? "Hidden" : "Visible";
 
@@ -144,7 +150,7 @@ namespace ChatClientGUI
             CommandViewUserList = new GenericCommand(() => _logic.RequestUserList(), () => true);
             CommandSend = new GenericCommand(SendNewMessage, () => IsConnected);
 
-            _logic = new ClientLogic(DisplayReceivedMessage, DisplayUserList);
+            _logic = new (DisplayReceivedMessage, DisplayUserList);
             _logic.OnConnectionStatus = ConnectionStatusChange;
 
             Messages = String.Empty;
@@ -175,7 +181,9 @@ namespace ChatClientGUI
         /// <summary>
         /// switcht Porperty <c>ButtonViewUserList</c>
         /// </summary>
+#pragma warning disable IDE0051 // Nicht verwendete private Member entfernen
         private void ChangeViewUserListVisibility()
+#pragma warning restore IDE0051 // Nicht verwendete private Member entfernen
         {
             ButtonViewUserList = !ButtonViewUserList;
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(ButtonViewUserList)));
@@ -207,8 +215,8 @@ namespace ChatClientGUI
                 _logic.Stop();
             else
             {
-                using (MD5 hash = MD5.Create())
-                    _logic.Start(UserName, hash.ComputeHash(Encoding.ASCII.GetBytes(pPasswordBox.Password)));
+                using MD5 hash = MD5.Create();
+                _logic.Start(UserName, hash.ComputeHash(Encoding.ASCII.GetBytes(pPasswordBox.Password)));
                 //UserList.Add(UserName);
             }
             //TODO in setter IsConnected
@@ -230,7 +238,9 @@ namespace ChatClientGUI
         /// Prüft ob Verbindsaufbau erlaubt ist
         /// </summary>
         /// <param name="pPasswordBox"></param>
-        /// <returns>Wenn nicht verbunden <code>true</code> - Wenn verbunden prüft ob UserName und Password <c>nicht</c> vorhanden <code>false</code></returns>
+        /// <returns>Wenn <c>nicht</c> verbunden <code>true</code>
+        /// Wenn verbunden prüft ob UserName und Password
+        /// <c>nicht</c> vorhanden <c>false</c></returns>
         private bool CanConnect(PasswordBox pPasswordBox)
         {
             if (IsNotConnected)

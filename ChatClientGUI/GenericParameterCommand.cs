@@ -3,6 +3,9 @@ using System.Windows.Input;
 
 namespace ChatClientGUI
 {
+    /// <summary>
+    /// Generisches Kommando mit Pramater
+    /// </summary>
     class GenericParameterCommand : ICommand
     {
         public event EventHandler CanExecuteChanged;
@@ -15,6 +18,11 @@ namespace ChatClientGUI
             return _canExecuteAction(parameter);
         }
 
+        /// <summary>
+        /// Generisches Kommando mit Pramater
+        /// </summary>
+        /// <param name="execute">auszuführende Aktion</param>
+        /// <param name="canExecute">Object als Parameter</param>
         public GenericParameterCommand(Action<object> execute, Func<object, bool> canExecute = null)
         {
             _executeAction = execute;

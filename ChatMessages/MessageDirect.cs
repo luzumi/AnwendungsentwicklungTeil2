@@ -5,6 +5,10 @@ using System.ComponentModel.DataAnnotations;
 
 namespace ChatMessages
 {
+    /// <summary>
+    /// Direktnachricht an einen Client
+    /// - erbt von <see cref="Message"></see>
+    /// </summary>
     public class MessageDirect : Message
     {
         public byte[] _data;
@@ -12,11 +16,18 @@ namespace ChatMessages
         public string TargetName;
         public Datatypes DataType;
 
+        /// <summary>
+        /// Direktnachricht an einen Client
+        /// </summary>
         public MessageDirect()
         {
             MessageType = MessageTypes.DirectMessage;
         }
 
+        /// <summary>
+        /// Direktnachricht an einen Client
+        /// </summary>
+        /// <param name="Data"> zu sendender NachrichtenStream</param>
         public MessageDirect(byte[] Data)
         {
             MessageType = MessageTypes.DirectMessage;

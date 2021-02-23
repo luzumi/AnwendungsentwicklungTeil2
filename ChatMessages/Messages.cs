@@ -4,31 +4,15 @@ using Microsoft.VisualBasic;
 
 namespace ChatMessages
 {
-    class MessageClientAdd : Message
-    {
-        public MessageClientAdd()
-        {
-            MessageType = MessageTypes.ClientAdd;
-        }
-
-        public override int GetSize()
-        {
-            throw new System.NotImplementedException();
-        }
-
-        public override byte[] ToArray()
-        {
-            throw new System.NotImplementedException();
-        }
-
-        public static Message FromArray(byte[] pArray)
-        {
-            throw new System.NotImplementedException();
-        }
-    }
-
+    /// <summary>
+    /// Ein Client wird vom Server geworfen
+    /// - erbt von <see cref="Message"></see>
+    /// </summary>
     public class MessageClientKick : Message
     {
+        /// <summary>
+        /// Ein Client wird vom Server geworfen
+        /// </summary>
         public MessageClientKick()
         {
             MessageType = MessageTypes.ClientRemove;
@@ -44,34 +28,6 @@ namespace ChatMessages
             byte[] data = new byte[1];
             data[0] = (byte)MessageType;
             return data;
-        }
-
-        public static Message FromArray(byte[] pArray)
-        {
-            throw new System.NotImplementedException();
-        }
-    }
-
-    class MessageViewRequest : Message
-    {
-        public MessageViewRequest()
-        {
-            MessageType = MessageTypes.ViewRequest;
-        }
-
-        public override int GetSize()
-        {
-            throw new System.NotImplementedException();
-        }
-
-        public override byte[] ToArray()
-        {
-            throw new System.NotImplementedException();
-        }
-
-        public static Message FromArray(byte[] pArray)
-        {
-            throw new System.NotImplementedException();
         }
     }
 }

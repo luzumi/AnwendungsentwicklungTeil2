@@ -7,6 +7,9 @@ using ChatMessages;
 
 namespace ChatServerLogic
 {
+    /// <summary>
+    /// Logic des ChatServers
+    /// </summary>
     public class ChatServer
     {
         private readonly TcpListener _listener;
@@ -22,7 +25,10 @@ namespace ChatServerLogic
 
         public bool IsReaderRunning { get; } //TODO:???????
 
-
+        /// <summary>
+        /// Logic des Servers
+        /// </summary>
+        /// <param name="ReceiveMethod"> Methode die von einem Chatserver ausgeführt wird </param>
         public ChatServer(Action<string> ReceiveMethod)
         {
             _onMessageReceived = ReceiveMethod;
@@ -34,6 +40,9 @@ namespace ChatServerLogic
             RoomList.Add(new Room("Lobby"));
         }
 
+        /// <summary>
+        /// startet einen Listener Asynchron
+        /// </summary>
         public async void StartListenerAsync()
         {
             if (_isListenerRunning) return;
@@ -51,7 +60,7 @@ namespace ChatServerLogic
                 _connectionList.AddLast(connInfo);
                 _onMessageReceived.Invoke($"Client {newClient.Client.RemoteEndPoint} verbindet sich");
                 RoomList = new();
-                RoomList.Add(new Room("Lobby"){_roomMember = _connectionList});
+                RoomList.Add(new Room("Lobby"){RoomMember = _connectionList});
             }
 
             _onMessageReceived.Invoke("stoppe Listener");
@@ -59,12 +68,18 @@ namespace ChatServerLogic
             _isListenerRunning = false;
         }
 
+        /// <summary>
+        /// stoppt den Listener
+        /// </summary>
         public void StopListener()
         {
             _onMessageReceived.Invoke("Listener wird beendet");
             ctsListener.Cancel();
         }
 
+        /// <summary>
+        /// stoppt den Reader
+        /// </summary>
         public void StopReader()
         {
             _onMessageReceived.Invoke("Reader wird beendet");
@@ -72,6 +87,10 @@ namespace ChatServerLogic
             Kick();
         }
 
+        /// <summary>
+        /// sendet Nachricht an alle Clients
+        /// </summary>
+        /// <param name="pMessage"> die zu sendende Nachricht</param>
         public void SendBroadcastMessage(string pMessage)
         {
             MessageBroadCast mbc = new();
@@ -84,6 +103,10 @@ namespace ChatServerLogic
             }
         }
 
+        /// <summary>
+        /// eine Nachricht wird empfangen
+        /// </summary>
+        /// <param name="pClient"></param>
         private async void Receive(ConnectionInfo pClient)
         {
             byte[] data = new byte[1024];
@@ -95,113 +118,7 @@ namespace ChatServerLogic
                 {
                     recievedBytes =
                         await pClient.Tcp.GetStream().ReadAsync(data.AsMemory(0, data.Length), ctsListener.Token);
-                    switch ((MessageTypes)data[0])
-                    {
-                        case MessageTypes.Login:
-                            var loginMessage = MessageLogin.FromArray(data[..recievedBytes]);
-                            bool success = true;
-                            foreach (var connectionInfo in _connectionList)
-                            {
-                                if (connectionInfo.ciUserName == loginMessage.userName)
-                                {
-                                    //TODO: fehlerbehandlung
-                                    success = false;
-                                    break;
-                                }
-                            }
-
-                            if (success)
-                            {
-                                MessageLoginStatus ls = new();
-                                ls.loginState = MessageTypes.LoginSuccessfully;
-                                pClient.ciUserName = loginMessage.userName;
-                                pClient.Tcp.GetStream().Write(ls.ToArray());
-
-                                MessageViewAllClients mulLogin = new();
-                                foreach (var client in _connectionList)
-                                    mulLogin.UserList.Add(client.ciUserName);
-
-                                var arr = mulLogin.ToArray();
-
-                                foreach (var client in _connectionList)
-                                {
-                                    client.Tcp.GetStream().Write(arr);
-                                }
-                            }
-                            else
-                            {
-                                MessageLoginStatus ls = new();
-                                ls.loginState = MessageTypes.LoginFail;
-                                pClient.Tcp.GetStream().Write(ls.ToArray());
-                            }
-
-                            pClient.ciUserName = loginMessage.userName;
-                            _onMessageReceived(loginMessage.userName);
-                            break;
-
-                        case MessageTypes.Logout:
-                            pClient.Tcp.Close();
-                            break;
-
-                        case MessageTypes.Broadcast:
-                            foreach (var client in _connectionList)
-                            {
-                                client.Tcp.GetStream().Write(data[..recievedBytes]);
-                            }
-
-                            if ((Datatypes)data[1] == Datatypes.Text)
-                                _onMessageReceived(new MessageBroadCast(data[..recievedBytes]).Content
-                                    .ConvertToString());
-                            break;
-
-                        case MessageTypes.DirectMessage:
-                            var messageDirect = MessageDirect.FromArray(data[..recievedBytes]);
-                            foreach (var client in _connectionList)
-                            {
-                                if (client.ciUserName == messageDirect.TargetName)
-                                {
-                                    client.Tcp.GetStream().Write(data.AsSpan()[0..recievedBytes]);
-                                    break;
-                                }
-                            }
-
-                            if ((Datatypes)data[1] == Datatypes.Text)
-                                _onMessageReceived(messageDirect._data.ConvertToString());
-                            break;
-
-                        case MessageTypes.JoinGroup:
-                            break;
-                        case MessageTypes.LeaveGroup:
-                            break;
-                        case MessageTypes.GroupMessage:
-                            break;
-                        case MessageTypes.ClientAdd:
-                            break;
-                        case MessageTypes.ClientRemove:
-                            break;
-                        case MessageTypes.ViewRequest:
-                            break;
-                        case MessageTypes.ViewAllClients:
-
-                            MessageViewAllClients messageViewAllClients = new();
-
-                            foreach (var ci in _connectionList)
-                            {
-                                messageViewAllClients.UserList.Add(ci.ciUserName);
-                            }
-
-                            pClient.Tcp.GetStream().Write(messageViewAllClients.ToArray());
-                            break;
-
-                        default:
-                            _onMessageReceived($"Client {pClient.ciUserName ?? "Unangemeldet"}" +
-                                               $" an IP {pClient.Tcp.Client.RemoteEndPoint} hat unbekanntes Paket gesendet: " +
-                                               $"{data[0]}  trenne Client");
-                            MessageClientKick mk = new();
-                            pClient.Tcp.GetStream().Write(mk.ToArray());
-                            pClient.Tcp.Close();
-                            break;
-                    }
+                    HandleIncomingMessage(pClient, data, recievedBytes);
                 }
                 catch (Exception)
                 {
@@ -220,6 +137,123 @@ namespace ChatServerLogic
 
             pClient.Tcp.Close();
             _connectionList.Remove(pClient);
+        }
+
+        /// <summary>
+        /// eingehende Nachricht wird gehandlet
+        /// </summary>
+        /// <param name="pClient"> Absender der Nachricht</param>
+        /// <param name="data"> Datastream der zu empfangenden Nachricht</param>
+        /// <param name="recievedBytes">Länge der Nachricht</param>
+        private void HandleIncomingMessage(ConnectionInfo pClient, byte[] data, int recievedBytes)
+        {
+            switch ((MessageTypes) data[0])
+            {
+                case MessageTypes.Login:
+                    var loginMessage = MessageLogin.FromArray(data[..recievedBytes]);
+                    bool success = true;
+                    foreach (var connectionInfo in _connectionList)
+                    {
+                        if (connectionInfo.ciUserName == loginMessage.userName)
+                        {
+                            //TODO: fehlerbehandlung
+                            success = false;
+                            break;
+                        }
+                    }
+
+                    if (success)
+                    {
+                        MessageLoginStatus ls = new();
+                        ls.loginState = MessageTypes.LoginSuccessfully;
+                        pClient.ciUserName = loginMessage.userName;
+                        pClient.Tcp.GetStream().Write(ls.ToArray());
+
+                        MessageViewAllClients mulLogin = new();
+                        foreach (var client in _connectionList)
+                            mulLogin.UserList.Add(client.ciUserName);
+
+                        var arr = mulLogin.ToArray();
+
+                        foreach (var client in _connectionList)
+                        {
+                            client.Tcp.GetStream().Write(arr);
+                        }
+                    }
+                    else
+                    {
+                        MessageLoginStatus ls = new();
+                        ls.loginState = MessageTypes.LoginFail;
+                        pClient.Tcp.GetStream().Write(ls.ToArray());
+                    }
+
+                    pClient.ciUserName = loginMessage.userName;
+                    _onMessageReceived(loginMessage.userName);
+                    break;
+
+                case MessageTypes.Logout:
+                    pClient.Tcp.Close();
+                    break;
+
+                case MessageTypes.Broadcast:
+                    foreach (var client in _connectionList)
+                    {
+                        client.Tcp.GetStream().Write(data.AsSpan()[..recievedBytes]);
+                    }
+
+                    if ((Datatypes) data[1] == Datatypes.Text)
+                        _onMessageReceived(new MessageBroadCast(data[..recievedBytes]).Content
+                            .ConvertToString());
+                    break;
+
+                case MessageTypes.DirectMessage:
+                    var messageDirect = MessageDirect.FromArray(data[..recievedBytes]);
+                    foreach (var client in _connectionList)
+                    {
+                        if (client.ciUserName == messageDirect.TargetName)
+                        {
+                            client.Tcp.GetStream().Write(data.AsSpan()[0..recievedBytes]);
+                            break;
+                        }
+                    }
+
+                    if ((Datatypes) data[1] == Datatypes.Text)
+                        _onMessageReceived(messageDirect._data.ConvertToString());
+                    break;
+
+                case MessageTypes.JoinGroup:
+                    break;
+                case MessageTypes.LeaveGroup:
+                    break;
+                case MessageTypes.GroupMessage:
+                    break;
+                case MessageTypes.ClientAdd:
+                    break;
+                case MessageTypes.ClientRemove:
+                    break;
+                case MessageTypes.ViewRequest:
+                    break;
+                case MessageTypes.ViewAllClients:
+
+                    MessageViewAllClients messageViewAllClients = new();
+
+                    foreach (var ci in _connectionList)
+                    {
+                        messageViewAllClients.UserList.Add(ci.ciUserName);
+                    }
+
+                    pClient.Tcp.GetStream().Write(messageViewAllClients.ToArray());
+                    break;
+
+                default:
+                    _onMessageReceived($"Client {pClient.ciUserName ?? "Unangemeldet"}" +
+                                       $" an IP {pClient.Tcp.Client.RemoteEndPoint} hat unbekanntes Paket gesendet: " +
+                                       $"{data[0]}  trenne Client");
+                    MessageClientKick mk = new();
+                    pClient.Tcp.GetStream().Write(mk.ToArray());
+                    pClient.Tcp.Close();
+                    break;
+            }
         }
 
         public List<string> GetConnectionStatus()

@@ -1,16 +1,15 @@
 ﻿// corat::WPFFIrstSteps.ChatClientLogic.MessageGroup.cs::022021
 
 using System;
-using ChatMessages;
 
-namespace ChatClientLogic
+namespace ChatMessages
 {
     public class MessageGroup : Message
     {
-        string RoomID;
-        public string SenderName;
-        public DataType ContentType;
         public byte[] _data;
+        public DataType ContentType;
+        private readonly string RoomID;
+        public string SenderName;
 
         public MessageGroup()
         {
@@ -35,12 +34,12 @@ namespace ChatClientLogic
 
         public override byte[] ToArray()
         {
-            byte[] data = new byte[GetSize()];
+            var data = new byte[GetSize()];
             data[0] = (byte)MessageType;
             data[1] = (byte)ContentType;
             data[2] = (byte)RoomID.Length;
             data[3] = (byte)SenderName.Length;
-            byte[] buffer = RoomID.ConvertToArray();
+            var buffer = RoomID.ConvertToArray();
             Array.Copy(buffer, 0, data, 4, buffer.Length);
             buffer = SenderName.ConvertToArray();
             Array.Copy(buffer, 0, data, 4 + RoomID.Length, buffer.Length);

@@ -3,6 +3,9 @@ using System.Windows.Input;
 
 namespace ChatClientGUI
 {
+    /// <summary>
+    /// Generisches Kommando ohne extra Parameter
+    /// </summary>
     class GenericCommand : ICommand
     {
         public event EventHandler CanExecuteChanged;

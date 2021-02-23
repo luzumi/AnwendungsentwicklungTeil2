@@ -5,6 +5,9 @@ namespace ChatServerGUI
 {
     class Program
     {
+        /// <summary>
+        /// Startet eine ConsolenGui für den ChatServer
+        /// </summary>
         static void Main()
         {
             Console.WriteLine("Hallo, ich bin ein Chat server Verwaltungsprogramm");
@@ -21,15 +24,15 @@ namespace ChatServerGUI
             chatServer.StartListenerAsync();
 #endif
 
-            string input;
+            string unFormatedServerCommand;
             string command = String.Empty;
             while (true)
             {
-                input = Console.ReadLine();
-                if (input != null)
+                unFormatedServerCommand = Console.ReadLine();
+                if (unFormatedServerCommand != null)
                 {
-                    int spaceIndex = input.IndexOf(" ", StringComparison.Ordinal);
-                    command = input.Substring(0, (spaceIndex > 0 ? spaceIndex : input.Length));
+                    int spaceIndex = unFormatedServerCommand.IndexOf(" ", StringComparison.Ordinal);
+                    command = unFormatedServerCommand.Substring(0, (spaceIndex > 0 ? spaceIndex : unFormatedServerCommand.Length));
                 }
 
                 switch (command)
@@ -45,7 +48,7 @@ namespace ChatServerGUI
                         foreach (var stat in status) Console.WriteLine(stat);
                         break;
                     case "/send":
-                        chatServer.SendBroadcastMessage(input?[6..]);
+                        chatServer.SendBroadcastMessage(unFormatedServerCommand?[6..]);
                         break;
                     case "/shutdown":
                         Console.WriteLine("ENDE");

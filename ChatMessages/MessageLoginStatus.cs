@@ -4,12 +4,18 @@ using System;
 
 namespace ChatMessages
 {
+    /// <summary>
+    /// Anfrage des Status eines Clients
+    /// - erbt von <see cref="Message"></see>
+    /// </summary>
     public class MessageLoginStatus : Message
     {
-        //const int SessionIdLenght = 4;
-        //public byte[] _sessionId = new byte[SessionIdLenght];
+
         public MessageTypes loginState;
 
+        /// <summary>
+        /// Anfrage des Status eines Client
+        /// </summary>
         public MessageLoginStatus()
         {
             
@@ -33,7 +39,7 @@ namespace ChatMessages
         /// zusammensetzen eines empfangenen Pakets
         /// </summary>
         /// <param name="pArray"></param>
-        /// <returns></returns>
+        /// <returns> Status der Client-Connection</returns>
         public static MessageLoginStatus FromArray(byte[] pArray)
         {
             if (pArray is null || pArray.Length != 1) throw new ArgumentException("Error MLS 33");

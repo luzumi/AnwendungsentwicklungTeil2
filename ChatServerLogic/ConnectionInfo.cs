@@ -7,6 +7,9 @@ using System.Threading.Tasks;
 
 namespace ChatServerLogic
 {
+    /// <summary>
+    /// erweiterung der TcpClientConnection
+    /// </summary>
     public class ConnectionInfo
     {
         public TcpClient Tcp;
@@ -15,14 +18,17 @@ namespace ChatServerLogic
         public Room Room;
     }
 
+    /// <summary>
+    /// ein ChatRoom
+    /// </summary>
     public class Room
     {
-        public string _RoomName;
-        public LinkedList<ConnectionInfo> _roomMember;
+        public string RoomName;
+        public LinkedList<ConnectionInfo> RoomMember;
 
         public Room(string pRoomName)
         {
-            _RoomName = pRoomName;
+            RoomName = pRoomName;
         }
     }
 }

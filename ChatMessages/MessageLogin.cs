@@ -5,18 +5,25 @@ using System.Text;
 
 namespace ChatMessages
 {
+    /// <summary>
+    /// Ein Client verbindet sich zum Server
+    /// - erbt von <see cref="Message"></see>
+    /// </summary>
     public class MessageLogin : Message
     {
-        public byte[] Password;
-        public string UserName;
+
+
+        /// <summary>
+        /// Ein Client sucht Verbindung zum Server
+        /// </summary>
+        /// <param name="pUserName"> Name des Users </param>
         public MessageLogin(string pUserName)
         {
             MessageType = MessageTypes.Login;
             userName = pUserName;
         }
 
-        //private const int passwordLength = 32;
-        public byte[] _password = {1, 2, 3};
+        public byte[] _password = {1, 2, 3}; //TODO: PasswortAbfrage via DB
         public byte[] Data;
 
         public override int GetSize()
