@@ -16,6 +16,11 @@ namespace ChatServerLogic
         public string ciUserName;
         public Task ReaderTask;
         public Room Room;
+
+        public override string ToString()
+        {
+            return this.ciUserName;
+        }
     }
 
     /// <summary>
@@ -31,4 +36,6 @@ namespace ChatServerLogic
             RoomName = pRoomName;
         }
     }
+
+
 }

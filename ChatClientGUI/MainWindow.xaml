@@ -1,9 +1,10 @@
-﻿<Window x:Class="ChatClientGUI.MainWindow"
+﻿<Window
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:ChatClientGUI"
+        xmlns:Specialized="clr-namespace:System.Collections.Specialized;assembly=System.Collections.Specialized" x:Class="ChatClientGUI.MainWindow"
         mc:Ignorable="d"
         Title="MainWindow" Height="400" Width="350">
 
@@ -27,7 +28,7 @@
 
 
         <!-- ConnectButtonRow -->
-        <Grid Grid.Column="0" Grid.Row="0" ColumnSpan="4">
+        <Grid Grid.Column="0" Grid.Row="0" Grid.ColumnSpan="4">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="*" />
                 <ColumnDefinition Width="*" />
@@ -55,15 +56,13 @@
             <Button Grid.Column="2"
                     Command="{Binding CommandConnect}"
                     CommandParameter="{Binding ElementName=TbPassword}">
-                <Button.Content>
-                    <StackPanel Orientation="Horizontal">
-                        <TextBlock Width="70"
+                <StackPanel Orientation="Horizontal">
+                    <TextBlock Width="70"
                                    Text="{Binding ButtonText}"
                                    VerticalAlignment="Center" />
-                        <Ellipse Width="15" Height="15" Margin="5"
+                    <Ellipse Width="15" Height="15" Margin="5"
                                  Fill="{Binding ConnectionColor}" />
-                    </StackPanel>
-                </Button.Content>
+                </StackPanel>
             </Button>
         </Grid>
         <!-- Write/Send Row -->
@@ -72,15 +71,14 @@
                                   IsEnabled="{Binding IsConnected}"
                                   Background="AntiqueWhite"
                                   SpellCheck.IsEnabled="True" />
-        <Button Grid.Row="2" Grid.Column="3" Content=" Send =>" IsDefault="true"
+        <Button Grid.Row="2" Grid.Column="3" Content=" Send =&gt;" IsDefault="true"
                 Command="{Binding CommandSend}"
-                CommandParameter="{Binding ElementName=TbMessage, Path=Text}"
+                CommandParameter="{Binding Text, ElementName=TbMessage}"
                 Background="{Binding ConnectionColor}"
                 IsEnabled="{Binding IsConnected}"
                 HorizontalContentAlignment="Center"
                 Width="100" />
 
-        <!-- MessagesView -->
         <ScrollViewer x:Name="SvMessages"
                       Grid.Row="1" Grid.Column="2" Grid.ColumnSpan="2">
             <TextBlock Text="{Binding Messages}"
@@ -88,16 +86,26 @@
                        TextWrapping="Wrap" />
         </ScrollViewer>
 
+        <!-- UserListe -->
         <Button Grid.Column="0" Grid.Row="1"
                 Command="{Binding CommandViewUserList}"
                 CommandParameter="{Binding ElementName=TbMessage}"
                 IsEnabled="{Binding IsConnected}">
             <Polygon Points="0,14 6,7 0,0" Fill="Black" />
         </Button>
-        <ListView Grid.Column="1" Grid.Row="1" Grid.ColumnSpan="2" Margin="0,0,94,0"
-                  ItemsSource="{Binding UserList}" 
-                  SelectedItem="{Binding SelectedTarget}" 
-                  SelectionMode="Single">
+        <ListView Grid.Column="1" Grid.Row="1"  Margin="0,0,5,0" >
+            <ListView.View>
+                <GridView>
+                    <GridViewColumn Header="User Online" DisplayMemberBinding="{Binding Path=UserList}">
+                        <GridViewColumn.CellTemplate>
+                            <DataTemplate>
+                                <TextBlock Text="{Binding Path=UserName}" />
+                            </DataTemplate>
+                        </GridViewColumn.CellTemplate>
+                    </GridViewColumn>
+                </GridView>
+            </ListView.View>
         </ListView>
+
     </Grid>
 </Window>

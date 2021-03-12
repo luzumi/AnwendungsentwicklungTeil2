@@ -63,10 +63,10 @@ namespace ChatClientLogic
 
             using (var hash = SHA256.Create())
             {
-                ml.Password = hash.ComputeHash(pPassword);
+                ml._password = hash.ComputeHash(pPassword);
             }
 
-            ml.UserName = pUserName;
+            ml.userName = pUserName;
 
             _connection.GetStream().Write(ml.ToArray());
             return true;

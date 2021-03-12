@@ -81,7 +81,7 @@ namespace ChatClientGUI
         public string ViewUserListVisibility => !ButtonViewUserList ? "Hidden" : "Visible";
 
         /// <summary>
-        /// <code>Property <see cref="string"/>Client aus <see cref="UserList"/> auswählen</code>
+        /// <code>Property <see cref="string"/> Client aus <see cref="UserList"/> auswählen</code>
         /// </summary>
         public string SelectedTarget { get; set; }
         public ObservableCollection<string> UserList { get; init; }
