@@ -8,6 +8,95 @@ public class ListFilterer
     {
     }
 
+    public class Decompose
+    {
+        /// <summary>
+        /// https://www.codewars.com/kata/54eb33e5bc1a25440d000891/train/csharp
+        /// </summary>
+        /// <param name="n"></param>
+        /// <returns></returns>
+        public string decompose(long n)
+        {
+            var square = n * n;
+            List<long> squareList = new List<long>();
+
+            var sum = 0L;
+
+            for (long i = n-1; i > 0; i--)
+            {
+                if (sum + i * i <= square)
+                {
+                    sum += (i * i);
+                    squareList.Add(i);
+                }
+
+                if (sum > square)
+                {
+                    squareList.Remove(squareList.IndexOf(i));
+                    sum -= (i*i);
+
+                }
+
+                if (sum != square)
+                {
+                    continue;
+                }
+
+                squareList.Reverse();
+
+                string result = squareList.Aggregate("", (current, numb) => current + (numb + " "));
+                return result.Trim();
+            }
+
+            return "Nothing";
+        }
+    }
+
+    public class PerfectPower
+    {
+        public static (int, int)? IsPerfectPower(int n)
+        {
+            double pow;
+            int j = 2;
+            for (int i = 2; i <= n; i++)
+            {
+                if (Math.Pow(i, j) > n) break;
+
+                for (j = 2; j <= n; j++)
+                {
+                    pow = Math.Pow(i, j);
+                    if (pow > n) break;
+                    if (Math.Abs(pow - n) < 0.5) { return (i, j); }
+
+                }
+
+                j = 2;
+            }
+
+            return null;
+        }
+    }
+
+    public class Scramblies
+    {
+        public static bool Scramble(string str1, string str2)
+        {
+            List<char> str1List = str1.ToList();
+            str1List.Sort();
+
+            for (int i = 0; i < str2.Length; i++)
+            {
+                if (str1List.Contains(str2[i]))
+                {
+                    str1List.Remove(str2[i]);
+                }
+                else return false;
+            }
+
+            return true;
+        }
+    }
+
     public class Number
     {
         public int DigitalRoot(long n)
@@ -26,6 +115,7 @@ public class ListFilterer
 
                 numberRow = result.ToString();
             }
+
             return result;
         }
     }
